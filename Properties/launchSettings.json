@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PlatformaniaCS": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "_DEV_MODE": "TRUE"
+      }
+    }
+  }
+}

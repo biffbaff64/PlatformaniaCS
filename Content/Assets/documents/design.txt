@@ -1,0 +1,21 @@
+
+Brief discription of design idea behind this game.
+==================================================
+
+This game is one that is rising out of me messing around with Java and LibGDX. This 'design document'
+will only give a brief sysnopsis of the ideas I have for it.
+
+This game will be a 2D platformer type game.
+
+The main character has several minor tasks and one main task.
+
+Main Task:- Rescue a group of local villagers from the jail cells hidden throughout the levels. To open a jail, a key must first be found.
+
+Minor tasks:- Retrieve 8 Potions, 8 Ancient Runes, and 8 Spell Books from the levels
+
+There will be a number of hazards, monsters and enemy characters to avoid.
+
+In various places with the game, the Hero will encounter characters who he will be able to talk to. They
+will provide tips and helpful advice. Some of them may choose not to talk, or will impart useless information.
+
+Several areas of the map can only be accessed via hidden entrances.

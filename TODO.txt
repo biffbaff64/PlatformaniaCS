@@ -1,0 +1,2 @@
+﻿
+Preferences class needs finishing ASAP.
