@@ -9,78 +9,79 @@ using PlatformaniaCS.Game.Graphics;
 
 using Trace = Lugh.Utils.Trace;
 
-namespace PlatformaniaCS.Game.UI;
-
-public class SplashScreen
+namespace PlatformaniaCS.Game.UI
 {
-    public bool IsAvailable { get; set; }
-
-    private OrthographicCamera _camera;
-    private SpriteBatch        _batch;
-    private Texture2D          _background;
-    private Stopwatch          _stopwatch;
-
-    public void Setup( string assetName )
+    public class SplashScreen
     {
-        Trace.CheckPoint();
+        public bool IsAvailable { get; set; }
 
-        _stopwatch  = Stopwatch.StartNew();
-        _background = AssetUtils.LoadAsset<Texture2D>( assetName );
-        _batch      = new SpriteBatch( App.MainGame.GraphicsDevice );
+        private OrthographicCamera _camera;
+        private SpriteBatch        _batch;
+        private Texture2D          _background;
+        private Stopwatch          _stopwatch;
 
-        var viewportAdapter = new BoxingViewportAdapter
-            (
-             App.MainGame.Window,
-             App.MainGame.GraphicsDevice,
-             Gfx.DesktopWidth,
-             Gfx.DesktopHeight
-            );
-
-        _camera = new OrthographicCamera( viewportAdapter );
-
-        IsAvailable = true;
-    }
-
-    public void Update()
-    {
-        if ( _stopwatch.ElapsedMilliseconds > 2500 )
+        public void Setup( string assetName )
         {
-            IsAvailable = false;
-        }
-    }
+            Trace.CheckPoint();
 
-    public void Render()
-    {
-        if ( IsAvailable )
+            _stopwatch  = Stopwatch.StartNew();
+            _background = AssetUtils.LoadAsset<Texture2D>( assetName );
+            _batch      = new SpriteBatch( App.MainGame.GraphicsDevice );
+
+            var viewportAdapter = new BoxingViewportAdapter
+                    (
+                     App.MainGame.Window,
+                     App.MainGame.GraphicsDevice,
+                     Gfx.DesktopWidth,
+                     Gfx.DesktopHeight
+                    );
+
+            _camera = new OrthographicCamera( viewportAdapter );
+
+            IsAvailable = true;
+        }
+
+        public void Update()
         {
-            var transformMatrix = _camera.GetViewMatrix();
-
-            _batch.Begin( transformMatrix: transformMatrix );
-
-            _batch.Draw
-                (
-                 _background,
-                 new Rectangle( 0, 0, Gfx.DesktopWidth, Gfx.DesktopHeight ),
-                 Color.White
-                );
-
-            _batch.End();
+            if ( _stopwatch.ElapsedMilliseconds > 2500 )
+            {
+                IsAvailable = false;
+            }
         }
-    }
 
-    public void Dispose()
-    {
-        Trace.CheckPoint();
+        public void Render()
+        {
+            if ( IsAvailable )
+            {
+                var transformMatrix = _camera.GetViewMatrix();
 
-        _background.Dispose();
-        _background = null;
+                _batch.Begin( transformMatrix: transformMatrix );
 
-        _stopwatch = null;
+                _batch.Draw
+                        (
+                         _background,
+                         new Rectangle( 0, 0, Gfx.DesktopWidth, Gfx.DesktopHeight ),
+                         Color.White
+                        );
 
-        _camera = null;
-        _camera = null;
+                _batch.End();
+            }
+        }
+
+        public void Dispose()
+        {
+            Trace.CheckPoint();
+
+            _background.Dispose();
+            _background = null;
+
+            _stopwatch = null;
+
+            _camera = null;
+            _camera = null;
         
-        _batch.Dispose();
-        _batch = null;
+            _batch.Dispose();
+            _batch = null;
+        }
     }
 }

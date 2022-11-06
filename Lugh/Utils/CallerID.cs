@@ -1,8 +1,9 @@
-namespace Lugh.Utils;
-
-public struct CallerID
+namespace Lugh.Utils
 {
-    public string FileName;
-    public string MethodName;
-    public int    LineNumber;
+    public struct CallerID
+    {
+        public string FileName;
+        public string MethodName;
+        public int    LineNumber;
+    }
 }

@@ -1,6 +1,7 @@
-﻿namespace PlatformaniaCS.Game.Entities.Managers;
-
-public class EntityManagerUtils
+﻿namespace PlatformaniaCS.Game.Entities.Managers
 {
+    public class EntityManagerUtils
+    {
         
+    }
 }

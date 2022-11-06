@@ -1,12 +1,13 @@
-﻿namespace PlatformaniaCS.Game.Maps;
-
-public class MapUtils : IDisposable
+﻿namespace PlatformaniaCS.Game.Maps
 {
-    public void DestroyBodies()
+    public class MapUtils : IDisposable
     {
-    }
+        public void DestroyBodies()
+        {
+        }
         
-    public void Dispose()
-    {
+        public void Dispose()
+        {
+        }
     }
 }

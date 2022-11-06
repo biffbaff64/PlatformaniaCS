@@ -6,117 +6,118 @@ using PlatformaniaCS.Game.Scenes;
 
 // ##################################################
 
-namespace PlatformaniaCS.Game.Config;
-
-public class AppConfig
+namespace PlatformaniaCS.Game.Config
 {
-    private StateID _startupState;
-
-    public AppConfig()
+    public class AppConfig
     {
-        Trace.CheckPoint();
+        private StateID _startupState;
 
-        _startupState = StateID._STATE_BEGIN_STARTUP;
-    }
+        public AppConfig()
+        {
+            Trace.CheckPoint();
 
-    public void Setup()
-    {
-        Trace.CheckPoint();
+            _startupState = StateID._STATE_BEGIN_STARTUP;
+        }
 
-        App.CreateEssentialObjects();
+        public void Setup()
+        {
+            Trace.CheckPoint();
 
-        // -------------------------------------
-        App.Developer.SetDeveloperModeState();
-        App.Developer.SetTempDeveloperSettings();
-        // -------------------------------------
+            App.CreateEssentialObjects();
 
-        Gfx.Initialise();
-        GdxSystem.Inst().Setup();
+            // -------------------------------------
+            App.Developer.SetDeveloperModeState();
+            App.Developer.SetTempDeveloperSettings();
+            // -------------------------------------
 
-        Stats.Setup( "PlatformaniaCS.meters" );
+            Gfx.Initialise();
+            GdxSystem.Inst().Setup();
 
-        //
-        // These essential objects have now been created.
-        // Setup/Initialise for any essential objects required
-        // before TitleScene can be created is mostly
-        // performed in startApp().
-    }
+            Stats.Setup( "PlatformaniaCS.meters" );
 
-    public void StartApp()
-    {
-        Trace.CheckPoint();
+            //
+            // These essential objects have now been created.
+            // Setup/Initialise for any essential objects required
+            // before TitleScene can be created is mostly
+            // performed in startApp().
+        }
 
-        App.WorldModel.CreateWorld();
-        App.Assets.Initialise();
-        App.Settings.FreshInstallCheck();
-        App.Settings.DebugReport();
+        public void StartApp()
+        {
+            Trace.CheckPoint();
 
-        App.BaseRenderer.CreateCameras();
-        App.WorldModel.CreateB2DRenderer();
-        App.GameAudio.Setup();
-        App.InputManager.Setup();
+            App.WorldModel.CreateWorld();
+            App.Assets.Initialise();
+            App.Settings.FreshInstallCheck();
+            App.Settings.DebugReport();
 
-        _startupState = StateID._STATE_END_STARTUP;
-    }
+            App.BaseRenderer.CreateCameras();
+            App.WorldModel.CreateB2DRenderer();
+            App.GameAudio.Setup();
+            App.InputManager.Setup();
 
-    /// <summary>
-    /// Ends the startup process by handing control to the
-    /// <see cref="TitleScene"/> or, if TitleScene is disabled,
-    /// control is passed to <see cref="MainScene"/>
-    /// </summary>
-    public void CloseStartup()
-    {
-        Trace.CheckPoint();
+            _startupState = StateID._STATE_END_STARTUP;
+        }
+
+        /// <summary>
+        /// Ends the startup process by handing control to the
+        /// <see cref="TitleScene"/> or, if TitleScene is disabled,
+        /// control is passed to <see cref="MainScene"/>
+        /// </summary>
+        public void CloseStartup()
+        {
+            Trace.CheckPoint();
             
-        App.Developer.ConfigReport();
+            App.Developer.ConfigReport();
 
-        // Development option, to allow skipping of the main menu
-        // and moving straight to the game scene.
-        if ( App.Developer.IsDevMode && App.Settings.IsDisabled( Settings.MenuScene ) )
-        {
-            Trace.Dbg( message: "Triggering Main Scene."  );
+            // Development option, to allow skipping of the main menu
+            // and moving straight to the game scene.
+            if ( App.Developer.IsDevMode && App.Settings.IsDisabled( Settings.MenuScene ) )
+            {
+                Trace.Dbg( message: "Triggering Main Scene."  );
                 
-            App.CreateMainsceneObjects();
-            App.MainScene = new MainScene();
-            App.MainScene.Reset();
-            App.Scene = App.MainScene;
-        }
-        else
-        {
-            Trace.Dbg( message: "Triggering Title Scene."  );
+                App.CreateMainsceneObjects();
+                App.MainScene = new MainScene();
+                App.MainScene.Reset();
+                App.Scene = App.MainScene;
+            }
+            else
+            {
+                Trace.Dbg( message: "Triggering Title Scene."  );
                 
-            App.TitleScene = new TitleScene();
-            App.Scene      = App.TitleScene;
+                App.TitleScene = new TitleScene();
+                App.Scene      = App.TitleScene;
+            }
         }
-    }
 
-    /// <summary>
-    /// Pause the game.
-    /// Ensure all necessary states are set correctly.
-    /// </summary>
-    public void Pause()
-    {
-        App.AppState.CurrentState   = StateID._STATE_PAUSED;
-        GdxSystem.Inst().GamePaused = true;
-
-        if ( ( App.Hud.HudStateID    != StateID._STATE_SETTINGS_PANEL )
-             && ( App.Hud.HudStateID != StateID._STATE_DEVELOPER_PANEL ) )
+        /// <summary>
+        /// Pause the game.
+        /// Ensure all necessary states are set correctly.
+        /// </summary>
+        public void Pause()
         {
-            App.Hud.HudStateID = StateID._STATE_PAUSED;
+            App.AppState.CurrentState   = StateID._STATE_PAUSED;
+            GdxSystem.Inst().GamePaused = true;
+
+            if ( ( App.Hud.HudStateID != StateID._STATE_SETTINGS_PANEL )
+              && ( App.Hud.HudStateID != StateID._STATE_DEVELOPER_PANEL ) )
+            {
+                App.Hud.HudStateID = StateID._STATE_PAUSED;
+            }
         }
+
+        /// <summary>
+        /// Un-Pause the game.
+        /// </summary>
+        public void UnPause()
+        {
+            App.AppState.CurrentState   = StateID._STATE_GAME;
+            GdxSystem.Inst().GamePaused = false;
+            App.Hud.HudStateID          = StateID._STATE_PANEL_UPDATE;
+        }
+
+        public bool IsStartupDone => ( _startupState == StateID._STATE_END_STARTUP );
+
+        public static bool GameScreenActive => ( GdxSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN );
     }
-
-    /// <summary>
-    /// Un-Pause the game.
-    /// </summary>
-    public void UnPause()
-    {
-        App.AppState.CurrentState   = StateID._STATE_GAME;
-        GdxSystem.Inst().GamePaused = false;
-        App.Hud.HudStateID          = StateID._STATE_PANEL_UPDATE;
-    }
-
-    public bool IsStartupDone => ( _startupState == StateID._STATE_END_STARTUP );
-
-    public static bool GameScreenActive => ( GdxSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN );
 }

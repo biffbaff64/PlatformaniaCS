@@ -1,6 +1,7 @@
-namespace Lugh.Input;
-
-public class GameButtonRegion : Switch
+namespace Lugh.Input
 {
+    public class GameButtonRegion : Switch
+    {
         
+    }
 }

@@ -1,7 +1,8 @@
 ﻿
-namespace PlatformaniaCS.Game.Physics;
-
-public class CollisionObject
+namespace PlatformaniaCS.Game.Physics
 {
-    public Rectangle Rectangle { get; set; }
+    public class CollisionObject
+    {
+        public Rectangle Rectangle { get; set; }
+    }
 }

@@ -7,90 +7,91 @@ using PlatformaniaCS.Game.UI;
 
 // ##################################################
 
-namespace PlatformaniaCS.Game.Core;
-
-public class MainGame : Microsoft.Xna.Framework.Game
+namespace PlatformaniaCS.Game.Core
 {
-    private SplashScreen _splashScreen;
-
-    public MainGame()
+    public class MainGame : Microsoft.Xna.Framework.Game
     {
-        App.GraphicsDeviceManager = new GraphicsDeviceManager( this );
+        private SplashScreen _splashScreen;
 
-        Window.AllowUserResizing = false;
-        Content.RootDirectory    = "Content/bin/Assets";
-        IsMouseVisible           = true;
-    }
+        public MainGame()
+        {
+            App.GraphicsDeviceManager = new GraphicsDeviceManager( this );
 
-    protected override void Initialize()
-    {
-        base.Initialize();
+            Window.AllowUserResizing = false;
+            Content.RootDirectory    = "Content/bin/Assets";
+            IsMouseVisible           = true;
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
         
-        GdxSystem.Inst().Setup();
-        GdxSystem.Inst().LogLevel = GdxSystem.LogDebug;
+            GdxSystem.Inst().Setup();
+            GdxSystem.Inst().LogLevel = GdxSystem.LogDebug;
 
-        Trace.EnableWriteToFile = true;
-        Trace.OpenDebugFile( "log.txt", true );
-        Trace.CheckPoint();
+            Trace.EnableWriteToFile = true;
+            Trace.OpenDebugFile( "log.txt", true );
+            Trace.CheckPoint();
 
-        App.MainGame = this;
+            App.MainGame = this;
 
-        Gfx.SetDesktopDimensions();
+            Gfx.SetDesktopDimensions();
 
-        _splashScreen = new SplashScreen();
-        _splashScreen.Setup( GameAssets.SplashScreenAsset );
+            _splashScreen = new SplashScreen();
+            _splashScreen.Setup( GameAssets.SplashScreenAsset );
 
-        // Initialise all essential objects required before
-        // the main screen is initialised.
-        App.AppConfig = new AppConfig();
-        App.AppConfig.Setup();
-    }
-
-    protected override void LoadContent()
-    {
-    }
-
-    protected override void Update( GameTime gameTime )
-    {
-        if ( GamePad.GetState( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed
-             || Keyboard.GetState().IsKeyDown( Keys.Escape ) )
-        {
-            Exit();
+            // Initialise all essential objects required before
+            // the main screen is initialised.
+            App.AppConfig = new AppConfig();
+            App.AppConfig.Setup();
         }
 
-        if ( _splashScreen.IsAvailable )
+        protected override void LoadContent()
         {
-            _splashScreen.Update();
+        }
 
-            if ( !_splashScreen.IsAvailable )
+        protected override void Update( GameTime gameTime )
+        {
+            if ( GamePad.GetState( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed
+              || Keyboard.GetState().IsKeyDown( Keys.Escape ) )
             {
-                _splashScreen.Dispose();
+                Exit();
+            }
 
-                Trace.Dbg( message: "Splashscreen Closed." );
+            if ( _splashScreen.IsAvailable )
+            {
+                _splashScreen.Update();
+
+                if ( !_splashScreen.IsAvailable )
+                {
+                    _splashScreen.Dispose();
+
+                    Trace.Dbg( message: "Splashscreen Closed." );
                 
-                App.AppConfig.CloseStartup();
+                    App.AppConfig.CloseStartup();
+                }
             }
-        }
-        else
-        {
-            App.Scene.Update();
-        }
-    }
-
-    protected override void Draw( GameTime gameTime )
-    {
-        if ( _splashScreen.IsAvailable )
-        {
-            if ( !App.AppConfig.IsStartupDone )
+            else
             {
-                App.AppConfig.StartApp();
+                App.Scene.Update();
             }
-
-            _splashScreen.Render();
         }
-        else
+
+        protected override void Draw( GameTime gameTime )
         {
-            App.Scene.Render( 0f );
+            if ( _splashScreen.IsAvailable )
+            {
+                if ( !App.AppConfig.IsStartupDone )
+                {
+                    App.AppConfig.StartApp();
+                }
+
+                _splashScreen.Render();
+            }
+            else
+            {
+                App.Scene.Render( 0f );
+            }
         }
     }
 }

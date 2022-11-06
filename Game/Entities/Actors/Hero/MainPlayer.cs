@@ -1,14 +1,15 @@
 ﻿using PlatformaniaCS.Game.Entities.Objects;
 
-namespace PlatformaniaCS.Game.Entities.Actors.Hero;
-
-public class MainPlayer : GameSprite
+namespace PlatformaniaCS.Game.Entities.Actors.Hero
 {
-    public void Setup( bool isSpawning )
+    public class MainPlayer : GameSprite
     {
-    }
+        public void Setup( bool isSpawning )
+        {
+        }
 
-    public void KillBody()
-    {
+        public void KillBody()
+        {
+        }
     }
 }

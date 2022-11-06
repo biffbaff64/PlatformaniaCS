@@ -12,65 +12,66 @@ using PlatformaniaCS.Game.Entities.Objects;
 
 #endregion using
 
-namespace PlatformaniaCS.Game.Maps;
-
-public class TMXMapParser : IDisposable
+namespace PlatformaniaCS.Game.Maps
 {
-    public const int Layer1         = 0;
-    public const int Layer2         = 1;
-    public const int Layer3         = 2;
-    public const int Layer4         = 3;
-    public const int Overlays       = 4;
-    public const int ObjectMarkers  = 5;
-    public const int CollisionLayer = 6;
-
-    public ArrayList        PlacementTiles   { get; set; }
-    public TiledMap         CurrentMap       { get; set; }
-    public TiledMapRenderer TiledMapRenderer { get; set; }
-    public string           CurrentMapName   { get; set; }
-
-    public void InitialiseLevelMap()
+    public class TMXMapParser : IDisposable
     {
-        CurrentMapName = App.RoomManager.GetCurrentMapNameWithPath();
-        CurrentMap     = App.MainGame.Content.Load<TiledMap>( CurrentMapName );
+        public const int Layer1         = 0;
+        public const int Layer2         = 1;
+        public const int Layer3         = 2;
+        public const int Layer4         = 3;
+        public const int Overlays       = 4;
+        public const int ObjectMarkers  = 5;
+        public const int CollisionLayer = 6;
 
-        if ( TiledMapRenderer == null )
+        public ArrayList        PlacementTiles   { get; set; }
+        public TiledMap         CurrentMap       { get; set; }
+        public TiledMapRenderer TiledMapRenderer { get; set; }
+        public string           CurrentMapName   { get; set; }
+
+        public void InitialiseLevelMap()
         {
-            TiledMapRenderer = new TiledMapRenderer( App.MainGame.GraphicsDevice, CurrentMap );
-        }
+            CurrentMapName = App.RoomManager.GetCurrentMapNameWithPath();
+            CurrentMap     = App.MainGame.Content.Load<TiledMap>( CurrentMapName );
+
+            if ( TiledMapRenderer == null )
+            {
+                TiledMapRenderer = new TiledMapRenderer( App.MainGame.GraphicsDevice, CurrentMap );
+            }
             
-        SetGameLevelMap();
+            SetGameLevelMap();
 
-        App.MapData.ScrollDirection.Set( Movement._DIRECTION_STILL, Movement._DIRECTION_STILL );
-    }
+            App.MapData.ScrollDirection.Set( Movement._DIRECTION_STILL, Movement._DIRECTION_STILL );
+        }
 
-    public void CreatePositioningData()
-    {
-    }
+        public void CreatePositioningData()
+        {
+        }
 
-    public void ParseObjectBasedMarkerTiles()
-    {
-    }
+        public void ParseObjectBasedMarkerTiles()
+        {
+        }
 
-    // TODO: For future use, parse collision areas from tiles.
-    public void ParseTiledCollision()
-    {
-    }
+        // TODO: For future use, parse collision areas from tiles.
+        public void ParseTiledCollision()
+        {
+        }
 
-    public void ParseAABBObjects()
-    {
-    }
+        public void ParseAABBObjects()
+        {
+        }
 
-    public SpriteDescriptor CreatePlacementTile( TiledMapObject mapObject, SpriteDescriptor descriptor )
-    {
-        return new SpriteDescriptor();
-    }
+        public SpriteDescriptor CreatePlacementTile( TiledMapObject mapObject, SpriteDescriptor descriptor )
+        {
+            return new SpriteDescriptor();
+        }
 
-    public void SetGameLevelMap()
-    {
-    }
+        public void SetGameLevelMap()
+        {
+        }
 
-    public void Dispose()
-    {
+        public void Dispose()
+        {
+        }
     }
 }

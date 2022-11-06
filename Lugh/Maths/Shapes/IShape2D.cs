@@ -1,9 +1,10 @@
 ﻿
-namespace Lugh.Maths;
-
-public interface IShape2D
+namespace Lugh.Maths
 {
-    bool Contains( Vec2F point );
-    bool Contains( float x, float y );
-    bool Contains( int   x, int   y );
+    public interface IShape2D
+    {
+        bool Contains( Vec2F point );
+        bool Contains( float x, float y );
+        bool Contains( int   x, int   y );
+    }
 }

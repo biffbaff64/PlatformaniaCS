@@ -1,5 +1,6 @@
-namespace PlatformaniaCS.Game.Graphics.Parallax;
-
-public class ParallaxLayer
+namespace PlatformaniaCS.Game.Graphics.Parallax
 {
+    public class ParallaxLayer
+    {
+    }
 }

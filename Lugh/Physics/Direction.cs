@@ -1,6 +1,7 @@
-﻿namespace Lugh.Physics;
-
-public class Direction
+﻿namespace Lugh.Physics
 {
+    public class Direction
+    {
         
+    }
 }

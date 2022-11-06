@@ -1,20 +1,21 @@
 using Box2DSharp.Dynamics;
 
-namespace Lugh.Physics;
-
-public struct PhysicsBody
+namespace Lugh.Physics
 {
-    public Body      Body;
-    public int       Index;
-    public bool      IsAlive;
-    public int       ContactCount;
-    public Rectangle BodyBox;
-
-    public void SetBodyBox( int x, int y, int width, int height )
+    public struct PhysicsBody
     {
-        BodyBox.X      = x;
-        BodyBox.Y      = y;
-        BodyBox.Width  = width;
-        BodyBox.Height = height;
+        public Body      Body;
+        public int       Index;
+        public bool      IsAlive;
+        public int       ContactCount;
+        public Rectangle BodyBox;
+
+        public void SetBodyBox( int x, int y, int width, int height )
+        {
+            BodyBox.X      = x;
+            BodyBox.Y      = y;
+            BodyBox.Width  = width;
+            BodyBox.Height = height;
+        }
     }
 }

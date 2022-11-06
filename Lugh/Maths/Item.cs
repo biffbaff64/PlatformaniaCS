@@ -1,120 +1,121 @@
 ﻿
-namespace Lugh.Maths;
-
-public class Item
+namespace Lugh.Maths
 {
-    protected int Maximum      { get; set; }
-    protected int Minimum      { get; set; }
-    protected int RefillAmount { get; set; }
-
-    public Item() : this( 0, 100, 0 )
+    public class Item
     {
-    }
+        protected int Maximum      { get; set; }
+        protected int Minimum      { get; set; }
+        protected int RefillAmount { get; set; }
 
-    public Item( int maximum ) : this( 0, maximum, 0 )
-    {
-    }
+        public Item() : this( 0, 100, 0 )
+        {
+        }
 
-    public Item( int minimum, int maximum ) : this( minimum, maximum, minimum )
-    {
-    }
+        public Item( int maximum ) : this( 0, maximum, 0 )
+        {
+        }
+
+        public Item( int minimum, int maximum ) : this( minimum, maximum, minimum )
+        {
+        }
         
-    public Item( int minimum, int maximum, int total )
-    {
-        Minimum      = minimum;
-        Maximum      = maximum;
-        Total        = total;
-        RefillAmount = minimum;
-    }
-
-    private int _total;
-    protected int Total
-    {
-        get
+        public Item( int minimum, int maximum, int total )
         {
-            Validate();
-            return _total;
+            Minimum      = minimum;
+            Maximum      = maximum;
+            Total        = total;
+            RefillAmount = minimum;
         }
-        set => _total = value;
-    }
 
-    public void Add( int amount )
-    {
-        if ( amount < 0 )
+        private int _total;
+        protected int Total
         {
-            Subtract( amount );
+            get
+            {
+                Validate();
+                return _total;
+            }
+            set => _total = value;
         }
-        else
+
+        public void Add( int amount )
         {
-            Total = Math.Min( Maximum, Total + amount );
+            if ( amount < 0 )
+            {
+                Subtract( amount );
+            }
+            else
+            {
+                Total = Math.Min( Maximum, Total + amount );
+            }
         }
-    }
 
-    public void Subtract( int amount )
-    {
-        Total = Math.Max( Minimum, Total - amount );
-    }
+        public void Subtract( int amount )
+        {
+            Total = Math.Max( Minimum, Total - amount );
+        }
 
-    public void SetToMaximum()
-    {
-        Total = Maximum;
-    }
+        public void SetToMaximum()
+        {
+            Total = Maximum;
+        }
 
-    public void SetToMinimum()
-    {
-        Total = Minimum;
-    }
+        public void SetToMinimum()
+        {
+            Total = Minimum;
+        }
         
-    public bool IsFull()
-    {
-        return Total >= Maximum;
-    }
-
-    public bool IsEmpty()
-    {
-        return Total <= Minimum;
-    }
-
-    public bool HasRoom()
-    {
-        return !IsFull();
-    }
-
-    public bool IsOverflowing()
-    {
-        return Total > Maximum;
-    }
-
-    public bool IsUnderflowing()
-    {
-        return Total < Minimum;
-    }
-
-    public void Refill( int amount = 0 )
-    {
-        Total = ( amount == 0 ) ? RefillAmount : amount;
-    }
-
-    public int GetFreeSpace()
-    {
-        return Math.Max( 0, Maximum - Total );
-    }
-
-    public void BoostMax( int amount )
-    {
-        Maximum += amount;
-    }
-
-    private void Validate()
-    {
-        if ( this.Total < this.Minimum )
+        public bool IsFull()
         {
-            this.Total = this.Minimum;
+            return Total >= Maximum;
         }
 
-        if ( this.Total > this.Maximum )
+        public bool IsEmpty()
         {
-            this.Total = this.Maximum;
+            return Total <= Minimum;
+        }
+
+        public bool HasRoom()
+        {
+            return !IsFull();
+        }
+
+        public bool IsOverflowing()
+        {
+            return Total > Maximum;
+        }
+
+        public bool IsUnderflowing()
+        {
+            return Total < Minimum;
+        }
+
+        public void Refill( int amount = 0 )
+        {
+            Total = ( amount == 0 ) ? RefillAmount : amount;
+        }
+
+        public int GetFreeSpace()
+        {
+            return Math.Max( 0, Maximum - Total );
+        }
+
+        public void BoostMax( int amount )
+        {
+            Maximum += amount;
+        }
+
+        private void Validate()
+        {
+            if ( this.Total < this.Minimum )
+            {
+                this.Total = this.Minimum;
+            }
+
+            if ( this.Total > this.Maximum )
+            {
+                this.Total = this.Maximum;
+            }
         }
     }
 }

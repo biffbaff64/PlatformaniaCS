@@ -1,5 +1,6 @@
-﻿namespace Lugh.Scene2D;
-
-public class Group : Actor
+﻿namespace Lugh.Scene2D
 {
+    public class Group : Actor
+    {
+    }
 }

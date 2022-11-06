@@ -1,8 +1,9 @@
-namespace PlatformaniaCS.Game.UI;
-
-public class GameCompletedPanel
+namespace PlatformaniaCS.Game.UI
 {
-    public void Setup()
+    public class GameCompletedPanel
     {
+        public void Setup()
+        {
+        }
     }
 }

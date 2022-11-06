@@ -1,6 +1,7 @@
-namespace PlatformaniaCS.Game.Entities;
-
-public class AnimationUtils
+namespace PlatformaniaCS.Game.Entities
 {
+    public class AnimationUtils
+    {
         
+    }
 }

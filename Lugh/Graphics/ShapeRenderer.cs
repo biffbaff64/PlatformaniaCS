@@ -1,34 +1,35 @@
-﻿namespace Lugh.Graphics;
-
-public class ShapeRenderer
+﻿namespace Lugh.Graphics
 {
-    public enum ShapeType
+    public class ShapeRenderer
     {
-        Point,
-        Line,
-        Filled
-    }
+        public enum ShapeType
+        {
+            Point,
+            Line,
+            Filled
+        }
 
-    public void Rect
+        public void Rect
         (
-        float x,       float y,
-        float originX, float originY,
-        float width,   float height,
-        float scaleX,  float scaleY,
-        float degrees
+                float x,       float y,
+                float originX, float originY,
+                float width,   float height,
+                float scaleX,  float scaleY,
+                float degrees
         )
-    {
-    }
+        {
+        }
         
-    public void Set( ShapeType type )
-    {
-    }
+        public void Set( ShapeType type )
+        {
+        }
 
-    public void SetColor( Color color )
-    {
-    }
+        public void SetColor( Color color )
+        {
+        }
 
-    public void SetColor( float r, float g, float b, float a )
-    {
+        public void SetColor( float r, float g, float b, float a )
+        {
+        }
     }
 }

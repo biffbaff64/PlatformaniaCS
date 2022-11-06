@@ -1,18 +1,19 @@
-﻿namespace Lugh.Scene2D;
-
-public class DelayedRemovalArray<T>
+﻿namespace Lugh.Scene2D
 {
-    public bool Contains( object obj )
+    public class DelayedRemovalArray<T>
     {
-        return false;
-    }
+        public bool Contains( object obj )
+        {
+            return false;
+        }
 
-    public void Add( object obj )
-    {
-    }
+        public void Add( object obj )
+        {
+        }
 
-    public bool Remove( object obj )
-    {
-        return false;
+        public bool Remove( object obj )
+        {
+            return false;
+        }
     }
 }

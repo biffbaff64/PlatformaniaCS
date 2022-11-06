@@ -1,59 +1,60 @@
-﻿namespace PlatformaniaCS.Game.Audio;
-
-public class GameAudio
+﻿namespace PlatformaniaCS.Game.Audio
 {
-    public int  CurrentTune     { get; set; }
-    public int  MusicVolumeSave { get; set; }
-    public int  FxVolumeSave    { get; set; }
-    public bool MusicLoaded     { get; set; }
-    public bool SoundsLoaded    { get; set; }
-    public bool IsTunePaused    { get; set; }
-
-    public GameAudio()
+    public class GameAudio
     {
-    }
+        public int  CurrentTune     { get; set; }
+        public int  MusicVolumeSave { get; set; }
+        public int  FxVolumeSave    { get; set; }
+        public bool MusicLoaded     { get; set; }
+        public bool SoundsLoaded    { get; set; }
+        public bool IsTunePaused    { get; set; }
 
-    public void Setup()
-    {
-        SoundsLoaded = false;
-        MusicLoaded  = false;
-        IsTunePaused = false;
+        public GameAudio()
+        {
+        }
 
-        LoadSounds();
+        public void Setup()
+        {
+            SoundsLoaded = false;
+            MusicLoaded  = false;
+            IsTunePaused = false;
 
-        MusicVolumeSave = Math.Max( 0, AudioData.DefaultMusicVolume );
-        FxVolumeSave    = Math.Max( 0, AudioData.DefaultFxVolume );
-    }
+            LoadSounds();
 
-    public void Update()
-    {
-    }
+            MusicVolumeSave = Math.Max( 0, AudioData.DefaultMusicVolume );
+            FxVolumeSave    = Math.Max( 0, AudioData.DefaultFxVolume );
+        }
 
-    public void PlayTune( bool play )
-    {
-    }
+        public void Update()
+        {
+        }
 
-    public void StartTune( int musicNumber, int volume, bool looping )
-    {
-    }
+        public void PlayTune( bool play )
+        {
+        }
 
-    public void StartSound( int soundNumber )
-    {
-    }
+        public void StartTune( int musicNumber, int volume, bool looping )
+        {
+        }
 
-    public void StopTune()
-    {
-    }
+        public void StartSound( int soundNumber )
+        {
+        }
 
-    public void SetMusicVolume( int volume )
-    {
-    }
+        public void StopTune()
+        {
+        }
 
-    public void SetFxVolume( int volume )
-    {
-    }
+        public void SetMusicVolume( int volume )
+        {
+        }
 
-    private void LoadSounds()
-    {
+        public void SetFxVolume( int volume )
+        {
+        }
+
+        private void LoadSounds()
+        {
+        }
     }
 }

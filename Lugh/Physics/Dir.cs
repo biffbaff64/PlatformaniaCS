@@ -1,6 +1,7 @@
-﻿namespace Lugh.Physics;
-
-public enum Dir
+﻿namespace Lugh.Physics
 {
+    public enum Dir
+    {
         
+    }
 }

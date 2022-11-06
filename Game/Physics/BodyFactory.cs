@@ -1,6 +1,7 @@
-﻿namespace PlatformaniaCS.Game.Physics;
-
-public class BodyFactory
+﻿namespace PlatformaniaCS.Game.Physics
 {
+    public class BodyFactory
+    {
         
+    }
 }

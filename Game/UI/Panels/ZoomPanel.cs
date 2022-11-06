@@ -1,6 +1,7 @@
-namespace PlatformaniaCS.Game.UI.Panels;
-
-public class ZoomPanel
+namespace PlatformaniaCS.Game.UI.Panels
 {
+    public class ZoomPanel
+    {
         
+    }
 }

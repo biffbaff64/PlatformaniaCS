@@ -3,124 +3,138 @@ using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.UI;
 using PlatformaniaCS.Game.Utils;
 
-namespace PlatformaniaCS.Game.Scenes;
-
-public class MainScene : AbstractBaseScene, IDisposable
+namespace PlatformaniaCS.Game.Scenes
 {
-    public EndgameManager     EndgameManager     { get; set; }
-    public MainGameHandler    MainGameHandler    { get; set; }
-    public GameCompletedPanel GameCompletedPanel { get; set; }
-    public bool               FirstTime          { get; set; }
-
-    public MainScene()
+    public class MainScene : IGdxScene, IDisposable
     {
-        FirstTime = true;
-    }
+        public EndgameManager     EndgameManager     { get; set; }
+        public MainGameHandler    MainGameHandler    { get; set; }
+        public GameCompletedPanel GameCompletedPanel { get; set; }
+        public bool               FirstTime          { get; set; }
 
-    public override void Initialise()
-    {
-        if ( FirstTime )
+        public MainScene()
         {
-            Trace.Divider( '#' );
-            Trace.Dbg( message: "NEW GAME:" );
-            Trace.Dbg( message: "DEVMODE: ", args: App.Developer.IsDevMode );
-            Trace.Dbg( message: "GODMODE: ", args: App.Developer.IsGodMode );
-            Trace.Divider( '#' );
-
-            EndgameManager  = new EndgameManager();
-            MainGameHandler = new MainGameHandler();
-
-            App.LevelManager.PrepareNewGame();
-            App.AppState.CurrentState = StateID._STATE_SETUP;
+            FirstTime = true;
         }
-    }
 
-    public override void Update()
-    {
-        App.MapData.Update();
-        App.GameProgress.Update();
-
-        if ( AppConfig.GameScreenActive )
+        public new void Initialise()
         {
-            switch ( App.AppState.CurrentState )
+            if ( FirstTime )
             {
-                case StateID._STATE_MAIN_MENU:
-                case StateID._STATE_CLOSING:
-                {
-                    break;
-                }
+                Trace.Divider( '#' );
+                Trace.Dbg( message: "NEW GAME:" );
+                Trace.Dbg( message: "DEVMODE: ", args: App.Developer.IsDevMode );
+                Trace.Dbg( message: "GODMODE: ", args: App.Developer.IsGodMode );
+                Trace.Divider( '#' );
 
-                case StateID._STATE_SETUP:
-                case StateID._STATE_GET_READY:
-                case StateID._STATE_WELCOME_PANEL:
-                case StateID._STATE_DEVELOPER_PANEL:
-                case StateID._STATE_PAUSED:
-                case StateID._STATE_GAME:
-                case StateID._STATE_MESSAGE_PANEL:
-                case StateID._STATE_PREPARE_LEVEL_RETRY:
-                case StateID._STATE_LEVEL_RETRY:
-                case StateID._STATE_PREPARE_LEVEL_FINISHED:
-                case StateID._STATE_LEVEL_FINISHED:
-                case StateID._STATE_PREPARE_GAME_OVER_MESSAGE:
-                case StateID._STATE_GAME_OVER:
-                case StateID._STATE_GAME_FINISHED:
-                case StateID._STATE_END_GAME:
+                EndgameManager  = new EndgameManager();
+                MainGameHandler = new MainGameHandler();
+
+                App.LevelManager.PrepareNewGame();
+                App.AppState.CurrentState = StateID._STATE_SETUP;
+            }
+        }
+
+        public new void Update()
+        {
+            App.MapData.Update();
+            App.GameProgress.Update();
+
+            if ( AppConfig.GameScreenActive )
+            {
+                switch ( App.AppState.CurrentState )
                 {
-                    MainGameHandler.Update();
-                    break;
+                    case StateID._STATE_MAIN_MENU:
+                    case StateID._STATE_CLOSING:
+                    {
+                        break;
+                    }
+
+                    case StateID._STATE_SETUP:
+                    case StateID._STATE_GET_READY:
+                    case StateID._STATE_WELCOME_PANEL:
+                    case StateID._STATE_DEVELOPER_PANEL:
+                    case StateID._STATE_PAUSED:
+                    case StateID._STATE_GAME:
+                    case StateID._STATE_MESSAGE_PANEL:
+                    case StateID._STATE_PREPARE_LEVEL_RETRY:
+                    case StateID._STATE_LEVEL_RETRY:
+                    case StateID._STATE_PREPARE_LEVEL_FINISHED:
+                    case StateID._STATE_LEVEL_FINISHED:
+                    case StateID._STATE_PREPARE_GAME_OVER_MESSAGE:
+                    case StateID._STATE_GAME_OVER:
+                    case StateID._STATE_GAME_FINISHED:
+                    case StateID._STATE_END_GAME:
+                    {
+                        MainGameHandler.Update();
+                        break;
+                    }
                 }
             }
         }
-    }
 
-    public override void Render( float delta )
-    {
-        if ( AppConfig.GameScreenActive )
+        public new void Render( float delta )
         {
-            App.BaseRenderer.Render();
+            if ( AppConfig.GameScreenActive )
+            {
+                App.BaseRenderer.Render();
 
-            App.WorldModel.WorldStep();
+                App.WorldModel.WorldStep();
+            }
         }
-    }
 
-    public override void Show()
-    {
-        Trace.CheckPoint();
+        public new void Show()
+        {
+            Trace.CheckPoint();
 
-        LoadImages();
+            LoadImages();
 
-        GdxSystem.Inst().CurrentScreenID = ScreenID._GAME_SCREEN;
+            GdxSystem.Inst().CurrentScreenID = ScreenID._GAME_SCREEN;
 
-        App.BaseRenderer.DisableAllCameras();
-        App.WorldModel.Activate();
+            App.BaseRenderer.DisableAllCameras();
+            App.WorldModel.Activate();
 
-        Initialise();
+            Initialise();
 
-        App.AppState.CurrentState = StateID._STATE_SETUP;
-    }
+            App.AppState.CurrentState = StateID._STATE_SETUP;
+        }
 
-    public override void Hide()
-    {
-        Trace.CheckPoint();
+        public new void Hide()
+        {
+            Trace.CheckPoint();
 
-        App.WorldModel.DeActivate();
-    }
+            App.WorldModel.DeActivate();
+        }
 
-    public void Reset()
-    {
-        FirstTime = true;
-    }
+        public void Reset()
+        {
+            FirstTime = true;
+        }
 
-    public override void LoadImages()
-    {
-    }
+        public new void LoadImages()
+        {
+        }
 
-    public override string Name()
-    {
-        return "Main Scene";
-    }
+        public new string Name()
+        {
+            return "Main Scene";
+        }
+
+        public void Resize( int width, int height )
+        {
+            App.BaseRenderer.ResizeCameras( width, height );
+        }
+ 
+        public void Pause()
+        {
+        }
+
+        public void Resume()
+        {
+        }
         
-    public override void Dispose()
-    {
+        public new void Dispose()
+        {
+        }
     }
 }

@@ -1,8 +1,9 @@
-﻿namespace Lugh.Graphics;
-
-public struct RegionSplitDescriptor
+﻿namespace Lugh.Graphics
 {
-    public int              Rows    { get; set; }
-    public int              Columns { get; set; }
-    public TextureRegion[,] Splits  { get; set; }
+    public struct RegionSplitDescriptor
+    {
+        public int              Rows    { get; set; }
+        public int              Columns { get; set; }
+        public TextureRegion[,] Splits  { get; set; }
+    }
 }

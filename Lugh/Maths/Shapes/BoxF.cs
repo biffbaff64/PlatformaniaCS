@@ -1,27 +1,28 @@
-﻿namespace Lugh.Maths;
-
-public class BoxF
+﻿namespace Lugh.Maths
 {
-    public float X      { get; set; }
-    public float Y      { get; set; }
-    public float Width  { get; set; }
-    public float Height { get; set; }
-
-    public void Set( float x, float y, float width, float height )
+    public class BoxF
     {
-        X      = x;
-        Y      = y;
-        Width  = width;
-        Height = height;
-    }
+        public float X      { get; set; }
+        public float Y      { get; set; }
+        public float Width  { get; set; }
+        public float Height { get; set; }
 
-    public bool Intersects( BoxF box )
-    {
-        return false;
-    }
+        public void Set( float x, float y, float width, float height )
+        {
+            X      = x;
+            Y      = y;
+            Width  = width;
+            Height = height;
+        }
 
-    public bool Intersects( Rectangle rectangle )
-    {
-        return false;
+        public bool Intersects( BoxF box )
+        {
+            return false;
+        }
+
+        public bool Intersects( Rectangle rectangle )
+        {
+            return false;
+        }
     }
 }

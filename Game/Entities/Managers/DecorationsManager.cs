@@ -1,6 +1,7 @@
-﻿namespace PlatformaniaCS.Game.Entities.Managers;
-
-public class DecorationsManager : BasicEntityManager
+﻿namespace PlatformaniaCS.Game.Entities.Managers
 {
+    public class DecorationsManager : BasicEntityManager
+    {
         
+    }
 }

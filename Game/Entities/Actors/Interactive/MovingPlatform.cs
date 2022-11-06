@@ -1,6 +1,7 @@
-namespace PlatformaniaCS.Game.Entities.Actors.Interactive;
-
-public class MovingPlatform
+namespace PlatformaniaCS.Game.Entities.Actors.Interactive
 {
+    public class MovingPlatform
+    {
         
+    }
 }

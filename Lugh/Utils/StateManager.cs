@@ -1,22 +1,23 @@
 ﻿
-namespace Lugh.Utils;
-
-public class StateManager
+namespace Lugh.Utils
 {
-    public StateID CurrentState { get; set; }
-
-    public StateManager()
+    public class StateManager
     {
-        CurrentState = StateID._INACTIVE;
-    }
+        public StateID CurrentState { get; set; }
 
-    public StateManager( StateID state )
-    {
-        CurrentState = state;
-    }
+        public StateManager()
+        {
+            CurrentState = StateID._INACTIVE;
+        }
 
-    public bool After( StateID state )
-    {
-        return ( CurrentState > state );
+        public StateManager( StateID state )
+        {
+            CurrentState = state;
+        }
+
+        public bool After( StateID state )
+        {
+            return ( CurrentState > state );
+        }
     }
 }

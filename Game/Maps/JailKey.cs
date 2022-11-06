@@ -1,13 +1,14 @@
-﻿namespace PlatformaniaCS.Game.Maps;
-
-public class JailKey
+﻿namespace PlatformaniaCS.Game.Maps
 {
-    public bool IsCollected { get; set; }
-    public bool IsUsed      { get; set; }
-
-    public JailKey()
+    public class JailKey
     {
-        this.IsCollected = false;
-        this.IsUsed      = false;
+        public bool IsCollected { get; set; }
+        public bool IsUsed      { get; set; }
+
+        public JailKey()
+        {
+            this.IsCollected = false;
+            this.IsUsed      = false;
+        }
     }
 }
