@@ -19,7 +19,7 @@ namespace PlatformaniaCS.Game.Core
 
         public void Update()
         {
-            switch ( App.AppState.CurrentState )
+            switch ( App.AppState )
             {
                 //
                 // Initialise the current level.
@@ -102,7 +102,7 @@ namespace PlatformaniaCS.Game.Core
 
                 default:
                 {
-                    Trace.Dbg( message: "Unsupported gameState: ", args: App.AppState.CurrentState );
+                    Trace.Dbg( message: "Unsupported gameState: ", args: App.AppState );
                     break;
                 }
             }
@@ -130,7 +130,7 @@ namespace PlatformaniaCS.Game.Core
 
             App.Hud.PanelManager.AddZoomPanel( GameAssets.GetreadyMsgAsset, 1500 );
 
-            App.AppState.CurrentState      = StateID._STATE_GET_READY;
+            App.AppState                   = StateID._STATE_GET_READY;
             App.GameProgress.GameSetupDone = true;
 
             _isWaitingForPlayer = true;
@@ -153,8 +153,8 @@ namespace PlatformaniaCS.Game.Core
             {
                 Trace.Dbg( message: "----- START GAME (GET READY) -----" );
 
-                App.AppState.CurrentState = StateID._STATE_GAME;
-                App.Hud.HudStateID        = StateID._STATE_PANEL_UPDATE;
+                App.AppState       = StateID._STATE_GAME;
+                App.Hud.HudStateID = StateID._STATE_PANEL_UPDATE;
 
                 // If game has virtual/onscreen controls...
                 if ( GdxSystem.Inst().AvailableInputs.Contains( ControllerType._VIRTUAL ) )
@@ -177,14 +177,14 @@ namespace PlatformaniaCS.Game.Core
         {
             App.Hud.Update();
 
-            switch ( App.AppState.CurrentState )
+            switch ( App.AppState )
             {
                 case StateID._STATE_DEVELOPER_PANEL:
                 {
                     if ( App.Developer.DeveloperPanelState == StateID._STATE_DISABLED )
                     {
-                        App.AppState.CurrentState = StateID._STATE_GAME;
-                        App.Hud.HudStateID        = StateID._STATE_PANEL_UPDATE;
+                        App.AppState       = StateID._STATE_GAME;
+                        App.Hud.HudStateID = StateID._STATE_PANEL_UPDATE;
                     }
 
                     break;
@@ -209,8 +209,8 @@ namespace PlatformaniaCS.Game.Core
                             App.Hud.IntroPanel = new IntroPanel();
                             App.Hud.IntroPanel.Create();
 
-                            App.Hud.HudStateID        = StateID._STATE_WELCOME_PANEL;
-                            App.AppState.CurrentState = StateID._STATE_WELCOME_PANEL;
+                            App.Hud.HudStateID = StateID._STATE_WELCOME_PANEL;
+                            App.AppState       = StateID._STATE_WELCOME_PANEL;
                             App.GetPlayer().SetActionState( ActionStates._WAITING );
                         }
 
@@ -227,11 +227,11 @@ namespace PlatformaniaCS.Game.Core
                         if ( !App.MainScene.EndgameManager.Update() )
                         {
                             // Tasks to perform if the game has not ended
-                            if ( App.AppState.CurrentState == StateID._STATE_PAUSED )
+                            if ( App.AppState == StateID._STATE_PAUSED )
                             {
                                 if ( !GdxSystem.Inst().GamePaused )
                                 {
-                                    App.AppState.CurrentState = StateID._STATE_GAME;
+                                    App.AppState = StateID._STATE_GAME;
                                 }
                             }
                         }
@@ -281,7 +281,7 @@ namespace PlatformaniaCS.Game.Core
         {
             App.Hud.Update();
 
-            if ( App.AppState.CurrentState == StateID._STATE_PREPARE_LEVEL_RETRY )
+            if ( App.AppState == StateID._STATE_PREPARE_LEVEL_RETRY )
             {
 //            try
 //            {
@@ -294,13 +294,13 @@ namespace PlatformaniaCS.Game.Core
 //
 //            App.getHud().getPanelManager().addZoomPanel(GameAssets.badLuckMessages[badLuckMessage], 2500);
 
-                App.AppState.CurrentState = StateID._STATE_LEVEL_RETRY;
+                App.AppState = StateID._STATE_LEVEL_RETRY;
             }
             else
             {
 //            if (!App.getHud().getPanelManager().panelExists(GameAssets.badLuckMessages[badLuckMessage]))
                 {
-                    App.AppState.CurrentState = StateID._STATE_SETUP;
+                    App.AppState = StateID._STATE_SETUP;
                 }
             }
         }
@@ -318,8 +318,8 @@ namespace PlatformaniaCS.Game.Core
 
             App.MainScene.Reset();
 
-            App.AppState.CurrentState = StateID._STATE_SETUP;
-            App.Hud.HudStateID        = StateID._STATE_PANEL_START;
+            App.AppState       = StateID._STATE_SETUP;
+            App.Hud.HudStateID = StateID._STATE_PANEL_START;
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace PlatformaniaCS.Game.Core
 
             App.GameAudio.StartSound( AudioData.SfxLost );
 
-            App.AppState.CurrentState = StateID._STATE_GAME_OVER;
+            App.AppState = StateID._STATE_GAME_OVER;
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace PlatformaniaCS.Game.Core
 
             if ( !App.Hud.PanelManager.PanelExists( GameAssets.GameoverMsgAsset ) )
             {
-                App.AppState.CurrentState = StateID._STATE_END_GAME;
+                App.AppState = StateID._STATE_END_GAME;
             }
         }
 

@@ -36,7 +36,7 @@ namespace PlatformaniaCS.Game.Scenes
         public void Initialise()
         {
             Trace.CheckPoint();
-            
+
             _menuPage    = new MenuPage();
             _optionsPage = new OptionsPage();
             _creditsPage = new CreditsPage();
@@ -58,7 +58,7 @@ namespace PlatformaniaCS.Game.Scenes
 
         public void Draw()
         {
-            if ( App.AppState.CurrentState == StateID._STATE_MAIN_MENU )
+            if ( App.AppState == StateID._STATE_MAIN_MENU )
             {
                 App.SpriteBatch.Draw
                 (
@@ -123,7 +123,7 @@ namespace PlatformaniaCS.Game.Scenes
             }
 
             GdxSystem.Inst().CurrentScreenID = ScreenID._MAIN_MENU;
-            App.AppState.CurrentState        = StateID._STATE_MAIN_MENU;
+            App.AppState                     = StateID._STATE_MAIN_MENU;
 
             LoadImages();
 
@@ -152,7 +152,7 @@ namespace PlatformaniaCS.Game.Scenes
         {
             App.BaseRenderer.ResizeCameras( width, height );
         }
- 
+
         public void Pause()
         {
         }

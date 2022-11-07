@@ -8,7 +8,7 @@ namespace PlatformaniaCS.Game.Graphics.Renderers
         {
             if ( !GdxSystem.Inst().ShutDownActive )
             {
-                switch ( App.AppState.CurrentState )
+                switch ( App.AppState )
                 {
                     case StateID._STATE_MAIN_MENU:
                     {
@@ -28,11 +28,13 @@ namespace PlatformaniaCS.Game.Graphics.Renderers
                     case StateID._STATE_DEBUG_HANG:
                     case StateID._STATE_GAME_OVER:
                     {
+                        var availableInputs = GdxSystem.Inst().AvailableInputs;
+
                         App.Hud?.Render
                         (
                             App.BaseRenderer.HudGameCamera,
-                            GdxSystem.Inst().AvailableInputs.Contains( ControllerType._VIRTUAL )
-                        );
+                            availableInputs.Contains( ControllerType._VIRTUAL )
+                            );
                         break;
                     }
 

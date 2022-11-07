@@ -4,7 +4,7 @@ namespace Lugh.UI
 {
     public abstract class AbstractBasePanel : IUserInterfacePanel
     {
-        public StateManager  StateManager  { get; set; }
+        public StateID       StateManager  { get; set; }
         public Vec2F         Position      { get; set; }
         public string        NameID        { get; set; }
         public bool          IsActive      { get; set; }
@@ -18,7 +18,7 @@ namespace Lugh.UI
 
         public AbstractBasePanel( int x, int y )
         {
-            StateManager = new StateManager();
+            StateManager = StateID._INACTIVE;
             Position     = new Vec2F();
             IsActive     = false;
             NameID       = "";
@@ -37,8 +37,6 @@ namespace Lugh.UI
         public virtual int     GetWidth()                  => TextureRegion.RegionWidth;
         public virtual int     GetHeight()                 => TextureRegion.RegionHeight;
         public virtual bool    NameExists( string nameID ) => nameID.Equals( NameID );
-        public virtual StateID GetState()                  => StateManager.CurrentState;
-        public virtual void    SetState( StateID state )   => StateManager.CurrentState = state;
 
         public virtual void Initialise( TextureRegion region, string nameID, params object[] args )
         {
@@ -62,7 +60,6 @@ namespace Lugh.UI
 
         public virtual void Dispose()
         {
-            StateManager  = null;
             Position      = null;
             TextureRegion = null;
             NameID        = null;

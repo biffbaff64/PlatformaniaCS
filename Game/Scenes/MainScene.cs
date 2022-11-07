@@ -1,7 +1,6 @@
 ﻿using PlatformaniaCS.Game.Config;
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.UI;
-using PlatformaniaCS.Game.Utils;
 
 namespace PlatformaniaCS.Game.Scenes
 {
@@ -17,7 +16,7 @@ namespace PlatformaniaCS.Game.Scenes
             FirstTime = true;
         }
 
-        public new void Initialise()
+        public void Initialise()
         {
             if ( FirstTime )
             {
@@ -31,18 +30,18 @@ namespace PlatformaniaCS.Game.Scenes
                 MainGameHandler = new MainGameHandler();
 
                 App.LevelManager.PrepareNewGame();
-                App.AppState.CurrentState = StateID._STATE_SETUP;
+                App.AppState = StateID._STATE_SETUP;
             }
         }
 
-        public new void Update()
+        public void Update()
         {
             App.MapData.Update();
             App.GameProgress.Update();
 
             if ( AppConfig.GameScreenActive )
             {
-                switch ( App.AppState.CurrentState )
+                switch ( App.AppState )
                 {
                     case StateID._STATE_MAIN_MENU:
                     case StateID._STATE_CLOSING:
@@ -73,7 +72,7 @@ namespace PlatformaniaCS.Game.Scenes
             }
         }
 
-        public new void Render( float delta )
+        public void Render( float delta )
         {
             if ( AppConfig.GameScreenActive )
             {
@@ -83,7 +82,7 @@ namespace PlatformaniaCS.Game.Scenes
             }
         }
 
-        public new void Show()
+        public void Show()
         {
             Trace.CheckPoint();
 
@@ -96,10 +95,10 @@ namespace PlatformaniaCS.Game.Scenes
 
             Initialise();
 
-            App.AppState.CurrentState = StateID._STATE_SETUP;
+            App.AppState = StateID._STATE_SETUP;
         }
 
-        public new void Hide()
+        public void Hide()
         {
             Trace.CheckPoint();
 
@@ -111,11 +110,11 @@ namespace PlatformaniaCS.Game.Scenes
             FirstTime = true;
         }
 
-        public new void LoadImages()
+        public void LoadImages()
         {
         }
 
-        public new string Name()
+        public string Name()
         {
             return "Main Scene";
         }
@@ -133,7 +132,7 @@ namespace PlatformaniaCS.Game.Scenes
         {
         }
         
-        public new void Dispose()
+        public void Dispose()
         {
         }
     }

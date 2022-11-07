@@ -8,7 +8,7 @@ namespace PlatformaniaCS.Game.Graphics.Renderers
         {
             if ( !GdxSystem.Inst().ShutDownActive )
             {
-                switch ( App.AppState.CurrentState )
+                switch ( App.AppState )
                 {
                     case StateID._STATE_SETUP:
                     case StateID._STATE_GET_READY:

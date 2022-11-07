@@ -32,9 +32,5 @@ namespace Lugh.UI
         int GetWidth();
 
         int GetHeight();
-
-        StateID GetState();
-
-        void SetState( StateID state );
     }
 }

@@ -67,15 +67,15 @@ namespace PlatformaniaCS.Game.Config
         public void CloseStartup()
         {
             Trace.CheckPoint();
-            
+
             App.Developer.ConfigReport();
 
             // Development option, to allow skipping of the main menu
             // and moving straight to the game scene.
             if ( App.Developer.IsDevMode && App.Settings.IsDisabled( Settings.MenuScene ) )
             {
-                Trace.Dbg( message: "Triggering Main Scene."  );
-                
+                Trace.Dbg( message: "Triggering Main Scene." );
+
                 App.CreateMainsceneObjects();
                 App.MainScene = new MainScene();
                 App.MainScene.Reset();
@@ -83,8 +83,8 @@ namespace PlatformaniaCS.Game.Config
             }
             else
             {
-                Trace.Dbg( message: "Triggering Title Scene."  );
-                
+                Trace.Dbg( message: "Triggering Title Scene." );
+
                 App.TitleScene = new TitleScene();
                 App.Scene      = App.TitleScene;
             }
@@ -96,7 +96,7 @@ namespace PlatformaniaCS.Game.Config
         /// </summary>
         public void Pause()
         {
-            App.AppState.CurrentState   = StateID._STATE_PAUSED;
+            App.AppState                = StateID._STATE_PAUSED;
             GdxSystem.Inst().GamePaused = true;
 
             if ( ( App.Hud.HudStateID != StateID._STATE_SETTINGS_PANEL )
@@ -111,7 +111,7 @@ namespace PlatformaniaCS.Game.Config
         /// </summary>
         public void UnPause()
         {
-            App.AppState.CurrentState   = StateID._STATE_GAME;
+            App.AppState                = StateID._STATE_GAME;
             GdxSystem.Inst().GamePaused = false;
             App.Hud.HudStateID          = StateID._STATE_PANEL_UPDATE;
         }

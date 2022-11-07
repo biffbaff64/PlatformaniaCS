@@ -19,7 +19,7 @@ namespace PlatformaniaCS.Game.Core
             if ( ( ( App.GetPlayer() != null ) && ( App.GetPlayer().ActionState == ActionStates._DEAD ) )
               || GdxSystem.Inst().ForceQuitToMenu )
             {
-                App.AppState.CurrentState = StateID._STATE_PREPARE_GAME_OVER_MESSAGE;
+                App.AppState = StateID._STATE_PREPARE_GAME_OVER_MESSAGE;
 
                 GdxSystem.Inst().QuitToMainMenu = true;
 
@@ -34,8 +34,8 @@ namespace PlatformaniaCS.Game.Core
                     App.MainScene.GameCompletedPanel = new GameCompletedPanel();
                     App.MainScene.GameCompletedPanel.Setup();
 
-                    App.Hud.HudStateID        = StateID._STATE_GAME_FINISHED;
-                    App.AppState.CurrentState = StateID._STATE_GAME_FINISHED;
+                    App.Hud.HudStateID = StateID._STATE_GAME_FINISHED;
+                    App.AppState       = StateID._STATE_GAME_FINISHED;
 
                     returnFlag = true;
                 }
@@ -45,8 +45,8 @@ namespace PlatformaniaCS.Game.Core
                     {
                         Trace.BoxedDbg( message: "LEVEL COMPLETED" );
 
-                        App.Hud.HudStateID        = StateID._STATE_PANEL_UPDATE;
-                        App.AppState.CurrentState = StateID._STATE_PREPARE_LEVEL_FINISHED;
+                        App.Hud.HudStateID = StateID._STATE_PANEL_UPDATE;
+                        App.AppState       = StateID._STATE_PREPARE_LEVEL_FINISHED;
 
                         returnFlag = true;
                     }
@@ -58,9 +58,9 @@ namespace PlatformaniaCS.Game.Core
                             {
                                 Trace.BoxedDbg( message: "LIFE LOST - TRY AGAIN" );
 
-                                App.AppState.CurrentState = StateID._STATE_PREPARE_LEVEL_RETRY;
+                                App.AppState = StateID._STATE_PREPARE_LEVEL_RETRY;
                             }
-                            
+
                             returnFlag = true;
                         }
                     }

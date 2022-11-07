@@ -113,7 +113,7 @@ namespace PlatformaniaCS.Game.Graphics.Renderers
 
             if ( AppConfig.GameScreenActive )
             {
-                if ( ( App.GetPlayer() != null ) && App.AppState.After( StateID._STATE_SETUP ) )
+                if ( ( App.GetPlayer() != null ) && App.AppState > StateID._STATE_SETUP )
                 {
                     positionSet = true;
                 }

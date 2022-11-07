@@ -66,7 +66,7 @@ namespace PlatformaniaCS.Game.Core
 
         public void Update()
         {
-            switch ( App.AppState.CurrentState )
+            switch ( App.AppState )
             {
                 case StateID._STATE_PAUSED:
                 case StateID._STATE_GAME:

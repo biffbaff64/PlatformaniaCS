@@ -2,7 +2,6 @@
 
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-
 using PlatformaniaCS.Game.Audio;
 using PlatformaniaCS.Game.Config;
 using PlatformaniaCS.Game.Entities;
@@ -25,7 +24,7 @@ namespace PlatformaniaCS.Game.Core
         // -------------------------------------------------
         // Objects created on power-up (Essential Objects)
         public static AppConfig             AppConfig             { get; set; }
-        public static StateManager          AppState              { get; set; }
+        public static StateID               AppState              { get; set; }
         public static GameAudio             GameAudio             { get; set; }
         public static GraphicsDeviceManager GraphicsDeviceManager { get; set; }
         public static SpriteBatch           SpriteBatch           { get; set; }
@@ -62,6 +61,7 @@ namespace PlatformaniaCS.Game.Core
 
         // ------------------------------------------------
         // General globals
+        // TODO:
 
         // ------------------------------------------------
         // CODE
@@ -99,7 +99,7 @@ namespace PlatformaniaCS.Game.Core
             // AppConfig is created in MainGame().
 
             // -------------------------------------------------
-            AppState    = new StateManager();
+            AppState    = StateID._INACTIVE;
             SpriteBatch = new SpriteBatch( MainGame.GraphicsDevice );
             MapData     = new MapData();
             EntityData  = new EntityData();
@@ -164,7 +164,7 @@ namespace PlatformaniaCS.Game.Core
             }
 
             // -----------------------
-        
+
             AudioData.Tidy();
         }
 
