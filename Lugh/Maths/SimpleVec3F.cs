@@ -71,9 +71,6 @@
             this.Z = 0;
         }
 
-        public override string ToString()
-        {
-            return "X: " + X + ", Y:" + Y + ", Z:" + Z;
-        }
+        public override string ToString() => "X: " + X + ", Y:" + Y + ", Z:" + Z;
     }
 }

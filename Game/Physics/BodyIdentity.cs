@@ -16,13 +16,11 @@ namespace PlatformaniaCS.Game.Physics
             this.Type   = type;
         }
         
-        public override string ToString()
-        {
-            return "BodyIdentity{" +
-                   "gid="          + Gid    +
-                   ", type="       + Type   +
-                   ", entity="     + Entity +
-                   '}';
-        }
+        public override string ToString() =>
+                "BodyIdentity{" +
+                "gid="          + Gid    +
+                ", type="       + Type   +
+                ", entity="     + Entity +
+                '}';
     }
 }

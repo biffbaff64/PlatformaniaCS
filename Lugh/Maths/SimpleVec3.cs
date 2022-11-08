@@ -57,10 +57,7 @@
             this.Z *= mulZ;
         }
 
-        public bool IsEmpty()
-        {
-            return ( ( X == 0 ) && ( Y == 0 ) && ( Z == 0 ) );
-        }
+        public bool IsEmpty() => ( ( X == 0 ) && ( Y == 0 ) && ( Z == 0 ) );
 
         public void SetEmpty()
         {
@@ -69,9 +66,6 @@
             this.Z = 0;
         }
 
-        public override string ToString()
-        {
-            return "X: " + X + ", Y:" + Y + ", Z:" + Z;
-        }
+        public override string ToString() => "X: " + X + ", Y:" + Y + ", Z:" + Z;
     }
 }

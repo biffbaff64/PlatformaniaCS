@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Lugh.Scene2D.Utils;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
 
@@ -15,7 +16,7 @@ namespace Lugh.Scene2D
         [AllowNull] public Group  Parent { get; set; }
         [AllowNull] public string Name   { get; set; }
 
-        public bool Visible { get; set; }
+        public bool IsVisible { get; set; }
 
         public List<Action> Actions { get; set; }
 
@@ -44,10 +45,7 @@ namespace Lugh.Scene2D
         {
         }
 
-        public bool Fire( Event ev )
-        {
-            return false;
-        }
+        public bool Fire( Event ev ) => false;
 
         /// <summary>
         /// Notifies this actor's listeners of the event. The event is
@@ -57,10 +55,7 @@ namespace Lugh.Scene2D
         /// If this actor is not in the stage, the stage must be set before
         /// calling this method.
         /// </summary>
-        public bool Notify( Event ev, bool capture )
-        {
-            return false;
-        }
+        public bool Notify( Event ev, bool capture ) => false;
 
         /// <summary>
         /// Returns the deepest {@link #isVisible() visible} (and optionally,
@@ -75,34 +70,19 @@ namespace Lugh.Scene2D
         /// The default implementation returns this actor if the point is within
         /// this actor's bounds and this actor is visible.
         /// </summary>
-        public Actor Hit( float x, float y, bool touchable )
-        {
-            return null;
-        }
+        public Actor Hit( float x, float y, bool touchable ) => null;
 
         /// <summary>
         /// Removes this actor from its parent, if it has a parent.
         /// </summary>
         /// <returns>TRUE if successful.</returns>
-        public bool Remove()
-        {
-            return false;
-        }
+        public bool Remove() => false;
 
-        public bool AddListener( IEventListener listener )
-        {
-            return false;
-        }
+        public bool AddListener( IEventListener listener ) => false;
 
-        public bool RemoveListener( IEventListener listener )
-        {
-            return false;
-        }
+        public bool RemoveListener( IEventListener listener ) => false;
 
-        public DelayedRemovalArray<IEventListener> GetListeners()
-        {
-            return _listeners;
-        }
+        public DelayedRemovalArray<IEventListener> GetListeners() => _listeners;
 
         public bool AddCaptureListener( [DisallowNull] IEventListener listener )
         {
@@ -114,15 +94,9 @@ namespace Lugh.Scene2D
             return true;
         }
 
-        public bool RemoveCaptureListener( [DisallowNull] IEventListener listener )
-        {
-            return _captureListeners.Remove( listener );
-        }
+        public bool RemoveCaptureListener( [DisallowNull] IEventListener listener ) => _captureListeners.Remove( listener );
 
-        public DelayedRemovalArray<IEventListener> GetCaptureListeners()
-        {
-            return _captureListeners;
-        }
+        public DelayedRemovalArray<IEventListener> GetCaptureListeners() => _captureListeners;
 
         public void AddAction( Action action )
         {
@@ -171,19 +145,13 @@ namespace Lugh.Scene2D
         /// Returns true if this actor is the same as or is the
         /// descendant of the specified actor.
         /// </summary>
-        public bool IsDescendantOf( Actor actor )
-        {
-            return false;
-        }
+        public bool IsDescendantOf( Actor actor ) => false;
 
         /// <summary>
         /// Returns true if this actor is the same as or is the
         /// ascendant of the specified actor.
         /// </summary>
-        public bool IsAscendantOf( Actor actor )
-        {
-            return false;
-        }
+        public bool IsAscendantOf( Actor actor ) => false;
 
         /// <summary>
         /// Returns this actor or the first ascendant of this actor that
@@ -279,8 +247,6 @@ namespace Lugh.Scene2D
             _color.G = g;
             _color.B = b;
             _color.A = a;
-            
-            
         }
 
         /// <summary>
@@ -299,69 +265,33 @@ namespace Lugh.Scene2D
             SetZIndex( 0 );
         }
 
-        public bool SetZIndex( int index )
-        {
-            return true;
-        }
+        public bool SetZIndex( int index ) => true;
 
-        public int GetZIndex()
-        {
-            return -1;
-        }
+        public int GetZIndex() => -1;
 
-        public bool ClipBegin()
-        {
-            return false;
-        }
+        public bool ClipBegin() => false;
 
-        public bool ClipBegin( float x, float y, float width, float height )
-        {
-            return false;
-        }
+        public bool ClipBegin( float x, float y, float width, float height ) => false;
 
         public void ClipEnd()
         {
         }
 
-        public Vector2 ScreenToLocalCoordinates( Vector2 screenCoords )
-        {
-            return screenCoords;
-        }
+        public Vector2 ScreenToLocalCoordinates( Vector2 screenCoords ) => screenCoords;
 
-        public Vector2 StageToLocalCoordinates( Vector2 stageCoords )
-        {
-            return stageCoords;
-        }
+        public Vector2 StageToLocalCoordinates( Vector2 stageCoords ) => stageCoords;
 
-        public Vector2 ParentToLocalCoordinates( Vector2 parentCoords )
-        {
-            return parentCoords;
-        }
+        public Vector2 ParentToLocalCoordinates( Vector2 parentCoords ) => parentCoords;
 
-        public Vector2 LocalToScreenCoordinates( Vector2 localCoords )
-        {
-            return localCoords;
-        }
+        public Vector2 LocalToScreenCoordinates( Vector2 localCoords ) => localCoords;
 
-        public Vector2 LocalToStageCoordinates( Vector2 localCoords )
-        {
-            return localCoords;
-        }
+        public Vector2 LocalToStageCoordinates( Vector2 localCoords ) => localCoords;
 
-        public Vector2 LocalToParentCoordinates( Vector2 localCoords )
-        {
-            return localCoords;
-        }
+        public Vector2 LocalToParentCoordinates( Vector2 localCoords ) => localCoords;
 
-        public Vector2 LocalToAscendantCoordinates( Actor ascendant, Vector2 localCoords)
-        {
-            return localCoords;
-        }
+        public Vector2 LocalToAscendantCoordinates( Actor ascendant, Vector2 localCoords) => localCoords;
 
-        public Vector2 LocalToActorCoordinates( Actor actor, Vector2 localCoords )
-        {
-            return localCoords;
-        }
+        public Vector2 LocalToActorCoordinates( Actor actor, Vector2 localCoords ) => localCoords;
 
         public void DrawDebug( ShapeRenderer shapes )
         {
@@ -413,9 +343,6 @@ namespace Lugh.Scene2D
             return this;
         }
 
-        public override string ToString()
-        {
-            return "";
-        }
+        public override string ToString() => "";
     }
 }

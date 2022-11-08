@@ -116,8 +116,14 @@ namespace PlatformaniaCS.Game.Config
             App.Hud.HudStateID          = StateID._STATE_PANEL_UPDATE;
         }
 
-        public bool IsStartupDone => ( _startupState == StateID._STATE_END_STARTUP );
+        public bool IsStartupDone
+        {
+            get => ( _startupState == StateID._STATE_END_STARTUP );
+        }
 
-        public static bool GameScreenActive => ( GdxSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN );
+        public static bool GameScreenActive
+        {
+            get => ( GdxSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN );
+        }
     }
 }

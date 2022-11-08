@@ -136,20 +136,14 @@ namespace PlatformaniaCS.Game.UI
             Position.Y = y;
         }
 
-        public bool HasRefillRoom()
-        {
-            return HasRoom() && ( Total < ( Maximum - 10 ) );
-        }
+        public bool HasRefillRoom() => HasRoom() && ( Total < ( Maximum - 10 ) );
 
         public void SetColor( Color color )
         {
             this._ninePatch.SetColor( color );
         }
 
-        public float GetSpeed()
-        {
-            return _speed;
-        }
+        public float GetSpeed() => _speed;
 
         public void SetSpeed( float speed )
         {

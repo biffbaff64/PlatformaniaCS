@@ -10,15 +10,9 @@ namespace PlatformaniaCS.Game.Graphics
         {
         }
 
-        public TextureRegion GetAnimationRegion( string descriptorAsset )
-        {
-            return null;
-        }
+        public TextureRegion GetAnimationRegion( string descriptorAsset ) => null;
 
-        public static T LoadAsset<T>( string name )
-        {
-            return App.MainGame.Content.Load<T>( name );
-        }
+        public static T LoadAsset<T>( string name ) => App.MainGame.Content.Load<T>( name );
 
         public static void UnloadAsset( string name )
         {

@@ -65,40 +65,22 @@ namespace Lugh.Maths
             Total = Minimum;
         }
         
-        public bool IsFull()
-        {
-            return Total >= Maximum;
-        }
+        public bool IsFull() => Total >= Maximum;
 
-        public bool IsEmpty()
-        {
-            return Total <= Minimum;
-        }
+        public bool IsEmpty() => Total <= Minimum;
 
-        public bool HasRoom()
-        {
-            return !IsFull();
-        }
+        public bool HasRoom() => !IsFull();
 
-        public bool IsOverflowing()
-        {
-            return Total > Maximum;
-        }
+        public bool IsOverflowing() => Total > Maximum;
 
-        public bool IsUnderflowing()
-        {
-            return Total < Minimum;
-        }
+        public bool IsUnderflowing() => Total < Minimum;
 
         public void Refill( int amount = 0 )
         {
             Total = ( amount == 0 ) ? RefillAmount : amount;
         }
 
-        public int GetFreeSpace()
-        {
-            return Math.Max( 0, Maximum - Total );
-        }
+        public int GetFreeSpace() => Math.Max( 0, Maximum - Total );
 
         public void BoostMax( int amount )
         {

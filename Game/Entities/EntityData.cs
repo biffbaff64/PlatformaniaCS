@@ -553,10 +553,7 @@ namespace PlatformaniaCS.Game.Entities
         /// <summary>
         /// Gets the entity from entityMap at the supplied index.
         /// </summary>
-        public IEntityComponent GetEntity( int index )
-        {
-            return EntityMap[ index ];
-        }
+        public IEntityComponent GetEntity( int index ) => EntityMap[ index ];
 
         /// <summary>
         /// Remove the entity at the supplied index from entityMap.
@@ -588,10 +585,7 @@ namespace PlatformaniaCS.Game.Entities
         /// <summary>
         /// Gets the entity manager at the specified array index.
         /// </summary>
-        public IEntityManagerComponent GetManager( int index )
-        {
-            return ManagerList[ index ];
-        }
+        public IEntityManagerComponent GetManager( int index ) => ManagerList[ index ];
 
         /// <summary>
         /// Removes the specified manager from the manager array.

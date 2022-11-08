@@ -44,10 +44,7 @@ namespace PlatformaniaCS.Game.Entities.Managers
             _maxCount    = 1;
         }
 
-        public int GetActiveCount()
-        {
-            return _activeCount;
-        }
+        public int GetActiveCount() => _activeCount;
 
         public void SetActiveCount( int numActive )
         {
@@ -64,14 +61,8 @@ namespace PlatformaniaCS.Game.Entities.Managers
             _maxCount = max;
         }
 
-        public GraphicID GetGID()
-        {
-            return _graphicID;
-        }
+        public GraphicID GetGID() => _graphicID;
 
-        public string GetName()
-        {
-            return nameof( _graphicID );
-        }
+        public string GetName() => nameof( _graphicID );
     }
 }

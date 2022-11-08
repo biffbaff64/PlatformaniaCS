@@ -14,7 +14,10 @@ namespace Lugh.Graphics
         public int       RegionWidth  { get; set; }
         public int       RegionHeight { get; set; }
 
-        public Rectangle Bounds => new Rectangle( RegionX, RegionY, RegionWidth, RegionHeight );
+        public Rectangle Bounds
+        {
+            get => new Rectangle( RegionX, RegionY, RegionWidth, RegionHeight );
+        }
 
         public TextureRegion()
         {
@@ -95,10 +98,7 @@ namespace Lugh.Graphics
             return tiles;
         }
 
-        public override string ToString()
-        {
-            return $"{( object )( Name ?? string.Empty )} {( object )Bounds}";
-        }
+        public override string ToString() => $"{( object )( Name ?? string.Empty )} {( object )Bounds}";
 
         public IEnumerator GetEnumerator()
         {

@@ -205,14 +205,12 @@ namespace PlatformaniaCS.Game.Core
             }
         }
 
-        public bool StacksAreEmpty()
-        {
-            return ( _coinsStack     == 0 )
-                && ( _gemsStack      == 0 )
-                && ( _prisonersStack == 0 )
-                && ( _keysStack      == 0 )
-                && ( _livesStack     == 0 );
-        }
+        public bool StacksAreEmpty() =>
+                ( _coinsStack     == 0 )
+             && ( _gemsStack      == 0 )
+             && ( _prisonersStack == 0 )
+             && ( _keysStack      == 0 )
+             && ( _livesStack     == 0 );
 
         private void UpdateDifficulty()
         {

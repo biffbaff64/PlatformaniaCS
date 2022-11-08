@@ -15,14 +15,8 @@
             Height = height;
         }
 
-        public bool Intersects( BoxF box )
-        {
-            return false;
-        }
+        public bool Intersects( BoxF box ) => false;
 
-        public bool Intersects( Rectangle rectangle )
-        {
-            return false;
-        }
+        public bool Intersects( Rectangle rectangle ) => false;
     }
 }

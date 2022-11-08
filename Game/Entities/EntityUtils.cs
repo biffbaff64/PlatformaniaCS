@@ -16,21 +16,16 @@ namespace PlatformaniaCS.Game.Entities
         {
         }
         
-        public TextureRegion GetKeyFrame( Animation animation, float elapsedTime, bool looping )
-        {
-            return animation.GetKeyFrame( elapsedTime, looping );
-        }
-        
-        public Body AddDynamicPhysicsBody( Rectangle rectangle, CollisionFilter filter )
-        {
-            return App.WorldModel.BodyBuilder.CreateDynamicBox(
-                                                               rectangle,
-                                                               filter,
-                                                               1.0f,
-                                                               B2DConstants.FullFriction,
-                                                               B2DConstants.LowRestitution
-                                                              );
-        }
+        public TextureRegion GetKeyFrame( Animation animation, float elapsedTime, bool looping ) => animation.GetKeyFrame( elapsedTime, looping );
+
+        public Body AddDynamicPhysicsBody( Rectangle rectangle, CollisionFilter filter ) =>
+                App.WorldModel.BodyBuilder.CreateDynamicBox(
+                    rectangle,
+                    filter,
+                    1.0f,
+                    B2DConstants.FullFriction,
+                    B2DConstants.LowRestitution
+                );
 
         public Body AddDynamicCirclePhysicsBody( Rectangle rectangle, CollisionFilter filter )
         {
@@ -47,41 +42,32 @@ namespace PlatformaniaCS.Game.Entities
                                                                  );
         }
 
-        public Body AddBouncyDynamicPhysicsBody( Rectangle rectangle, CollisionFilter filter )
-        {
-            return App.WorldModel.BodyBuilder.CreateDynamicBox(
-                                                               rectangle,
-                                                               filter,
-                                                               0.8f,
-                                                               B2DConstants.LowFriction,
-                                                               B2DConstants.HighRestitution
-                                                              );
-        }
+        public Body AddBouncyDynamicPhysicsBody( Rectangle rectangle, CollisionFilter filter ) =>
+                App.WorldModel.BodyBuilder.CreateDynamicBox(
+                    rectangle,
+                    filter,
+                    0.8f,
+                    B2DConstants.LowFriction,
+                    B2DConstants.HighRestitution
+                );
 
-        public Body AddKinematicPhysicsBody( Rectangle rectangle, CollisionFilter filter )
-        {
-            return App.WorldModel.BodyBuilder.CreateKinematicBody(
-                                                                  rectangle,
-                                                                  filter,
-                                                                  1.0f,
-                                                                  B2DConstants.DefaultFriction,
-                                                                  B2DConstants.LowRestitution
-                                                                 );
-        }
+        public Body AddKinematicPhysicsBody( Rectangle rectangle, CollisionFilter filter ) =>
+                App.WorldModel.BodyBuilder.CreateKinematicBody(
+                    rectangle,
+                    filter,
+                    1.0f,
+                    B2DConstants.DefaultFriction,
+                    B2DConstants.LowRestitution
+                );
 
-        public Body AddStaticPhysicsBody( Rectangle rectangle, CollisionFilter filter )
-        {
-            return App.WorldModel.BodyBuilder.CreateStaticBody(
-                                                               rectangle,
-                                                               filter
-                                                              );
-        }
+        public Body AddStaticPhysicsBody( Rectangle rectangle, CollisionFilter filter ) =>
+                App.WorldModel.BodyBuilder.CreateStaticBody(
+                    rectangle,
+                    filter
+                );
 
-        public bool isOnScreen( GameSprite sprite )
-        {
-            return App.MapData.ViewportBox.Intersects( sprite.BoundsBox );
-        }
-        
+        public bool isOnScreen( GameSprite sprite ) => App.MapData.ViewportBox.Intersects( sprite.BoundsBox );
+
         public int GetInitialZPosition( GraphicID graphicID )
         {
             int zed;

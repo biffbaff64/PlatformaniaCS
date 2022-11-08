@@ -192,9 +192,6 @@ namespace PlatformaniaCS.Game.Physics
             return shape;
         }
 
-        public Body NewBody( Rectangle physicsBodyBodyBox, ushort bodyCategory, ushort collidesWith, PhysicsBodyType physicsBodyType )
-        {
-            throw new NotImplementedException();
-        }
+        public Body NewBody( Rectangle physicsBodyBodyBox, ushort bodyCategory, ushort collidesWith, PhysicsBodyType physicsBodyType ) => throw new NotImplementedException();
     }
 }

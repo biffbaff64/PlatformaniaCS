@@ -228,10 +228,7 @@ namespace PlatformaniaCS.Game.Entities.Objects
         /// GdxSprites are placed on TiledMap boundaries and
         /// some may need that position adjusting.
         /// </summary>
-        public SimpleVec3 GetPositionModifier()
-        {
-            return new SimpleVec3( 0, 0, 0 );
-        }
+        public SimpleVec3 GetPositionModifier() => new SimpleVec3( 0, 0, 0 );
 
         /// <summary>
         /// Provides the facility for some sprites to perform certain
@@ -443,34 +440,22 @@ namespace PlatformaniaCS.Game.Entities.Objects
         /// <summary>
         /// Helper method to fetch the physics body for this sprite.
         /// </summary>
-        public PhysicsBody GetPhysicsBody()
-        {
-            return App.WorldModel.BodiesList[ B2dBodyIndex ];
-        }
+        public PhysicsBody GetPhysicsBody() => App.WorldModel.BodiesList[ B2dBodyIndex ];
 
         /// <summary>
         /// Helper method to fetch the physics body bounding box for this sprite.
         /// </summary>
-        public Rectangle GetBodyBox()
-        {
-            return App.WorldModel.BodiesList[ B2dBodyIndex ].BodyBox;
-        }
+        public Rectangle GetBodyBox() => App.WorldModel.BodiesList[ B2dBodyIndex ].BodyBox;
 
         /// <summary>
         /// Gets the current X position of the physics body attached to this sprite.
         /// </summary>
-        public float GetBodyX()
-        {
-            return GetPhysicsBody().Body == null ? 0 : ( GetPhysicsBody().Body.GetPosition().X * Gfx.PPM );
-        }
+        public float GetBodyX() => GetPhysicsBody().Body == null ? 0 : ( GetPhysicsBody().Body.GetPosition().X * Gfx.PPM );
 
         /// <summary>
         /// Gets the current Y position of the physics body attached to this sprite.
         /// </summary>
-        public float GetBodyY()
-        {
-            return GetPhysicsBody().Body == null ? 0 : ( GetPhysicsBody().Body.GetPosition().Y * Gfx.PPM );
-        }
+        public float GetBodyY() => GetPhysicsBody().Body == null ? 0 : ( GetPhysicsBody().Body.GetPosition().Y * Gfx.PPM );
 
         public void Dispose()
         {
@@ -488,11 +473,9 @@ namespace PlatformaniaCS.Game.Entities.Objects
 
         // ---------------------------------------------------------------
 
-        public CollisionObject GetCollisionObject()
-        {
-            // TO BE REMOVED
-            return null;
-        }
+        public CollisionObject GetCollisionObject() =>
+                // TO BE REMOVED
+                null;
 
         public void SetCollisionObject( float xPos, float yPos )
         {

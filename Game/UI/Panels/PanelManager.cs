@@ -47,10 +47,7 @@ namespace PlatformaniaCS.Game.UI.Panels
         {
         }
 
-        public bool PanelExists( string name )
-        {
-            return false;
-        }
+        public bool PanelExists( string name ) => false;
 
         public void SetPosition( string name, int x, int y )
         {

@@ -5,6 +5,11 @@ namespace PlatformaniaCS.Game.Scenes
 {
     public class MenuPage : IUIPage
     {
+        public ImageButton ButtonStart   { get; set; }
+        public ImageButton ButtonOptions { get; set; }
+        public ImageButton ButtonCredits { get; set; }
+        public ImageButton ButtonExit    { get; set; }
+
         private const int Start            = 0;
         private const int Options          = 1;
         private const int Credits          = 2;
@@ -61,7 +66,7 @@ namespace PlatformaniaCS.Game.Scenes
         public void Hide()
         {
             Trace.CheckPoint();
-            
+
             ShowItems( false );
         }
 
@@ -79,8 +84,34 @@ namespace PlatformaniaCS.Game.Scenes
 
         private void ShowItems( bool visible )
         {
+            if ( ButtonStart != null )
+            {
+                ButtonStart.SetVisible( visible );
+            }
+
+            if ( ButtonOptions != null )
+            {
+                ButtonOptions.SetVisible( visible );
+            }
+
+            if ( ButtonCredits != null )
+            {
+                ButtonCredits.SetVisible( visible );
+            }
+
+            if ( ButtonExit != null )
+            {
+                ButtonExit.SetVisible( visible );
+            }
+
+            if ( _decoration != null )
+            {
+                _decoration.SetVisible( visible );
+            }
+
+            _indicatorDrawable = visible;
         }
-        
+
         private void CreateButtons()
         {
         }

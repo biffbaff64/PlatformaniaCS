@@ -61,10 +61,7 @@ namespace PlatformaniaCS.Game.Maps
         {
         }
 
-        public SpriteDescriptor CreatePlacementTile( TiledMapObject mapObject, SpriteDescriptor descriptor )
-        {
-            return new SpriteDescriptor();
-        }
+        public SpriteDescriptor CreatePlacementTile( TiledMapObject mapObject, SpriteDescriptor descriptor ) => new SpriteDescriptor();
 
         public void SetGameLevelMap()
         {

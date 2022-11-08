@@ -114,10 +114,7 @@ namespace PlatformaniaCS.Game.Scenes
         {
         }
 
-        public string Name()
-        {
-            return "Main Scene";
-        }
+        public string Name() => "Main Scene";
 
         public void Resize( int width, int height )
         {

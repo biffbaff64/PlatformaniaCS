@@ -89,30 +89,15 @@
             this.Total = this.Minimum;
         }
 
-        public bool IsFull()
-        {
-            return ( this.Total >= this.Maximum );
-        }
+        public bool IsFull() => ( this.Total >= this.Maximum );
 
-        public bool IsEmpty()
-        {
-            return ( this.Total <= this.Minimum );
-        }
+        public bool IsEmpty() => ( this.Total <= this.Minimum );
 
-        public bool HasRoom()
-        {
-            return !IsFull();
-        }
+        public bool HasRoom() => !IsFull();
 
-        public bool IsOverflowing()
-        {
-            return this.Total > this.Maximum;
-        }
+        public bool IsOverflowing() => this.Total > this.Maximum;
 
-        public bool IsUnderflowing()
-        {
-            return this.Total < this.Minimum;
-        }
+        public bool IsUnderflowing() => this.Total < this.Minimum;
 
         public void Refill()
         {
@@ -124,21 +109,15 @@
             this.Total = refillAmount;
         }
 
-        public float GetRefillAmount()
-        {
-            return this.RefillAmount;
-        }
+        public float GetRefillAmount() => this.RefillAmount;
 
         public void SetRefillAmount( float refill )
         {
             this.RefillAmount = refill;
         }
 
-        public float GetFreeSpace()
-        {
-            return Math.Max( 0, Maximum - Total );
-        }
-    
+        public float GetFreeSpace() => Math.Max( 0, Maximum - Total );
+
         public void BoostMax( float amount )
         {
             Maximum += amount;

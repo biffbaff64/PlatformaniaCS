@@ -123,10 +123,7 @@ namespace PlatformaniaCS.Game.Maps
             return name;
         }
 
-        public string GetCurrentMapNameWithPath()
-        {
-            return MapsPath + _roomMap[ ActiveRoom.Row ].RoomName;
-        }
+        public string GetCurrentMapNameWithPath() => MapsPath + _roomMap[ ActiveRoom.Row ].RoomName;
 
         public void SetPlayerStart()
         {

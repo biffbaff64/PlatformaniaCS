@@ -28,10 +28,7 @@ namespace Lugh.Utils
         {
         }
 
-        public static int GetMeter( int meter )
-        {
-            return 0;
-        }
+        public static int GetMeter( int meter ) => 0;
 
         public static void ResetAllMeters()
         {
