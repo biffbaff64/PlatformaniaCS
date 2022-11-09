@@ -9,4 +9,9 @@ public class Stage
 {
     public static bool  DebugMode  { get; set; }
     public static Color DebugColor { get; set; }
+
+    public Vector2 ScreenToStageCoordinates( Vector2 screenCoords )
+    {
+        return default;
+    }
 }

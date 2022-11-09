@@ -2,9 +2,8 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-
+using Box2DSharp.Common;
 using Microsoft.Xna.Framework.Graphics;
-
 using Color = Microsoft.Xna.Framework.Color;
 
 // ##################################################
@@ -18,9 +17,10 @@ public class Actor
     [AllowNull] public string Name   { get; set; }
 
     public bool  IsVisible { get; set; }
-    public Vec2F Size      { get; set; }
-
-    public List<Action> Actions { get; set; }
+    
+    public Vec2F        Size      { get; set; } = new Vec2F();
+    public Vec2F        Position  { get; set; } = new Vec2F();
+    public List<Action> Actions   { get; set; } = new List<Action>();
 
     [AllowNull] private object _userObject;
 
@@ -28,7 +28,6 @@ public class Actor
     private DelayedRemovalArray<IEventListener> _captureListeners;
 
     private Touchable _touchable;
-    private Vec2F     _position;
     private Vec2F     _origin;
     private Vec2F     _scale;
     private float     _rotation;
@@ -189,8 +188,8 @@ public class Actor
 
     protected void SetSize( float width, float height )
     {
-        if ( ( Math.Abs( Size.X - width ) > 0.001f )
-             || ( Math.Abs( Size.Y - height ) > 0.001f ) )
+        if ( ( Math.Abs( Size.X - width )  > 0.001f )
+          || ( Math.Abs( Size.Y - height ) > 0.001f ) )
         {
             Size.X = width;
             Size.Y = height;
@@ -208,7 +207,7 @@ public class Actor
         {
             Size.X += size;
             Size.Y += size;
-            
+
             SizeChanged();
         }
     }
@@ -222,7 +221,7 @@ public class Actor
         {
             Size.X += width;
             Size.Y += height;
-            
+
             SizeChanged();
         }
     }
@@ -234,6 +233,75 @@ public class Actor
     {
     }
 
+    public float ScaleX
+    {
+        get => _scale.X;
+        set
+        {
+            if ( Math.Abs( _scale.X - value ) > 0f )
+            {
+                _scale.X = value;
+                
+                ScaleChanged();
+            }
+        }
+    }
+
+    public float ScaleY
+    {
+        get => _scale.Y;
+        set
+        {
+            if ( Math.Abs( _scale.Y - value ) > 0f )
+            {
+                _scale.Y = value;
+                
+                ScaleChanged();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Sets the scale for X and Y to the same value.  
+    /// </summary>
+    public void SetScale( float scale )
+    {
+        if ( ( Math.Abs( _scale.X - scale ) > 0f )
+          || ( Math.Abs( _scale.Y - scale ) > 0f ) )
+        {
+            ScaleX = scale;
+            ScaleY = scale;
+            
+            ScaleChanged();
+        }
+    }
+
+    /// <summary>
+    /// Sets the scaleX and scaleY.  
+    /// </summary>
+    public void SetScale( float scaleX, float scaleY )
+    {
+        if ( ( Math.Abs( _scale.X - scaleX ) > 0f )
+          || ( Math.Abs( _scale.Y - scaleY ) > 0f ) )
+        {
+            ScaleX = scaleX;
+            ScaleY = scaleY;
+            
+            ScaleChanged();
+        }
+    }
+
+    /// <summary>
+    /// Adds the specified scale to the current scale.
+    /// </summary>
+    public void ScaleBy( float scale )
+    {
+        if ( scale != 0f )
+        {
+            
+        }
+    }
+    
     /// <summary>
     /// Called when the actor's scale has been changed.
     /// </summary>
@@ -318,11 +386,81 @@ public class Actor
     {
     }
 
-    public Vector2 ScreenToLocalCoordinates( Vector2 screenCoords ) => screenCoords;
+    /// <summary>
+    /// Transforms the specified point in screen coordinates to the
+    /// actor's local coordinate system.
+    /// </summary>
+    public Vector2 ScreenToLocalCoordinates( Vector2 screenCoords )
+    {
+        var stage = this.Stage;
 
-    public Vector2 StageToLocalCoordinates( Vector2 stageCoords ) => stageCoords;
+        if ( stage == null )
+        {
+            return screenCoords;
+        }
 
-    public Vector2 ParentToLocalCoordinates( Vector2 parentCoords ) => parentCoords;
+        return StageToLocalCoordinates( stage.ScreenToStageCoordinates( screenCoords ) );
+    }
+
+    /// <summary>
+    /// Transforms the specified point in the stage's coordinates
+    /// to the actor's local coordinate system.
+    /// </summary>
+    public Vector2 StageToLocalCoordinates( Vector2 stageCoords )
+    {
+        if ( Parent != null )
+        {
+            Parent.StageToLocalCoordinates( stageCoords );
+        }
+
+        ParentToLocalCoordinates( stageCoords );
+
+        return stageCoords;
+    }
+
+    /// <summary>
+    /// Converts the coordinates given in the parent's coordinate
+    /// system to this actor's coordinate system.
+    /// </summary>
+    public Vector2 ParentToLocalCoordinates( Vector2 parentCoords )
+    {
+        float rotation = this.Rotation;
+        float scaleX   = this.ScaleX;
+        float scaleY   = this.ScaleY;
+        float childX   = X;
+        float childY   = Y;
+
+        if ( rotation == 0 )
+        {
+            if ( scaleX == 1f && scaleY == 1f )
+            {
+                parentCoords.X -= childX;
+                parentCoords.Y -= childY;
+            }
+            else
+            {
+                float originX = this.OriginX;
+                float originY = this.OriginY;
+
+                parentCoords.X = ( parentCoords.X - childX - originX ) / scaleX + originX;
+                parentCoords.Y = ( parentCoords.Y - childY - originY ) / scaleY + originY;
+            }
+        }
+        else
+        {
+            float cos     = ( float )Math.Cos( rotation * MathUtils.DegreesToRadians );
+            float sin     = ( float )Math.Sin( rotation * MathUtils.DegreesToRadians );
+            float originX = this.OriginX;
+            float originY = this.OriginY;
+            float tox     = parentCoords.X - childX - originX;
+            float toy     = parentCoords.Y - childY - originY;
+
+            parentCoords.X = ( tox * cos  + toy * sin ) / scaleX + originX;
+            parentCoords.Y = ( tox * -sin + toy * cos ) / scaleY + originY;
+        }
+
+        return parentCoords;
+    }
 
     public Vector2 LocalToScreenCoordinates( Vector2 localCoords ) => localCoords;
 
@@ -330,9 +468,36 @@ public class Actor
 
     public Vector2 LocalToParentCoordinates( Vector2 localCoords ) => localCoords;
 
-    public Vector2 LocalToAscendantCoordinates( Actor ascendant, Vector2 localCoords ) => localCoords;
+    /// <summary>
+    /// Converts coordinates for this actor to those of an ascendant.
+    /// The ascendant is not required to be the immediate parent.
+    /// </summary>
+    public Vector2 LocalToAscendantCoordinates( Actor ascendant, Vector2 localCoords )
+    {
+        Actor actor = this;
 
-    public Vector2 LocalToActorCoordinates( Actor actor, Vector2 localCoords ) => localCoords;
+        do
+        {
+            actor.LocalToParentCoordinates( localCoords );
+            actor = actor.Parent;
+
+            if ( actor == ascendant ) break;
+        }
+        while ( actor != null );
+
+        return localCoords;
+    }
+
+    /// <summary>
+    /// Converts coordinates for this actor to those of another actor,
+    /// which can be anywhere in the stage.
+    /// </summary>
+    public Vector2 LocalToActorCoordinates( Actor actor, Vector2 localCoords )
+    {
+        LocalToStageCoordinates( localCoords: localCoords );
+
+        return actor.StageToLocalCoordinates( localCoords );
+    }
 
     public void DrawDebug( ShapeRenderer shapes )
     {
@@ -354,13 +519,13 @@ public class Actor
         }
 
         shapes.Rect
-            (
-             _position.X, _position.Y,
-             _origin.X, _origin.Y,
-             Size.X, Size.Y,
-             _scale.X, _scale.Y,
-             _rotation
-            );
+        (
+            _position.X, _position.Y,
+            _origin.X, _origin.Y,
+            Size.X, Size.Y,
+            _scale.X, _scale.Y,
+            _rotation
+        );
     }
 
     public bool DebugMode
@@ -384,5 +549,22 @@ public class Actor
         return this;
     }
 
-    public override string ToString() => "";
+    public override string ToString()
+    {
+        var name = Name;
+
+        if ( name == null )
+        {
+            name = this.GetType().Name;
+
+            var dotIndex = name.LastIndexOf( '.' );
+
+            if ( dotIndex != -1 )
+            {
+                name = name.Substring( dotIndex + 1 );
+            }
+        }
+
+        return name;
+    }
 }
