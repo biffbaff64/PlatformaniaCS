@@ -3,11 +3,10 @@
 
 // ##################################################
 
-namespace Lugh.Scene2D
+namespace Scene2DCS;
+
+public class Stage
 {
-    public class Stage
-    {
-        public static bool  DebugMode  { get; set; }
-        public static Color DebugColor { get; set; }
-    }
+    public static bool  DebugMode  { get; set; }
+    public static Color DebugColor { get; set; }
 }

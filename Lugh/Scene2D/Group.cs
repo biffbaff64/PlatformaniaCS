@@ -1,11 +1,10 @@
-﻿using Lugh.Scene2D.Utils;
+﻿using Scene2DCS.Utils;
 
-namespace Lugh.Scene2D
+namespace Scene2DCS;
+
+public class Group : Actor, ICullable
 {
-    public class Group : Actor, ICullable
+    public void SetCullingArea( Rectangle cullingArea )
     {
-        public void SetCullingArea( Rectangle cullingArea )
-        {
-        }
     }
 }

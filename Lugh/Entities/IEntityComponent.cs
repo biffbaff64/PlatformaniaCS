@@ -1,12 +1,11 @@
 ﻿
-namespace Lugh.Entities
+namespace Lugh.Entities;
+
+public interface IEntityComponent
 {
-    public interface IEntityComponent
-    {
-        void SetActionState( ActionStates action );
+    void SetActionState( ActionStates action );
 
-        void SetCollisionObject( float xPos, float yPos );
+    void SetCollisionObject( float xPos, float yPos );
 
-        void Tidy( int index );
-    }
+    void Tidy( int index );
 }

@@ -1,12 +1,11 @@
-﻿namespace Enums
+﻿namespace Enums;
+
+public enum CamID
 {
-    public enum CamID
-    {
-        _PARALLAX,
-        _TILED,
-        _SPRITE,
-        _OVERLAY,
-        _HUD,
-        _STAGE,
-    }
+    _PARALLAX,
+    _TILED,
+    _SPRITE,
+    _OVERLAY,
+    _HUD,
+    _STAGE,
 }

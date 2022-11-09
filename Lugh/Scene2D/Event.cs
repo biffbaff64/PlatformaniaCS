@@ -1,9 +1,8 @@
-﻿namespace Lugh.Scene2D
+﻿namespace Scene2DCS;
+
+public class Event
 {
-    public class Event
+    public void Reset()
     {
-        public void Reset()
-        {
-        }
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace PlatformaniaCS.Game.Entities.Managers
+﻿namespace PlatformaniaCS.Game.Entities.Managers;
+
+public class HazardsManager : BasicEntityManager
 {
-    public class HazardsManager : BasicEntityManager
-    {
         
-    }
 }

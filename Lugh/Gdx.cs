@@ -1,6 +1,5 @@
-﻿namespace Lugh
+﻿namespace Lugh;
+
+public class Gdx
 {
-    public class Gdx
-    {
-    }
 }

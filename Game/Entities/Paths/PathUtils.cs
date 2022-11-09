@@ -1,13 +1,12 @@
-namespace PlatformaniaCS.Game.Entities.Paths
-{
-    public class PathUtils : IDisposable
-    {
-        public void Setup()
-        {
-        }
+namespace PlatformaniaCS.Game.Entities.Paths;
 
-        public void Dispose()
-        {
-        }
+public class PathUtils : IDisposable
+{
+    public void Setup()
+    {
+    }
+
+    public void Dispose()
+    {
     }
 }

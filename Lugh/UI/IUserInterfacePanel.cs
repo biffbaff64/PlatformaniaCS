@@ -1,8 +1,7 @@
 ﻿
-namespace Lugh.UI
+namespace Lugh.UI;
+
+public interface IUserInterfacePanel : IDefaultUIPanel, IDisposable
 {
-    public interface IUserInterfacePanel : IDefaultUIPanel, IDisposable
-    {
         
-    }
 }

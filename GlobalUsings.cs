@@ -16,7 +16,7 @@ global using Lugh.Input;
 global using Lugh.Logging;
 global using Lugh.Maths;
 global using Lugh.Physics;
-global using Lugh.Scene2D;
+global using Scene2DCS;
 global using Lugh.Utils;
 
 // --------------------------------------

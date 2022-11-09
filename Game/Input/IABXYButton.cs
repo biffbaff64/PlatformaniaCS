@@ -1,7 +1,6 @@
-﻿namespace PlatformaniaCS.Game.Input
+﻿namespace PlatformaniaCS.Game.Input;
+
+public interface IABXYButton
 {
-    public interface IABXYButton
-    {
         
-    }
 }

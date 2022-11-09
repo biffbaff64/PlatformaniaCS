@@ -1,36 +1,35 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Lugh.UI
+namespace Lugh.UI;
+
+public interface IDefaultUIPanel
 {
-    public interface IDefaultUIPanel
-    {
-        void Open();
+    void Open();
 
-        void Close();
+    void Close();
 
-        void Initialise( TextureRegion region, string nameID, params object[] args );
+    void Initialise( TextureRegion region, string nameID, params object[] args );
 
-        void Set( SimpleVec2F xy, SimpleVec2F distance, Direction direction, SimpleVec2F speed );
+    void Set( SimpleVec2F xy, SimpleVec2F distance, Direction direction, SimpleVec2F speed );
 
-        void Setup();
+    void Setup();
 
-        void Draw( SpriteBatch spriteBatch );
+    void Draw( SpriteBatch spriteBatch );
 
-        void PopulateTable();
+    void PopulateTable();
 
-        void SetPosition( float x, float y );
+    void SetPosition( float x, float y );
 
-        void ForceZoomOut();
+    void ForceZoomOut();
 
-        void SetPauseTime( int time );
+    void SetPauseTime( int time );
 
-        bool Update();
+    bool Update();
 
-        bool NameExists( string nameID );
+    bool NameExists( string nameID );
 
-        int GetWidth();
+    int GetWidth();
 
-        int GetHeight();
-    }
+    int GetHeight();
 }

@@ -1,43 +1,42 @@
-﻿namespace Lugh.Maths
+﻿namespace Lugh.Maths;
+
+public interface IItem
 {
-    public interface IItem
-    {
-        void Add( float amount );
+    void Add( float amount );
 
-        void Add( float amount, float wrap );
+    void Add( float amount, float wrap );
 
-        void Subtract( float amount );
+    void Subtract( float amount );
 
-        void Subtract( float amount, float wrap );
+    void Subtract( float amount, float wrap );
 
-        void SetMinMax( float minimum, float maximum );
+    void SetMinMax( float minimum, float maximum );
 
-        void SetToMaximum();
+    void SetToMaximum();
 
-        void SetToMinimum();
+    void SetToMinimum();
 
-        bool IsFull();
+    bool IsFull();
 
-        bool IsEmpty();
+    bool IsEmpty();
 
-        bool HasRoom();
+    bool HasRoom();
 
-        bool IsOverflowing();
+    bool IsOverflowing();
 
-        bool IsUnderflowing();
+    bool IsUnderflowing();
 
-        void Refill();
+    void Refill();
 
-        void Refill( float refillAmount );
+    void Refill( float refillAmount );
 
-        float GetRefillAmount();
+    float GetRefillAmount();
 
-        void SetRefillAmount( float refill );
+    void SetRefillAmount( float refill );
 
-        float GetFreeSpace();
+    float GetFreeSpace();
 
-        void BoostMax( float amount );
+    void BoostMax( float amount );
 
-        void Validate();
-    }
+    void Validate();
 }

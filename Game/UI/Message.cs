@@ -1,7 +1,6 @@
-namespace PlatformaniaCS.Game.UI
+namespace PlatformaniaCS.Game.UI;
+
+public class Message
 {
-    public class Message
-    {
         
-    }
 }

@@ -1,7 +1,6 @@
-﻿namespace Lugh.Scene2D
+﻿namespace Scene2DCS;
+
+public interface IEventListener
 {
-    public interface IEventListener
-    {
-        public bool Handle (Event ev);
-    }
+    public bool Handle (Event ev);
 }

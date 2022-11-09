@@ -1,7 +1,6 @@
-namespace Lugh.Input
+namespace Lugh.Input;
+
+public enum ControllerPos
 {
-    public enum ControllerPos
-    {
         
-    }
 }

@@ -1,8 +1,7 @@
-﻿using Lugh.Scene2D.Utils;
+﻿using Scene2DCS.Utils;
 
-namespace Lugh.Scene2D
+namespace Scene2DCS;
+
+public class WidgetGroup : Group, ILayout
 {
-    public class WidgetGroup : Group, ILayout
-    {
-    }
 }

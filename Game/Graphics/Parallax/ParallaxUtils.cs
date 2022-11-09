@@ -1,9 +1,8 @@
-namespace PlatformaniaCS.Game.Graphics.Parallax
+namespace PlatformaniaCS.Game.Graphics.Parallax;
+
+public class ParallaxUtils
 {
-    public class ParallaxUtils
+    public void Scroll()
     {
-        public void Scroll()
-        {
-        }
     }
 }

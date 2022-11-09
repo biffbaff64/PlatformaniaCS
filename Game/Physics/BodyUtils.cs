@@ -1,7 +1,6 @@
-﻿namespace PlatformaniaCS.Game.Physics
+﻿namespace PlatformaniaCS.Game.Physics;
+
+public class BodyUtils
 {
-    public class BodyUtils
-    {
         
-    }
 }

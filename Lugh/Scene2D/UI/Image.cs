@@ -1,5 +1,5 @@
 ﻿namespace Scene2DCS;
 
-public class Table
+public class Image : Widget
 {
 }

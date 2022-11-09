@@ -1,7 +1,6 @@
-﻿namespace PlatformaniaCS.Game.Input
+﻿namespace PlatformaniaCS.Game.Input;
+
+public class BButtonActions
 {
-    public class BButtonActions
-    {
         
-    }
 }

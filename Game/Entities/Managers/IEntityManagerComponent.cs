@@ -1,28 +1,27 @@
 ﻿
-namespace PlatformaniaCS.Game.Entities.Managers
+namespace PlatformaniaCS.Game.Entities.Managers;
+
+public interface IEntityManagerComponent
 {
-    public interface IEntityManagerComponent
-    {
-        void Init();
+    void Init();
 
-        void Update();
+    void Update();
 
-        void Create();
+    void Create();
 
-        void Free();
+    void Free();
 
-        void Reset();
+    void Reset();
 
-        int GetActiveCount();
+    int GetActiveCount();
 
-        void SetActiveCount( int numActive );
+    void SetActiveCount( int numActive );
 
-        void AddMaxCount( int add );
+    void AddMaxCount( int add );
 
-        void SetMaxCount( int max );
+    void SetMaxCount( int max );
 
-        GraphicID GetGID();
+    GraphicID GetGID();
 
-        string GetName();
-    }
+    string GetName();
 }

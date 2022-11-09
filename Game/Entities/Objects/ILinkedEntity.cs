@@ -1,7 +1,6 @@
-﻿namespace PlatformaniaCS.Game.Entities.Objects
+﻿namespace PlatformaniaCS.Game.Entities.Objects;
+
+public interface ILinkedEntity
 {
-    public interface ILinkedEntity
-    {
         
-    }
 }

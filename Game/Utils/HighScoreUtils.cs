@@ -1,7 +1,6 @@
-namespace PlatformaniaCS.Game.Utils
+namespace PlatformaniaCS.Game.Utils;
+
+public class HighScoreUtils
 {
-    public class HighScoreUtils
-    {
         
-    }
 }

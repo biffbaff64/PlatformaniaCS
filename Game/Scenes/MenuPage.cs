@@ -1,22 +1,22 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using PlatformaniaCS.Game.UI;
 
-namespace PlatformaniaCS.Game.Scenes
-{
-    public class MenuPage : IUIPage
-    {
-        public ImageButton ButtonStart   { get; set; }
-        public ImageButton ButtonOptions { get; set; }
-        public ImageButton ButtonCredits { get; set; }
-        public ImageButton ButtonExit    { get; set; }
+namespace PlatformaniaCS.Game.Scenes;
 
-        private const int Start            = 0;
-        private const int Options          = 1;
-        private const int Credits          = 2;
-        private const int Exit             = 3;
-        private const int Poppy            = 4;
-        private const int Xmas_Tree        = 5;
-        private const int Indicator_Frames = 6;
+public class MenuPage : IUIPage
+{
+    public ImageButton ButtonStart   { get; set; }
+    public ImageButton ButtonOptions { get; set; }
+    public ImageButton ButtonCredits { get; set; }
+    public ImageButton ButtonExit    { get; set; }
+
+    private const int Start            = 0;
+    private const int Options          = 1;
+    private const int Credits          = 2;
+    private const int Exit             = 3;
+    private const int Poppy            = 4;
+    private const int Xmas_Tree        = 5;
+    private const int Indicator_Frames = 6;
 
         //@formatter:off
         private readonly int[,] _displayPos =
@@ -28,100 +28,99 @@ namespace PlatformaniaCS.Game.Scenes
             { 512, 120,   0,   0 },       //
             {   0,   0,   0,   0 },       //
         };
-        //@formatter:on
+    //@formatter:on
 
-        private Texture2D       _decoration;
-        private Texture2D       _leftIndicator;
-        private Texture2D       _rightIndicator;
-        private TextureRegion[] _indicatorFrames;
-        private Animation       _indicatorAnim;
-        private float           _elapsedAnimTime;
-        private bool            _indicatorDrawable;
-        private int             _indicatorIndex;
-        private Rectangle[]     _buttonBoxes;
+    private Texture2D       _decoration;
+    private Texture2D       _leftIndicator;
+    private Texture2D       _rightIndicator;
+    private TextureRegion[] _indicatorFrames;
+    private Animation       _indicatorAnim;
+    private float           _elapsedAnimTime;
+    private bool            _indicatorDrawable;
+    private int             _indicatorIndex;
+    private Rectangle[]     _buttonBoxes;
 
-        public MenuPage()
+    public MenuPage()
+    {
+    }
+
+    public void Initialise()
+    {
+        Trace.CheckPoint();
+
+        CreateButtons();
+        CreateIndicator();
+
+        AddDateSpecificItems( false );
+    }
+
+    public bool Update() => false;
+
+    public void Show()
+    {
+        Trace.CheckPoint();
+
+        ShowItems( true );
+    }
+
+    public void Hide()
+    {
+        Trace.CheckPoint();
+
+        ShowItems( false );
+    }
+
+    public void Draw()
+    {
+        if ( _indicatorDrawable )
         {
         }
+    }
 
-        public void Initialise()
+    public void Dispose()
+    {
+        Trace.CheckPoint();
+    }
+
+    private void ShowItems( bool visible )
+    {
+        if ( ButtonStart != null )
         {
-            Trace.CheckPoint();
-
-            CreateButtons();
-            CreateIndicator();
-
-            AddDateSpecificItems( false );
+            ButtonStart.SetVisible( visible );
         }
 
-        public bool Update() => false;
-
-        public void Show()
+        if ( ButtonOptions != null )
         {
-            Trace.CheckPoint();
-
-            ShowItems( true );
+            ButtonOptions.SetVisible( visible );
         }
 
-        public void Hide()
+        if ( ButtonCredits != null )
         {
-            Trace.CheckPoint();
-
-            ShowItems( false );
+            ButtonCredits.SetVisible( visible );
         }
 
-        public void Draw()
+        if ( ButtonExit != null )
         {
-            if ( _indicatorDrawable )
-            {
-            }
+            ButtonExit.SetVisible( visible );
         }
 
-        public void Dispose()
+        if ( _decoration != null )
         {
-            Trace.CheckPoint();
+            _decoration.SetVisible( visible );
         }
 
-        private void ShowItems( bool visible )
-        {
-            if ( ButtonStart != null )
-            {
-                ButtonStart.SetVisible( visible );
-            }
+        _indicatorDrawable = visible;
+    }
 
-            if ( ButtonOptions != null )
-            {
-                ButtonOptions.SetVisible( visible );
-            }
+    private void CreateButtons()
+    {
+    }
 
-            if ( ButtonCredits != null )
-            {
-                ButtonCredits.SetVisible( visible );
-            }
+    private void CreateIndicator()
+    {
+    }
 
-            if ( ButtonExit != null )
-            {
-                ButtonExit.SetVisible( visible );
-            }
-
-            if ( _decoration != null )
-            {
-                _decoration.SetVisible( visible );
-            }
-
-            _indicatorDrawable = visible;
-        }
-
-        private void CreateButtons()
-        {
-        }
-
-        private void CreateIndicator()
-        {
-        }
-
-        private void AddDateSpecificItems( bool forceShow )
-        {
-        }
+    private void AddDateSpecificItems( bool forceShow )
+    {
     }
 }

@@ -1,29 +1,28 @@
 ﻿using PlatformaniaCS.Game.UI;
 
-namespace PlatformaniaCS.Game.Scenes
+namespace PlatformaniaCS.Game.Scenes;
+
+public class CreditsPage : IUIPage
 {
-    public class CreditsPage : IUIPage
+    public void Initialise()
     {
-        public void Initialise()
-        {
-        }
+    }
 
-        public bool Update() => false;
+    public bool Update() => false;
 
-        public void Show()
-        {
-        }
+    public void Show()
+    {
+    }
 
-        public void Hide()
-        {
-        }
+    public void Hide()
+    {
+    }
 
-        public void Draw()
-        {
-        }
+    public void Draw()
+    {
+    }
 
-        public void Dispose()
-        {
-        }
+    public void Dispose()
+    {
     }
 }

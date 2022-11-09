@@ -1,9 +1,8 @@
-namespace PlatformaniaCS.Game.UI
+namespace PlatformaniaCS.Game.UI;
+
+public class YesNoDialog : IDisposable
 {
-    public class YesNoDialog : IDisposable
+    public void Dispose()
     {
-        public void Dispose()
-        {
-        }
     }
 }

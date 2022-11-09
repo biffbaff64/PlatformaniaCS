@@ -1,9 +1,8 @@
-﻿namespace PlatformaniaCS.Game.Input
+﻿namespace PlatformaniaCS.Game.Input;
+
+public class InputManager
 {
-    public class InputManager
+    public void Setup()
     {
-        public void Setup()
-        {
-        }
     }
 }

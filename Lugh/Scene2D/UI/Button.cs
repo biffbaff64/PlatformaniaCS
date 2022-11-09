@@ -1,6 +1,5 @@
-﻿namespace Lugh.Scene2D
+﻿namespace Scene2DCS;
+
+public class Button : Table
 {
-    public class Button : Table
-    {
-    }
 }

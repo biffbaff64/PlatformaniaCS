@@ -4,70 +4,69 @@ using PlatformaniaCS.Game.UI;
 
 // ##################################################
 
-namespace PlatformaniaCS.Game.Core
+namespace PlatformaniaCS.Game.Core;
+
+public class EndgameManager
 {
-    public class EndgameManager
+    public EndgameManager()
     {
-        public EndgameManager()
+    }
+
+    public bool Update()
+    {
+        bool returnFlag = false;
+
+        if ( ( ( App.GetPlayer() != null ) && ( App.GetPlayer().ActionState == ActionStates._DEAD ) )
+             || GdxSystem.Inst().ForceQuitToMenu )
         {
+            App.AppState = StateID._STATE_PREPARE_GAME_OVER_MESSAGE;
+
+            GdxSystem.Inst().QuitToMainMenu = true;
+
+            returnFlag = true;
         }
-
-        public bool Update()
+        else
         {
-            bool returnFlag = false;
-
-            if ( ( ( App.GetPlayer() != null ) && ( App.GetPlayer().ActionState == ActionStates._DEAD ) )
-              || GdxSystem.Inst().ForceQuitToMenu )
+            if ( App.GameProgress.GameCompleted )
             {
-                App.AppState = StateID._STATE_PREPARE_GAME_OVER_MESSAGE;
+                Trace.BoxedDbg( message: "GAME COMPLETED" );
 
-                GdxSystem.Inst().QuitToMainMenu = true;
+                App.MainScene.GameCompletedPanel = new GameCompletedPanel();
+                App.MainScene.GameCompletedPanel.Setup();
+
+                App.Hud.HudStateID = StateID._STATE_GAME_FINISHED;
+                App.AppState       = StateID._STATE_GAME_FINISHED;
 
                 returnFlag = true;
             }
             else
             {
-                if ( App.GameProgress.GameCompleted )
+                if ( App.GameProgress.LevelCompleted )
                 {
-                    Trace.BoxedDbg( message: "GAME COMPLETED" );
+                    Trace.BoxedDbg( message: "LEVEL COMPLETED" );
 
-                    App.MainScene.GameCompletedPanel = new GameCompletedPanel();
-                    App.MainScene.GameCompletedPanel.Setup();
-
-                    App.Hud.HudStateID = StateID._STATE_GAME_FINISHED;
-                    App.AppState       = StateID._STATE_GAME_FINISHED;
+                    App.Hud.HudStateID = StateID._STATE_PANEL_UPDATE;
+                    App.AppState       = StateID._STATE_PREPARE_LEVEL_FINISHED;
 
                     returnFlag = true;
                 }
                 else
                 {
-                    if ( App.GameProgress.LevelCompleted )
+                    if ( App.GameProgress.IsRestarting )
                     {
-                        Trace.BoxedDbg( message: "LEVEL COMPLETED" );
+                        if ( App.GetPlayer().ActionState == ActionStates._RESETTING )
+                        {
+                            Trace.BoxedDbg( message: "LIFE LOST - TRY AGAIN" );
 
-                        App.Hud.HudStateID = StateID._STATE_PANEL_UPDATE;
-                        App.AppState       = StateID._STATE_PREPARE_LEVEL_FINISHED;
+                            App.AppState = StateID._STATE_PREPARE_LEVEL_RETRY;
+                        }
 
                         returnFlag = true;
                     }
-                    else
-                    {
-                        if ( App.GameProgress.IsRestarting )
-                        {
-                            if ( App.GetPlayer().ActionState == ActionStates._RESETTING )
-                            {
-                                Trace.BoxedDbg( message: "LIFE LOST - TRY AGAIN" );
-
-                                App.AppState = StateID._STATE_PREPARE_LEVEL_RETRY;
-                            }
-
-                            returnFlag = true;
-                        }
-                    }
                 }
             }
-
-            return returnFlag;
         }
+
+        return returnFlag;
     }
 }

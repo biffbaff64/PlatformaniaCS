@@ -1,7 +1,6 @@
-﻿namespace PlatformaniaCS.Game.Entities.Actors
+﻿namespace PlatformaniaCS.Game.Entities.Actors;
+
+public class Pickup
 {
-    public class Pickup
-    {
         
-    }
 }

@@ -1,18 +1,18 @@
 ﻿
-namespace PlatformaniaCS.Game.UI
-{
-    public class ItemBar
-    {
-        public const int NumItemPanels = 4;
-        public const int ItemsPerPanel = 8;
+namespace PlatformaniaCS.Game.UI;
 
-        private const int X              = 0;
-        private const int Y              = 1;
-        private const int Width          = 2;
-        private const int Height         = 3;
-        private const int CollectPanel   = 0;
-        private const int ItemsIndex     = 1;
-        private const int HighlightIndex = 9;
+public class ItemBar
+{
+    public const int NumItemPanels = 4;
+    public const int ItemsPerPanel = 8;
+
+    private const int X              = 0;
+    private const int Y              = 1;
+    private const int Width          = 2;
+    private const int Height         = 3;
+    private const int CollectPanel   = 0;
+    private const int ItemsIndex     = 1;
+    private const int HighlightIndex = 9;
 
         //@formatter:off
         public static GraphicID[ , ] ItemIDs =
@@ -71,6 +71,5 @@ namespace PlatformaniaCS.Game.UI
             {798, 36, 32, 32, 791, 29, 48, 48},
         };
 
-        //@formatter:on
-    }
+    //@formatter:on
 }

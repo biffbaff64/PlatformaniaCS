@@ -1,2 +1,14 @@
 ﻿
 Preferences class needs finishing ASAP.
+
+Scene2D library
+===============
+
+TO BE COMPLETED :-
+
+    Actor
+    Widget
+    WidgetGroup
+    Group
+    Event
+    

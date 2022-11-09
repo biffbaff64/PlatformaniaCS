@@ -1,11 +1,10 @@
-﻿namespace Enums
-{
-    public enum TaskType
-    {
-        _RUNES_MASTER,
-        _POTIONS_MASTER,
-        _BOOKS_MASTER,
+﻿namespace Enums;
 
-        _RUBBISH_COLLECTOR
-    }
+public enum TaskType
+{
+    _RUNES_MASTER,
+    _POTIONS_MASTER,
+    _BOOKS_MASTER,
+
+    _RUBBISH_COLLECTOR
 }

@@ -1,17 +1,16 @@
-﻿namespace PlatformaniaCS.Game.UI
+﻿namespace PlatformaniaCS.Game.UI;
+
+public interface IUIPage
 {
-    public interface IUIPage
-    {
-        void Initialise();
+    void Initialise();
 
-        bool Update();
+    bool Update();
 
-        void Show();
+    void Show();
 
-        void Hide();
+    void Hide();
 
-        void Draw();
+    void Draw();
 
-        void Dispose();
-    }
+    void Dispose();
 }

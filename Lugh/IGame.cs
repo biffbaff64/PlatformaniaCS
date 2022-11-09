@@ -1,15 +1,14 @@
-namespace Lugh
+namespace Lugh;
+
+public interface IGame
 {
-    public interface IGame
-    {
-        void Initialise();
+    void Initialise();
 
-        void LoadContent();
+    void LoadContent();
 
-        void Update( float gameTime );
+    void Update( float gameTime );
 
-        void Draw();
+    void Draw();
 
-        void SetScene( IGdxScene scene );
-    }
+    void SetScene( IGdxScene scene );
 }
