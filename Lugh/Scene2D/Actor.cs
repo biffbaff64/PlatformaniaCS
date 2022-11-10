@@ -2,8 +2,9 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Box2DSharp.Common;
+
 using Microsoft.Xna.Framework.Graphics;
+
 using Color = Microsoft.Xna.Framework.Color;
 
 // ##################################################
@@ -16,20 +17,20 @@ public class Actor
     [AllowNull] public Group  Parent { get; set; }
     [AllowNull] public string Name   { get; set; }
 
-    public bool  IsVisible { get; set; }
-    
-    public Vec2F        Size      { get; set; } = new Vec2F();
-    public Vec2F        Position  { get; set; } = new Vec2F();
-    public List<Action> Actions   { get; set; } = new List<Action>();
+    public bool IsVisible { get; set; }
+
+    public Vec2F        Size     { get; set; } = new();
+    public Vec2F        Position { get; set; } = new();
+    public Vec2F        Origin   { get; set; } = new();
+    public List<Action> Actions  { get; set; } = new();
 
     [AllowNull] private object _userObject;
 
-    private DelayedRemovalArray<IEventListener> _listeners;
-    private DelayedRemovalArray<IEventListener> _captureListeners;
+    private DelayedRemovalArray<IEventListener> _listeners        = new();
+    private DelayedRemovalArray<IEventListener> _captureListeners = new();
 
-    private Touchable _touchable;
-    private Vec2F     _origin;
-    private Vec2F     _scale;
+    private Touchable _touchable = Touchable.Enabled;
+    private Vec2F     _scale     = new();
     private float     _rotation;
     private Color     _color;
     private bool      _debugMode;
@@ -188,8 +189,8 @@ public class Actor
 
     protected void SetSize( float width, float height )
     {
-        if ( ( Math.Abs( Size.X - width )  > 0.001f )
-          || ( Math.Abs( Size.Y - height ) > 0.001f ) )
+        if ( ( Math.Abs( Size.X - width ) > 0.001f )
+             || ( Math.Abs( Size.Y - height ) > 0.001f ) )
         {
             Size.X = width;
             Size.Y = height;
@@ -241,7 +242,7 @@ public class Actor
             if ( Math.Abs( _scale.X - value ) > 0f )
             {
                 _scale.X = value;
-                
+
                 ScaleChanged();
             }
         }
@@ -255,7 +256,7 @@ public class Actor
             if ( Math.Abs( _scale.Y - value ) > 0f )
             {
                 _scale.Y = value;
-                
+
                 ScaleChanged();
             }
         }
@@ -267,11 +268,11 @@ public class Actor
     public void SetScale( float scale )
     {
         if ( ( Math.Abs( _scale.X - scale ) > 0f )
-          || ( Math.Abs( _scale.Y - scale ) > 0f ) )
+             || ( Math.Abs( _scale.Y - scale ) > 0f ) )
         {
             ScaleX = scale;
             ScaleY = scale;
-            
+
             ScaleChanged();
         }
     }
@@ -282,11 +283,11 @@ public class Actor
     public void SetScale( float scaleX, float scaleY )
     {
         if ( ( Math.Abs( _scale.X - scaleX ) > 0f )
-          || ( Math.Abs( _scale.Y - scaleY ) > 0f ) )
+             || ( Math.Abs( _scale.Y - scaleY ) > 0f ) )
         {
             ScaleX = scaleX;
             ScaleY = scaleY;
-            
+
             ScaleChanged();
         }
     }
@@ -298,15 +299,49 @@ public class Actor
     {
         if ( scale != 0f )
         {
-            
         }
     }
-    
+
     /// <summary>
     /// Called when the actor's scale has been changed.
     /// </summary>
     protected void ScaleChanged()
     {
+    }
+
+    public void SetOrigin( float originX, float originY )
+    {
+        Origin.X = originX;
+        Origin.Y = originY;
+    }
+
+    public void SetOrigin( int alignment )
+    {
+        if ( ( alignment & Align.left ) != 0 )
+        {
+            Origin.X = 0;
+        }
+        else if ( ( alignment & Align.right ) != 0 )
+        {
+            Origin.X = Size.X;
+        }
+        else
+        {
+            Origin.X = Size.X / 2;
+        }
+
+        if ( ( alignment & Align.bottom ) != 0 )
+        {
+            Origin.Y = 0;
+        }
+        else if ( ( alignment & Align.top ) != 0 )
+        {
+            Origin.Y = Size.Y;
+        }
+        else
+        {
+            Origin.Y = Size.Y / 2;
+        }
     }
 
     /// <summary>
@@ -424,11 +459,11 @@ public class Actor
     /// </summary>
     public Vector2 ParentToLocalCoordinates( Vector2 parentCoords )
     {
-        float rotation = this.Rotation;
-        float scaleX   = this.ScaleX;
-        float scaleY   = this.ScaleY;
-        float childX   = X;
-        float childY   = Y;
+        var rotation = this.Rotation;
+        var scaleX   = this.ScaleX;
+        var scaleY   = this.ScaleY;
+        var childX   = Position.X;
+        var childY   = Position.Y;
 
         if ( rotation == 0 )
         {
@@ -439,8 +474,8 @@ public class Actor
             }
             else
             {
-                float originX = this.OriginX;
-                float originY = this.OriginY;
+                float originX = this.Origin.X;
+                float originY = this.Origin.Y;
 
                 parentCoords.X = ( parentCoords.X - childX - originX ) / scaleX + originX;
                 parentCoords.Y = ( parentCoords.Y - childY - originY ) / scaleY + originY;
@@ -450,12 +485,13 @@ public class Actor
         {
             float cos     = ( float )Math.Cos( rotation * MathUtils.DegreesToRadians );
             float sin     = ( float )Math.Sin( rotation * MathUtils.DegreesToRadians );
-            float originX = this.OriginX;
-            float originY = this.OriginY;
-            float tox     = parentCoords.X - childX - originX;
-            float toy     = parentCoords.Y - childY - originY;
+            float originX = this.Origin.X;
+            float originY = this.Origin.Y;
 
-            parentCoords.X = ( tox * cos  + toy * sin ) / scaleX + originX;
+            float tox = parentCoords.X - childX - originX;
+            float toy = parentCoords.Y - childY - originY;
+
+            parentCoords.X = ( tox * cos + toy * sin ) / scaleX + originX;
             parentCoords.Y = ( tox * -sin + toy * cos ) / scaleY + originY;
         }
 
@@ -519,13 +555,13 @@ public class Actor
         }
 
         shapes.Rect
-        (
-            _position.X, _position.Y,
-            _origin.X, _origin.Y,
-            Size.X, Size.Y,
-            _scale.X, _scale.Y,
-            _rotation
-        );
+            (
+             Position.X, Position.Y,
+             Origin.X, Origin.Y,
+             Size.X, Size.Y,
+             _scale.X, _scale.Y,
+             _rotation
+            );
     }
 
     public bool DebugMode
