@@ -2,9 +2,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-
 using Microsoft.Xna.Framework.Graphics;
-
 using Color = Microsoft.Xna.Framework.Color;
 
 // ##################################################
@@ -13,9 +11,10 @@ namespace Scene2DCS;
 
 public class Actor
 {
-    [AllowNull] public Stage  Stage  { get; set; }
-    [AllowNull] public Group  Parent { get; set; }
-    [AllowNull] public string Name   { get; set; }
+    [AllowNull] public Stage  Stage      { get; set; }
+    [AllowNull] public Group  Parent     { get; set; }
+    [AllowNull] public string Name       { get; set; }
+    [AllowNull] public object UserObject { get; set; }
 
     public bool IsVisible { get; set; }
 
@@ -24,7 +23,6 @@ public class Actor
     public Vec2F        Origin   { get; set; } = new();
     public List<Action> Actions  { get; set; } = new();
 
-    [AllowNull] private object _userObject;
 
     private DelayedRemovalArray<IEventListener> _listeners        = new();
     private DelayedRemovalArray<IEventListener> _captureListeners = new();
@@ -33,7 +31,6 @@ public class Actor
     private Vec2F     _scale     = new();
     private float     _rotation;
     private Color     _color;
-    private bool      _debugMode;
 
     // -----------------------------------------------
     // Code
@@ -181,6 +178,202 @@ public class Actor
     public bool IsTouchable() => _touchable == Touchable.Enabled;
 
     /// <summary>
+    /// Returns true if this actor and all ascendants are visible.7
+    /// </summary>
+    public bool AscendantsVisible()
+    {
+        Actor actor = this;
+
+        do
+        {
+            if ( !actor.IsVisible ) return false;
+
+            actor = actor.Parent;
+        }
+        while ( actor != null );
+        
+        return true;
+    }
+    
+    /// <summary>
+    /// Returns the X position of the actor's left edge.
+    /// </summary>
+    public float GetX() => Position.X;
+
+    /// <summary>
+    /// Returns the Y position of the actor's bottom edge.
+    /// </summary>
+    public float GetY() => Position.Y;
+
+    /// <summary>
+    /// Returns the X position of the specified <see cref="Align"/> alignment.
+    /// </summary>
+    public float GetX( int alignment )
+    {
+        var x = Position.X;
+
+        if ( ( alignment & Align.right ) != 0 )
+        {
+            x += Size.X;
+        }
+        else if ( ( alignment & Align.left ) != 0 )
+        {
+            x += Size.X / 2;
+        }
+
+        return x;
+    }
+
+    /// <summary>
+    /// Returns the Y position of the specified <see cref="Align"/> alignment.
+    /// </summary>
+    public float GetY( int alignment )
+    {
+        var y = Position.Y;
+
+        if ( ( alignment & Align.top ) != 0 )
+        {
+            y += Size.Y;
+        }
+        else if ( ( alignment & Align.bottom ) != 0 )
+        {
+            y += Size.Y / 2;
+        }
+
+        return y;
+    }
+
+    /// <summary>
+    /// Sets the X position of the actor's bottom left corner.
+    /// </summary>
+    public void SetX( float x )
+    {
+        if ( Position.X != x )
+        {
+            Position.X = x;
+
+            PositionChanged();
+        }
+    }
+
+    /// <summary>
+    /// Sets the Y position of the actor's bottom left corner.
+    /// </summary>
+    public void SetY( float y )
+    {
+        if ( Position.Y != y )
+        {
+            Position.Y = y;
+
+            PositionChanged();
+        }
+    }
+    `
+    /// <summary>
+    /// Sets the X position using the specified <see cref="Align"/> alignment.
+    /// Note this may set the position to non-integer coordinates. 
+    /// </summary>
+    public void SetX( float x, int alignment )
+    {
+        if ( ( alignment & Align.right ) != 0 )
+        {
+            x -= Size.X;
+        }
+        else if ( ( alignment & Align.left ) == 0 ) //
+        {
+            x -= Size.X / 2;
+        }
+
+        if ( this.Position.X != x )
+        {
+            this.Position.X = x;
+            
+            PositionChanged();
+        }
+    }
+    `
+    /// <summary>
+    /// Sets the Y position using the specified <see cref="Align"/> alignment.
+    /// Note this may set the position to non-integer coordinates. 
+    /// </summary>
+    public void SetY( float y, int alignment )
+    {
+        if ( ( alignment & Align.top ) != 0 )
+        {
+            y -= Size.Y;
+        }
+        else if ( ( alignment & Align.bottom ) == 0 ) //
+        {
+            y -= Size.Y / 2;
+        }
+
+        if ( this.Position.Y != y )
+        {
+            this.Position.Y = y;
+            
+            PositionChanged();
+        }
+    }
+
+    /// <summary>
+    /// Sets the position of the actor's bottom left corner.
+    /// </summary>
+    public void SetPosition( float x, float y )
+    {
+        if ( this.Position.X != x || this.Position.Y != y )
+        {
+            this.Position.X = x;
+            this.Position.Y = y;
+
+            PositionChanged();
+        }
+    }
+
+    /// <summary>
+    /// Sets the position using the specified <see cref="Align"/> alignment.
+    /// Note this may set the position to non-integer coordinates. 
+    /// </summary>
+    public void SetPosition( float x, float y, int alignment )
+    {
+        if ( ( alignment & Align.right ) != 0 )
+        {
+            x -= Size.X;
+        }
+        else if ( ( alignment & Align.left ) == 0 ) //
+        {
+            x -= Size.X / 2;
+        }
+
+        if ( ( alignment & Align.top ) != 0 )
+        {
+            y -= Size.Y;
+        }
+        else if ( ( alignment & Align.bottom ) == 0 ) //
+        {
+            y -= Size.Y / 2;
+        }
+
+        if ( this.Position.X != x || this.Position.Y != y )
+        {
+            this.Position.X = x;
+            this.Position.Y = y;
+
+            PositionChanged();
+        }
+    }
+
+    public void MoveBy( float x, float y )
+    {
+        if ( x != 0 || y != 0 )
+        {
+            Position.X += x;
+            Position.Y += y;
+
+            PositionChanged();
+        }
+    }
+
+    /// <summary>
     /// Called when the actor's position has been changed.
     /// </summary>
     protected void PositionChanged()
@@ -189,8 +382,8 @@ public class Actor
 
     protected void SetSize( float width, float height )
     {
-        if ( ( Math.Abs( Size.X - width ) > 0.001f )
-             || ( Math.Abs( Size.Y - height ) > 0.001f ) )
+        if ( ( Math.Abs( Size.X - width )  > 0.001f )
+          || ( Math.Abs( Size.Y - height ) > 0.001f ) )
         {
             Size.X = width;
             Size.Y = height;
@@ -227,12 +420,35 @@ public class Actor
         }
     }
 
+    public void SetBounds( float x, float y, float width, float height )
+    {
+        if ( this.Position.X != x || this.Position.Y != y )
+        {
+            this.Position.X = x;
+            this.Position.Y = y;
+
+            PositionChanged();
+        }
+
+        if ( this.Size.X != width || this.Size.Y != height )
+        {
+            this.Size.X = width;
+            this.Size.Y = height;
+
+            SizeChanged();
+        }
+    }
+
     /// <summary>
     /// Called when the actor's size has been changed.
     /// </summary>
     protected void SizeChanged()
     {
     }
+
+    public float Top() => Position.Y + Size.Y;
+
+    public float Right() => Position.X + Size.X;
 
     public float ScaleX
     {
@@ -268,7 +484,7 @@ public class Actor
     public void SetScale( float scale )
     {
         if ( ( Math.Abs( _scale.X - scale ) > 0f )
-             || ( Math.Abs( _scale.Y - scale ) > 0f ) )
+          || ( Math.Abs( _scale.Y - scale ) > 0f ) )
         {
             ScaleX = scale;
             ScaleY = scale;
@@ -283,7 +499,7 @@ public class Actor
     public void SetScale( float scaleX, float scaleY )
     {
         if ( ( Math.Abs( _scale.X - scaleX ) > 0f )
-             || ( Math.Abs( _scale.Y - scaleY ) > 0f ) )
+          || ( Math.Abs( _scale.Y - scaleY ) > 0f ) )
         {
             ScaleX = scaleX;
             ScaleY = scaleY;
@@ -299,6 +515,24 @@ public class Actor
     {
         if ( scale != 0f )
         {
+            ScaleX += scale;
+            ScaleY += scale;
+
+            ScaleChanged();
+        }
+    }
+
+    /// <summary>
+    /// Adds the specified scale to the current scale.
+    /// </summary>
+    public void ScaleBy( float scaleX, float scaleY )
+    {
+        if ( scaleX != 0f || scaleY != 0 )
+        {
+            ScaleX += scaleX;
+            ScaleY += scaleY;
+
+            ScaleChanged();
         }
     }
 
@@ -378,6 +612,9 @@ public class Actor
         }
     }
 
+    /// <summary>
+    /// Returns the color the actor will be tinted when drawn.
+    /// </summary>
     public Color GetColor() => _color;
 
     public void SetColor( Color color )
@@ -409,16 +646,90 @@ public class Actor
         SetZIndex( 0 );
     }
 
-    public bool SetZIndex( int index ) => true;
+    /// <summary>
+    /// Sets the z-index of this actor. The z-index is the index into the
+    /// parent's {@link Group#getChildren() children}, where a lower index
+    /// is below a higher index. Setting a z-index higher than the number
+    /// of children will move the child to the front.
+    /// Setting a z-index less than zero is invalid.
+    /// </summary>
+    /// <returns>True if the z-index changed.</returns>
+    public bool SetZIndex( int index )
+    {
+        if ( index < 0 )
+        {
+            throw new ArgumentException( "ZIndex cannot be < 0." );
+        }
 
-    public int GetZIndex() => -1;
+        Group parent = this.Parent;
 
-    public bool ClipBegin() => false;
+        if ( parent == null ) return false;
 
-    public bool ClipBegin( float x, float y, float width, float height ) => false;
+        List<Actor> children = parent.Children;
 
+        if ( children.Size <= 1 ) return false;
+
+        index = Math.Min( index, children.Size - 1 );
+
+        if ( children.Get( index ) == this ) return false;
+
+        if ( !children.RemoveValue( this, true ) ) return false;
+
+        children.Insert( index, this );
+
+        return true;
+    }
+
+    /// <summary>
+    /// Returns the z-index of this actor, or -1 if the actor is not in a group.
+    /// </summary>
+    public int GetZIndex()
+    {
+        Group parent = Parent;
+
+        if ( parent == null ) return -1;
+
+        return parent.Children.IndexOf( this, true );
+    }
+
+    /// <summary>
+    /// Clip this actors bounds.
+    /// </summary>
+    public bool ClipBegin() => ClipBegin( Position.X, Position.Y, Size.X, Size.Y );
+
+    public bool ClipBegin( float x, float y, float width, float height )
+    {
+        if ( width <= 0 || height <= 0 ) return false;
+
+        Stage stage = this.Stage;
+
+        if ( stage == null ) return false;
+
+        Rectangle tableBounds = new Rectangle
+        {
+                X      = ( int )Position.X,
+                Y      = ( int )Position.Y,
+                Width  = ( int )Size.X,
+                Height = ( int )Size.Y
+        };
+
+        Rectangle scissorBounds = Pools.obtain( Rectangle.class);
+
+        stage.CalculateScissors( tableBounds, scissorBounds );
+
+        if ( ScissorStack.pushScissors( scissorBounds ) ) return true;
+
+        Pools.free( scissorBounds );
+
+        return false;
+    }
+
+    /// <summary>
+    /// Ends clipping begun by <see cref="ClipBegin()"/>
+    /// </summary>
     public void ClipEnd()
     {
+        Pools.Free( ScissorStack.PopScissors() );
     }
 
     /// <summary>
@@ -483,26 +794,88 @@ public class Actor
         }
         else
         {
-            float cos     = ( float )Math.Cos( rotation * MathUtils.DegreesToRadians );
-            float sin     = ( float )Math.Sin( rotation * MathUtils.DegreesToRadians );
-            float originX = this.Origin.X;
-            float originY = this.Origin.Y;
+            var cos     = ( float )Math.Cos( rotation * MathUtils.DegreesToRadians );
+            var sin     = ( float )Math.Sin( rotation * MathUtils.DegreesToRadians );
+            var originX = this.Origin.X;
+            var originY = this.Origin.Y;
 
-            float tox = parentCoords.X - childX - originX;
-            float toy = parentCoords.Y - childY - originY;
+            var tox = parentCoords.X - childX - originX;
+            var toy = parentCoords.Y - childY - originY;
 
-            parentCoords.X = ( tox * cos + toy * sin ) / scaleX + originX;
+            parentCoords.X = ( tox * cos  + toy * sin ) / scaleX + originX;
             parentCoords.Y = ( tox * -sin + toy * cos ) / scaleY + originY;
         }
 
         return parentCoords;
     }
 
-    public Vector2 LocalToScreenCoordinates( Vector2 localCoords ) => localCoords;
+    /// <summary>
+    /// Transforms the specified point in the actor's coordinates
+    /// to be in screen coordinates.
+    /// </summary>
+    public Vector2 LocalToScreenCoordinates( Vector2 localCoords )
+    {
+        var stage = this.Stage;
 
-    public Vector2 LocalToStageCoordinates( Vector2 localCoords ) => localCoords;
+        if ( stage == null )
+        {
+            return localCoords;
+        }
 
-    public Vector2 LocalToParentCoordinates( Vector2 localCoords ) => localCoords;
+        return stage.StageToScreenCoordinates( LocalToAscendantCoordinates( null, localCoords ) );
+    }
+
+    /// <summary>
+    /// Transforms the specified point in the actor's coordinates
+    /// to be in the stage's coordinates.
+    /// </summary>
+    public Vector2 LocalToStageCoordinates( Vector2 localCoords )
+        => LocalToAscendantCoordinates( null, localCoords );
+
+    /// <summary>
+    /// Transforms the specified point in the actor's coordinates
+    /// to be in the parent's coordinates.
+    /// </summary>
+    public Vector2 LocalToParentCoordinates( Vector2 localCoords )
+    {
+        var rotation = -this._rotation;
+        var scaleX   = this.ScaleX;
+        var scaleY   = this.ScaleY;
+        var x        = this.Position.X;
+        var y        = this.Position.Y;
+
+        if ( rotation == 0 )
+        {
+            if ( scaleX == 1 && scaleY == 1 )
+            {
+                localCoords.X += x;
+                localCoords.Y += y;
+            }
+            else
+            {
+                var originX = this.Origin.X;
+                var originY = this.Origin.Y;
+
+                localCoords.X = ( localCoords.X - originX ) * scaleX + originX + x;
+                localCoords.Y = ( localCoords.Y - originY ) * scaleY + originY + y;
+            }
+        }
+        else
+        {
+            var cos     = ( float )Math.Cos( rotation * MathUtils.DegreesToRadians );
+            var sin     = ( float )Math.Sin( rotation * MathUtils.DegreesToRadians );
+            var originX = this.Origin.X;
+            var originY = this.Origin.Y;
+
+            var tox = ( localCoords.X - originX ) * scaleX;
+            var toy = ( localCoords.Y - originY ) * scaleY;
+
+            localCoords.X = ( tox * cos  + toy * sin ) + originX + x;
+            localCoords.Y = ( tox * -sin + toy * cos ) + originY + y;
+        }
+
+        return localCoords;
+    }
 
     /// <summary>
     /// Converts coordinates for this actor to those of an ascendant.
@@ -535,14 +908,20 @@ public class Actor
         return actor.StageToLocalCoordinates( localCoords );
     }
 
+    /// <summary>
+    /// Draws this actor's debug lines if <see cref="Debug"/> is true.
+    /// </summary>
     public void DrawDebug( ShapeRenderer shapes )
     {
         DrawDebugBounds( shapes );
     }
 
+    /// <summary>
+    /// Draws a rectangle for the bounds of this actor if <see cref="Debug"/> is true.
+    /// </summary>
     protected void DrawDebugBounds( ShapeRenderer shapes )
     {
-        if ( !_debugMode )
+        if ( !_debug )
         {
             return;
         }
@@ -555,34 +934,29 @@ public class Actor
         }
 
         shapes.Rect
-            (
-             Position.X, Position.Y,
-             Origin.X, Origin.Y,
-             Size.X, Size.Y,
-             _scale.X, _scale.Y,
-             _rotation
-            );
+        (
+            Position.X, Position.Y,
+            Origin.X, Origin.Y,
+            Size.X, Size.Y,
+            _scale.X, _scale.Y,
+            _rotation
+        );
     }
 
-    public bool DebugMode
+    private bool _debug;
+
+    public bool Debug
     {
-        get => _debugMode;
+        get => _debug;
         set
         {
-            _debugMode = value;
+            _debug = value;
 
-            if ( DebugMode )
+            if ( Debug )
             {
                 Stage.DebugMode = true;
             }
         }
-    }
-
-    public Actor Debug()
-    {
-        DebugMode = true;
-
-        return this;
     }
 
     public override string ToString()

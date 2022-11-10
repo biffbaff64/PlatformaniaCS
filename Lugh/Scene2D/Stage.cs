@@ -14,4 +14,9 @@ public class Stage
     {
         return default;
     }
+
+    public Vector2 StageToScreenCoordinates( Vector2 localToAscendantCoordinates )
+    {
+        return default;
+    }
 }
