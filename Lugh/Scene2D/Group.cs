@@ -4,8 +4,23 @@ using Scene2DCS.Utils;
 
 namespace Scene2DCS;
 
+/// <summary>
+/// 2D scene graph node that may contain other actors.
+/// Actors have a z-order equal to the order they were inserted into the group.
+/// Actors inserted later will be drawn on top of actors added earlier. Touch
+/// events that hit more than one actor are distributed to topmost actors first.
+/// </summary>
 public class Group : Actor, ICullable
 {
+    private Vector2 _tmp = new();
+
+    private SnapshotArray< Actor > _children          = new SnapshotArray< Actor >( true, 4, Actor.class);
+    private Affine2                _worldTransform    = new();
+    private Matrix4                _computedTransform = new();
+    private Matrix4                _oldTransform      = new();
+    private bool                   _transform         = true;
+    private Rectangle              _cullingArea;
+
     public new void Act( float delta )
     {
     }
@@ -13,7 +28,7 @@ public class Group : Actor, ICullable
     public new void Draw( SpriteBatch batch, float parentAlpha )
     {
     }
-    
+
     public new void DrawDebug( ShapeRenderer shapes )
     {
     }
@@ -71,7 +86,7 @@ public class Group : Actor, ICullable
     {
     }
 
-    public T FindActor<T>( string name )
+    public T FindActor< T >( string name )
     {
         return default;
     }
