@@ -2,7 +2,9 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.Xna.Framework.Graphics;
+
 using Color = Microsoft.Xna.Framework.Color;
 
 // ##################################################
@@ -18,14 +20,14 @@ public class Actor
 
     public bool IsVisible { get; set; }
 
-    public Vec2F        Size     { get; set; } = new();
-    public Vec2F        Position { get; set; } = new();
-    public Vec2F        Origin   { get; set; } = new();
-    public List<Action> Actions  { get; set; } = new();
+    public Vec2F          Size     { get; set; } = new();
+    public Vec2F          Position { get; set; } = new();
+    public Vec2F          Origin   { get; set; } = new();
+    public List< Action > Actions  { get; set; } = new();
 
 
-    private DelayedRemovalArray<IEventListener> _listeners        = new();
-    private DelayedRemovalArray<IEventListener> _captureListeners = new();
+    private DelayedRemovalArray< IEventListener > _listeners        = new();
+    private DelayedRemovalArray< IEventListener > _captureListeners = new();
 
     private Touchable _touchable = Touchable.Enabled;
     private Vec2F     _scale     = new();
@@ -80,7 +82,7 @@ public class Actor
 
     public bool RemoveListener( IEventListener listener ) => false;
 
-    public DelayedRemovalArray<IEventListener> GetListeners() => _listeners;
+    public DelayedRemovalArray< IEventListener > GetListeners() => _listeners;
 
     public bool AddCaptureListener( [DisallowNull] IEventListener listener )
     {
@@ -94,7 +96,7 @@ public class Actor
 
     public bool RemoveCaptureListener( [DisallowNull] IEventListener listener ) => _captureListeners.Remove( listener );
 
-    public DelayedRemovalArray<IEventListener> GetCaptureListeners() => _captureListeners;
+    public DelayedRemovalArray< IEventListener > GetCaptureListeners() => _captureListeners;
 
     public void AddAction( Action action )
     {
@@ -155,7 +157,7 @@ public class Actor
     /// Returns this actor or the first ascendant of this actor that
     /// is assignable with the specified type, or null if none were found.
     /// </summary>
-    public T FirstAscendant<T>( T type ) where T : Actor
+    public T FirstAscendant< T >( T type ) where T : Actor
     {
         Actor actor = this;
 
@@ -191,10 +193,10 @@ public class Actor
             actor = actor.Parent;
         }
         while ( actor != null );
-        
+
         return true;
     }
-    
+
     /// <summary>
     /// Returns the X position of the actor's left edge.
     /// </summary>
@@ -268,7 +270,7 @@ public class Actor
             PositionChanged();
         }
     }
-    `
+
     /// <summary>
     /// Sets the X position using the specified <see cref="Align"/> alignment.
     /// Note this may set the position to non-integer coordinates. 
@@ -279,7 +281,7 @@ public class Actor
         {
             x -= Size.X;
         }
-        else if ( ( alignment & Align.left ) == 0 ) //
+        else if ( ( alignment & Align.left ) == 0 )
         {
             x -= Size.X / 2;
         }
@@ -287,11 +289,11 @@ public class Actor
         if ( this.Position.X != x )
         {
             this.Position.X = x;
-            
+
             PositionChanged();
         }
     }
-    `
+
     /// <summary>
     /// Sets the Y position using the specified <see cref="Align"/> alignment.
     /// Note this may set the position to non-integer coordinates. 
@@ -310,7 +312,7 @@ public class Actor
         if ( this.Position.Y != y )
         {
             this.Position.Y = y;
-            
+
             PositionChanged();
         }
     }
@@ -382,8 +384,8 @@ public class Actor
 
     protected void SetSize( float width, float height )
     {
-        if ( ( Math.Abs( Size.X - width )  > 0.001f )
-          || ( Math.Abs( Size.Y - height ) > 0.001f ) )
+        if ( ( Math.Abs( Size.X - width ) > 0.001f )
+             || ( Math.Abs( Size.Y - height ) > 0.001f ) )
         {
             Size.X = width;
             Size.Y = height;
@@ -484,7 +486,7 @@ public class Actor
     public void SetScale( float scale )
     {
         if ( ( Math.Abs( _scale.X - scale ) > 0f )
-          || ( Math.Abs( _scale.Y - scale ) > 0f ) )
+             || ( Math.Abs( _scale.Y - scale ) > 0f ) )
         {
             ScaleX = scale;
             ScaleY = scale;
@@ -499,7 +501,7 @@ public class Actor
     public void SetScale( float scaleX, float scaleY )
     {
         if ( ( Math.Abs( _scale.X - scaleX ) > 0f )
-          || ( Math.Abs( _scale.Y - scaleY ) > 0f ) )
+             || ( Math.Abs( _scale.Y - scaleY ) > 0f ) )
         {
             ScaleX = scaleX;
             ScaleY = scaleY;
@@ -658,14 +660,14 @@ public class Actor
     {
         if ( index < 0 )
         {
-            throw new ArgumentException( "ZIndex cannot be < 0." );
+            throw new ArgumentException( "Z Index cannot be < 0." );
         }
 
         Group parent = this.Parent;
 
         if ( parent == null ) return false;
 
-        List<Actor> children = parent.Children;
+        List< Actor > children = parent.Children;
 
         if ( children.Size <= 1 ) return false;
 
@@ -707,10 +709,7 @@ public class Actor
 
         Rectangle tableBounds = new Rectangle
         {
-                X      = ( int )Position.X,
-                Y      = ( int )Position.Y,
-                Width  = ( int )Size.X,
-                Height = ( int )Size.Y
+            X = ( int )Position.X, Y = ( int )Position.Y, Width = ( int )Size.X, Height = ( int )Size.Y
         };
 
         Rectangle scissorBounds = Pools.obtain( Rectangle.class);
@@ -802,7 +801,7 @@ public class Actor
             var tox = parentCoords.X - childX - originX;
             var toy = parentCoords.Y - childY - originY;
 
-            parentCoords.X = ( tox * cos  + toy * sin ) / scaleX + originX;
+            parentCoords.X = ( tox * cos + toy * sin ) / scaleX + originX;
             parentCoords.Y = ( tox * -sin + toy * cos ) / scaleY + originY;
         }
 
@@ -870,7 +869,7 @@ public class Actor
             var tox = ( localCoords.X - originX ) * scaleX;
             var toy = ( localCoords.Y - originY ) * scaleY;
 
-            localCoords.X = ( tox * cos  + toy * sin ) + originX + x;
+            localCoords.X = ( tox * cos + toy * sin ) + originX + x;
             localCoords.Y = ( tox * -sin + toy * cos ) + originY + y;
         }
 
@@ -934,13 +933,13 @@ public class Actor
         }
 
         shapes.Rect
-        (
-            Position.X, Position.Y,
-            Origin.X, Origin.Y,
-            Size.X, Size.Y,
-            _scale.X, _scale.Y,
-            _rotation
-        );
+            (
+             Position.X, Position.Y,
+             Origin.X, Origin.Y,
+             Size.X, Size.Y,
+             _scale.X, _scale.Y,
+             _rotation
+            );
     }
 
     private bool _debug;
