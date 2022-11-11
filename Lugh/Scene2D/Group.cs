@@ -12,7 +12,7 @@ namespace Scene2DCS;
 /// </summary>
 public class Group : Actor, ICullable
 {
-    private Vector2 _tmp = new();
+    private Vector2 _tmp = new Vector2();
 
     private SnapshotArray< Actor > _children          = new SnapshotArray< Actor >( true, 4, Actor.class);
     private Affine2                _worldTransform    = new();
