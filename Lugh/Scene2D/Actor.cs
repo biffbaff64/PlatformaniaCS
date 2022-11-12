@@ -667,7 +667,7 @@ public class Actor
 
         if ( parent == null ) return false;
 
-        List< Actor > children = parent.Children;
+        Array< Actor > children = parent.Children;
 
         if ( children.Size <= 1 ) return false;
 
@@ -675,7 +675,7 @@ public class Actor
 
         if ( children.Get( index ) == this ) return false;
 
-        if ( !children.RemoveValue( this, true ) ) return false;
+        if ( !children.RemoveValue( this ) ) return false;
 
         children.Insert( index, this );
 

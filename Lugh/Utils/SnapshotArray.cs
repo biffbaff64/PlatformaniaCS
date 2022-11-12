@@ -90,7 +90,7 @@ public class SnapshotArray< T > : Array< T >
         // Snapshot is in use, copy backing array to recycled array or create new backing array.
         if ( _recycled != null && _recycled.Length >= Size )
         {
-            System.Arraycopy( Items, 0, _recycled, 0, Size );
+            Array.Copy( Items, 0, _recycled, 0, Size );
 
             Items     = _recycled;
             _recycled = null;

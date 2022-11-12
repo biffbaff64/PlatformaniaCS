@@ -16,12 +16,14 @@ namespace Scene2DCS;
 /// </summary>
 public class Group : Actor, ICullable
 {
+    public SnapshotArray< Actor > Children { get; set; }
+        = new SnapshotArray< Actor >( true, 4, typeof( Actor ));
+
     private Vector2 _tmp = new Vector2();
 
-    private SnapshotArray< Actor > _children          = new SnapshotArray< Actor >( true, 4, Actor.class);
-    private Affine2                _worldTransform    = new();
-    private Matrix4                _computedTransform = new();
-    private Matrix4                _oldTransform      = new();
+    private Affine2                _worldTransform    = new Affine2();
+    private Matrix4                _computedTransform = new Matrix4();
+    private Matrix4                _oldTransform      = new Matrix4();
     private bool                   _transform         = true;
     private Rectangle              _cullingArea;
 
