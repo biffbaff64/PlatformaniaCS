@@ -157,7 +157,7 @@ public class MainGameHandler
             App.Hud.HudStateID = StateID._STATE_PANEL_UPDATE;
 
             // If game has virtual/onscreen controls...
-            if ( GdxSystem.Inst().AvailableInputs.Contains( ControllerType._VIRTUAL ) )
+            if ( LughSystem.Inst().AvailableInputs.Contains( ControllerType._VIRTUAL ) )
             {
                 App.Hud.ShowControls( true );
             }
@@ -229,7 +229,7 @@ public class MainGameHandler
                         // Tasks to perform if the game has not ended
                         if ( App.AppState == StateID._STATE_PAUSED )
                         {
-                            if ( !GdxSystem.Inst().GamePaused )
+                            if ( !LughSystem.Inst().GamePaused )
                             {
                                 App.AppState = StateID._STATE_GAME;
                             }

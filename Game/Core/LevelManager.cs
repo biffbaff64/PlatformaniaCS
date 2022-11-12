@@ -27,9 +27,9 @@ public class LevelManager
             SetupForNewLevel();
         }
 
-        GdxSystem.Inst().GamePaused      = false;
-        GdxSystem.Inst().QuitToMainMenu  = false;
-        GdxSystem.Inst().ForceQuitToMenu = false;
+        LughSystem.Inst().GamePaused      = false;
+        LughSystem.Inst().QuitToMainMenu  = false;
+        LughSystem.Inst().ForceQuitToMenu = false;
 
         App.GameProgress.IsRestarting   = false;
         App.GameProgress.LevelCompleted = false;

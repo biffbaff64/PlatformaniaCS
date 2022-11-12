@@ -37,7 +37,7 @@ public static class Trace
         params object[]           args
         )
     {
-        if ( GdxSystem.Inst().LogLevel == GdxSystem.LogDebug )
+        if ( LughSystem.Inst().LogLevel == LughSystem.LogDebug )
         {
             message = string.Join( DebugTag, message );
 
@@ -71,7 +71,7 @@ public static class Trace
         params object[]           args
         )
     {
-        if ( GdxSystem.Inst().LogLevel == GdxSystem.LogDebug )
+        if ( LughSystem.Inst().LogLevel == LughSystem.LogDebug )
         {
             Divider();
 
@@ -109,7 +109,7 @@ public static class Trace
         params object[]           args
         )
     {
-        if ( GdxSystem.Inst().LogLevel == GdxSystem.LogDebug )
+        if ( LughSystem.Inst().LogLevel == LughSystem.LogDebug )
         {
             message = string.Join( ErrorTag, message );
 
@@ -145,7 +145,7 @@ public static class Trace
         params object[]           args
         )
     {
-        if ( ( GdxSystem.Inst().LogLevel == GdxSystem.LogDebug ) && condition )
+        if ( ( LughSystem.Inst().LogLevel == LughSystem.LogDebug ) && condition )
         {
             message = string.Join( DebugTag, message );
 
@@ -177,7 +177,7 @@ public static class Trace
         [CallerLineNumber] int    callerLine     = 0
         )
     {
-        if ( GdxSystem.Inst().LogLevel == GdxSystem.LogDebug )
+        if ( LughSystem.Inst().LogLevel == LughSystem.LogDebug )
         {
             var sb = new StringBuilder();
 
@@ -206,7 +206,7 @@ public static class Trace
     /// <param name="args"></param>
     public static void Info( string message, params object[] args )
     {
-        if ( GdxSystem.Inst().LogLevel == GdxSystem.LogDebug )
+        if ( LughSystem.Inst().LogLevel == LughSystem.LogDebug )
         {
             message = string.Join( InfoTag, message );
 

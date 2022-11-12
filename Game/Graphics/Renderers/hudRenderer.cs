@@ -6,7 +6,7 @@ public class HUDRenderer
 {
     public void Render()
     {
-        if ( !GdxSystem.Inst().ShutDownActive )
+        if ( !LughSystem.Inst().ShutDownActive )
         {
             switch ( App.AppState )
             {
@@ -28,7 +28,7 @@ public class HUDRenderer
                 case StateID._STATE_DEBUG_HANG:
                 case StateID._STATE_GAME_OVER:
                 {
-                    var availableInputs = GdxSystem.Inst().AvailableInputs;
+                    var availableInputs = LughSystem.Inst().AvailableInputs;
 
                     App.Hud?.Render
                         (

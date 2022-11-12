@@ -7,7 +7,7 @@ using Trace = Lugh.Utils.Trace;
 
 namespace Lugh;
 
-public class GdxSystem
+public class LughSystem
 {
     public const int LogNone  = 0;
     public const int LogDebug = 1;
@@ -29,11 +29,11 @@ public class GdxSystem
     public GameButtonRegion     FullScreenButton     { get; set; }
     public Switch               SystemBackButton     { get; set; }
     public ImageButton          BackButton           { get; set; }
-    public IGdxScene            CurrentScene         { get; set; }
+    public IScene            CurrentScene         { get; set; }
 
-    private static readonly GdxSystem instance = new();
+    private static readonly LughSystem instance = new();
 
-    public static GdxSystem Inst() => instance;
+    public static LughSystem Inst() => instance;
 
     public int LogLevel { get; set; }
 

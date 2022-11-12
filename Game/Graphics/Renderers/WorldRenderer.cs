@@ -6,7 +6,7 @@ public class WorldRenderer
 {
     public void Render()
     {
-        if ( !GdxSystem.Inst().ShutDownActive )
+        if ( !LughSystem.Inst().ShutDownActive )
         {
             switch ( App.AppState )
             {

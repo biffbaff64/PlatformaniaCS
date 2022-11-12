@@ -127,24 +127,24 @@ public class Developer
             Trace.Dbg
                 (
                  message: "_VIRTUAL?           : ",
-                 args: GdxSystem.Inst().AvailableInputs.Contains( ControllerType._VIRTUAL )
+                 args: LughSystem.Inst().AvailableInputs.Contains( ControllerType._VIRTUAL )
                 );
 
             Trace.Dbg
                 (
                  message: "_EXTERNAL?          : ",
-                 args: GdxSystem.Inst().AvailableInputs.Contains( ControllerType._EXTERNAL )
+                 args: LughSystem.Inst().AvailableInputs.Contains( ControllerType._EXTERNAL )
                 );
 
             Trace.Dbg
                 (
                  message: "_KEYBOARD?          : ",
-                 args: GdxSystem.Inst().AvailableInputs.Contains( ControllerType._KEYBOARD )
+                 args: LughSystem.Inst().AvailableInputs.Contains( ControllerType._KEYBOARD )
                 );
 
-            Trace.Dbg( message: "controllerPos       : ", args: GdxSystem.Inst().VirtualControllerPos );
-            Trace.Dbg( message: "controllersFitted   : ", args: GdxSystem.Inst().ControllersFitted );
-            Trace.Dbg( message: "usedController      : ", args: GdxSystem.Inst().CurrentController );
+            Trace.Dbg( message: "controllerPos       : ", args: LughSystem.Inst().VirtualControllerPos );
+            Trace.Dbg( message: "controllersFitted   : ", args: LughSystem.Inst().ControllersFitted );
+            Trace.Dbg( message: "usedController      : ", args: LughSystem.Inst().CurrentController );
             Trace.Divider();
         }
     }

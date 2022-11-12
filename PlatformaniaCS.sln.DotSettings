@@ -128,6 +128,14 @@
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=047247F4A0D05845AA03F4859AB0C600/ShortenQualifiedReferences/@EntryValue">False</s:Boolean>
 	
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=047247F4A0D05845AA03F4859AB0C600/UITag/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2CAB0A567F30704CA99AA3EC249E3153/Text/@EntryValue">// ##################################################
+
+// ##################################################
+
+namespace $NAMESPACE$;
+
+public class $CLASS$ {$END$}
+</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/CustomProperties/=Category/@EntryIndexedValue">Primary</s:String>

@@ -1,6 +1,6 @@
 namespace Lugh;
 
-public interface IGdxScene
+public interface IScene
 {
     /// <summary>
     /// Called when the scene should initialise itself.

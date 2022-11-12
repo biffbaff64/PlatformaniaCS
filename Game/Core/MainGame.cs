@@ -26,8 +26,8 @@ public class MainGame : Microsoft.Xna.Framework.Game
     {
         base.Initialize();
         
-        GdxSystem.Inst().Setup();
-        GdxSystem.Inst().LogLevel = GdxSystem.LogDebug;
+        LughSystem.Inst().Setup();
+        LughSystem.Inst().LogLevel = LughSystem.LogDebug;
 
         Trace.EnableWriteToFile = true;
         Trace.OpenDebugFile( "log.txt", true );

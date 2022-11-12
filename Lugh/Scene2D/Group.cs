@@ -1,6 +1,10 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿// ##################################################
+
+using Microsoft.Xna.Framework.Graphics;
 
 using Scene2DCS.Utils;
+
+// ##################################################
 
 namespace Scene2DCS;
 

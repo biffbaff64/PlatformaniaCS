@@ -4,7 +4,7 @@ using PlatformaniaCS.Game.UI;
 
 namespace PlatformaniaCS.Game.Scenes;
 
-public class MainScene : IGdxScene, IDisposable
+public class MainScene : IScene, IDisposable
 {
     public EndgameManager     EndgameManager     { get; set; }
     public MainGameHandler    MainGameHandler    { get; set; }
@@ -88,7 +88,7 @@ public class MainScene : IGdxScene, IDisposable
 
         LoadImages();
 
-        GdxSystem.Inst().CurrentScreenID = ScreenID._GAME_SCREEN;
+        LughSystem.Inst().CurrentScreenID = ScreenID._GAME_SCREEN;
 
         App.BaseRenderer.DisableAllCameras();
         App.WorldModel.Activate();

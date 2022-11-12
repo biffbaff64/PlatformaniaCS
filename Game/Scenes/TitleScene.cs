@@ -12,7 +12,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace PlatformaniaCS.Game.Scenes;
 
-public class TitleScene : IGdxScene, IDisposable
+public class TitleScene : IScene, IDisposable
 {
     private const int MenuPage    = 0;
     private const int OptionsPage = 1;
@@ -83,9 +83,9 @@ public class TitleScene : IGdxScene, IDisposable
                 {
                     DrawForeground();
 
-                    if ( GdxSystem.Inst().BackButton is { IsVisible: true } )
+                    if ( LughSystem.Inst().BackButton is { IsVisible: true } )
                     {
-                        GdxSystem.Inst().BackButton.Position.Set( 20, 20 );
+                        LughSystem.Inst().BackButton.Position.Set( 20, 20 );
                     }
 
                     break;
@@ -115,14 +115,14 @@ public class TitleScene : IGdxScene, IDisposable
     {
         Trace.CheckPoint();
 
-        if ( GdxSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN )
+        if ( LughSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN )
         {
             // If moving to the TitleScene from MainScene, then all objects
             // that are unnecessary at this point must be destroyed.
             App.DeleteMainsceneObjects();
         }
 
-        GdxSystem.Inst().CurrentScreenID = ScreenID._MAIN_MENU;
+        LughSystem.Inst().CurrentScreenID = ScreenID._MAIN_MENU;
         App.AppState                     = StateID._STATE_MAIN_MENU;
 
         LoadImages();

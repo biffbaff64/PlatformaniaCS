@@ -17,11 +17,11 @@ public class EndgameManager
         bool returnFlag = false;
 
         if ( ( ( App.GetPlayer() != null ) && ( App.GetPlayer().ActionState == ActionStates._DEAD ) )
-             || GdxSystem.Inst().ForceQuitToMenu )
+             || LughSystem.Inst().ForceQuitToMenu )
         {
             App.AppState = StateID._STATE_PREPARE_GAME_OVER_MESSAGE;
 
-            GdxSystem.Inst().QuitToMainMenu = true;
+            LughSystem.Inst().QuitToMainMenu = true;
 
             returnFlag = true;
         }

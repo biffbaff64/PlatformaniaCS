@@ -49,7 +49,7 @@ public class WorldModel : IDisposable
 
     public void WorldStep()
     {
-        if ( WorldStepEnabled && ( Box2DWorld != null ) && !GdxSystem.Inst().GamePaused )
+        if ( WorldStepEnabled && ( Box2DWorld != null ) && !LughSystem.Inst().GamePaused )
         {
             Box2DWorld.Step
                 (

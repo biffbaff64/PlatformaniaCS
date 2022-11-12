@@ -10,5 +10,5 @@ public interface IGame
 
     void Draw();
 
-    void SetScene( IGdxScene scene );
+    void SetScene( IScene scene );
 }

@@ -1,6 +1,6 @@
 ﻿namespace Lugh;
 
-public interface IGDXPoolable
+public interface IPoolable
 {
     /// <summary>
     /// Resets the object for reuse. Object references should

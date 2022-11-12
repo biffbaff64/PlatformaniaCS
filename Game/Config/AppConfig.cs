@@ -31,7 +31,7 @@ public class AppConfig
         // -------------------------------------
 
         Gfx.Initialise();
-        GdxSystem.Inst().Setup();
+        LughSystem.Inst().Setup();
 
         Stats.Setup( "PlatformaniaCS.meters" );
 
@@ -97,7 +97,7 @@ public class AppConfig
     public void Pause()
     {
         App.AppState                = StateID._STATE_PAUSED;
-        GdxSystem.Inst().GamePaused = true;
+        LughSystem.Inst().GamePaused = true;
 
         if ( ( App.Hud.HudStateID    != StateID._STATE_SETTINGS_PANEL )
              && ( App.Hud.HudStateID != StateID._STATE_DEVELOPER_PANEL ) )
@@ -112,7 +112,7 @@ public class AppConfig
     public void UnPause()
     {
         App.AppState                = StateID._STATE_GAME;
-        GdxSystem.Inst().GamePaused = false;
+        LughSystem.Inst().GamePaused = false;
         App.Hud.HudStateID          = StateID._STATE_PANEL_UPDATE;
     }
 
@@ -123,6 +123,6 @@ public class AppConfig
 
     public static bool GameScreenActive
     {
-        get => ( GdxSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN );
+        get => ( LughSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN );
     }
 }

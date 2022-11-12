@@ -36,7 +36,7 @@ public class BaseRenderer : IDisposable
     {
         Trace.CheckPoint();
 
-        GdxSystem.Inst().CamerasReady = false;
+        LughSystem.Inst().CamerasReady = false;
 
         // --------------------------------------------------------
 
@@ -104,7 +104,7 @@ public class BaseRenderer : IDisposable
 
         // --------------------------------------------------------
 
-        GdxSystem.Inst().CamerasReady = true;
+        LughSystem.Inst().CamerasReady = true;
     }
 
     public void Render()

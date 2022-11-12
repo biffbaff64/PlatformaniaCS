@@ -71,21 +71,21 @@ public abstract class App
     public static int            GetLevel()   => GameProgress.GameLevel;
     public static ContentManager GetContent() => MainGame.Content;
 
-    public static IGdxScene Scene
+    public static IScene Scene
     {
-        get => GdxSystem.Inst().CurrentScene;
+        get => LughSystem.Inst().CurrentScene;
         set
         {
-            if ( GdxSystem.Inst().CurrentScene != null )
+            if ( LughSystem.Inst().CurrentScene != null )
             {
-                GdxSystem.Inst().CurrentScene.Hide();
+                LughSystem.Inst().CurrentScene.Hide();
             }
 
-            GdxSystem.Inst().CurrentScene = value;
+            LughSystem.Inst().CurrentScene = value;
 
-            if ( GdxSystem.Inst().CurrentScene != null )
+            if ( LughSystem.Inst().CurrentScene != null )
             {
-                GdxSystem.Inst().CurrentScene.Show();
+                LughSystem.Inst().CurrentScene.Show();
             }
         }
     }
