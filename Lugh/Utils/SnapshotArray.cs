@@ -200,6 +200,7 @@ public class SnapshotArray< T > : Array< T >
     {
         Modified();
 
+        Size = newSize;
         return base.SetSize( newSize );
     }
 

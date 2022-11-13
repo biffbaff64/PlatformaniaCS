@@ -118,7 +118,7 @@ public class Array< T >
     {
         if ( index > Size )
         {
-            throw new IndexOutOfBoundsException( "index can't be > size: " + index + " > " + Size );
+            throw new IndexOutOfRangeException( "index can't be > size: " + index + " > " + Size );
         }
 
         T[] items = this.Items;
@@ -128,7 +128,7 @@ public class Array< T >
             items = Resize( Math.Max( 8, ( int )( Size * 1.75f ) ) );
         }
 
-        if ( Ordered ) 
+        if ( Ordered )
         {
             Array.Copy
             (
@@ -136,7 +136,7 @@ public class Array< T >
                 index,
                 items,
                 index + 1,
-                Size - index
+                Size  - index
             );
         }
         else
@@ -151,8 +151,8 @@ public class Array< T >
 
     protected T[] Resize( int newSize )
     {
-        T[] items    = this.Items;
-        T[] newItems = ( T[] )ArrayReflection.newInstance( items.getClass().getComponentType(), newSize );
+        var items = this.Items;
+        var newItems = new T[ newSize ];
 
         Array.Copy( items, 0, newItems, 0, Math.Min( Size, newItems.Length ) );
         this.Items = newItems;
