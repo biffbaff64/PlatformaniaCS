@@ -2,9 +2,8 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-
 using Microsoft.Xna.Framework.Graphics;
-
+using Scene2DCS.Utils;
 using Color = Microsoft.Xna.Framework.Color;
 
 // ##################################################
@@ -101,6 +100,7 @@ public class Actor
     public void AddAction( Action action )
     {
         action.Actor = this;
+
         Actions.Add( action );
 
 //            if ( stage != null && stage.getActionsRequestRendering() )
@@ -159,7 +159,7 @@ public class Actor
     /// </summary>
     public T FirstAscendant< T >( T type ) where T : Actor
     {
-        Actor actor = this;
+        var actor = this;
 
         do
         {
@@ -184,7 +184,7 @@ public class Actor
     /// </summary>
     public bool AscendantsVisible()
     {
-        Actor actor = this;
+        var actor = this;
 
         do
         {
@@ -384,8 +384,8 @@ public class Actor
 
     protected void SetSize( float width, float height )
     {
-        if ( ( Math.Abs( Size.X - width ) > 0.001f )
-             || ( Math.Abs( Size.Y - height ) > 0.001f ) )
+        if ( ( Math.Abs( Size.X - width )  > 0.001f )
+          || ( Math.Abs( Size.Y - height ) > 0.001f ) )
         {
             Size.X = width;
             Size.Y = height;
@@ -486,7 +486,7 @@ public class Actor
     public void SetScale( float scale )
     {
         if ( ( Math.Abs( _scale.X - scale ) > 0f )
-             || ( Math.Abs( _scale.Y - scale ) > 0f ) )
+          || ( Math.Abs( _scale.Y - scale ) > 0f ) )
         {
             ScaleX = scale;
             ScaleY = scale;
@@ -501,7 +501,7 @@ public class Actor
     public void SetScale( float scaleX, float scaleY )
     {
         if ( ( Math.Abs( _scale.X - scaleX ) > 0f )
-             || ( Math.Abs( _scale.Y - scaleY ) > 0f ) )
+          || ( Math.Abs( _scale.Y - scaleY ) > 0f ) )
         {
             ScaleX = scaleX;
             ScaleY = scaleY;
@@ -663,7 +663,7 @@ public class Actor
             throw new ArgumentException( "Z Index cannot be < 0." );
         }
 
-        Group parent = this.Parent;
+        var parent = this.Parent;
 
         if ( parent == null ) return false;
 
@@ -687,11 +687,11 @@ public class Actor
     /// </summary>
     public int GetZIndex()
     {
-        Group parent = Parent;
+        var parent = Parent;
 
         if ( parent == null ) return -1;
 
-        return parent.Children.IndexOf( this, true );
+        return parent.Children.IndexOf( this );
     }
 
     /// <summary>
@@ -703,22 +703,25 @@ public class Actor
     {
         if ( width <= 0 || height <= 0 ) return false;
 
-        Stage stage = this.Stage;
+        var stage = this.Stage;
 
         if ( stage == null ) return false;
 
-        Rectangle tableBounds = new Rectangle
+        var tableBounds = new Rectangle
         {
-            X = ( int )Position.X, Y = ( int )Position.Y, Width = ( int )Size.X, Height = ( int )Size.Y
+                X      = ( int )Position.X,
+                Y      = ( int )Position.Y,
+                Width  = ( int )Size.X,
+                Height = ( int )Size.Y
         };
 
-        Rectangle scissorBounds = Pools.obtain( Rectangle.class);
+        Rectangle scissorBounds = Pools.Obtain( typeof( Rectangle ) );
 
         stage.CalculateScissors( tableBounds, scissorBounds );
 
-        if ( ScissorStack.pushScissors( scissorBounds ) ) return true;
+        if ( ScissorStack.PushScissors( scissorBounds ) ) return true;
 
-        Pools.free( scissorBounds );
+        Pools.Free( scissorBounds );
 
         return false;
     }
@@ -753,10 +756,7 @@ public class Actor
     /// </summary>
     public Vector2 StageToLocalCoordinates( Vector2 stageCoords )
     {
-        if ( Parent != null )
-        {
-            Parent.StageToLocalCoordinates( stageCoords );
-        }
+        Parent?.StageToLocalCoordinates( stageCoords );
 
         ParentToLocalCoordinates( stageCoords );
 
@@ -777,7 +777,7 @@ public class Actor
 
         if ( rotation == 0 )
         {
-            if ( scaleX == 1f && scaleY == 1f )
+            if ( ( scaleX == 1f ) && ( scaleY == 1f ) )
             {
                 parentCoords.X -= childX;
                 parentCoords.Y -= childY;
@@ -793,15 +793,16 @@ public class Actor
         }
         else
         {
-            var cos     = ( float )Math.Cos( rotation * MathUtils.DegreesToRadians );
-            var sin     = ( float )Math.Sin( rotation * MathUtils.DegreesToRadians );
+            var cos = ( float )Math.Cos( rotation * MathUtils.DegreesToRadians );
+            var sin = ( float )Math.Sin( rotation * MathUtils.DegreesToRadians );
+
             var originX = this.Origin.X;
             var originY = this.Origin.Y;
 
             var tox = parentCoords.X - childX - originX;
             var toy = parentCoords.Y - childY - originY;
 
-            parentCoords.X = ( tox * cos + toy * sin ) / scaleX + originX;
+            parentCoords.X = ( tox * cos  + toy * sin ) / scaleX + originX;
             parentCoords.Y = ( tox * -sin + toy * cos ) / scaleY + originY;
         }
 
@@ -845,7 +846,7 @@ public class Actor
 
         if ( rotation == 0 )
         {
-            if ( scaleX == 1 && scaleY == 1 )
+            if ( ( scaleX == 1 ) && ( scaleY == 1 ) )
             {
                 localCoords.X += x;
                 localCoords.Y += y;
@@ -861,15 +862,16 @@ public class Actor
         }
         else
         {
-            var cos     = ( float )Math.Cos( rotation * MathUtils.DegreesToRadians );
-            var sin     = ( float )Math.Sin( rotation * MathUtils.DegreesToRadians );
+            var cos = ( float )Math.Cos( rotation * MathUtils.DegreesToRadians );
+            var sin = ( float )Math.Sin( rotation * MathUtils.DegreesToRadians );
+
             var originX = this.Origin.X;
             var originY = this.Origin.Y;
 
             var tox = ( localCoords.X - originX ) * scaleX;
             var toy = ( localCoords.Y - originY ) * scaleY;
 
-            localCoords.X = ( tox * cos + toy * sin ) + originX + x;
+            localCoords.X = ( tox * cos  + toy * sin ) + originX + x;
             localCoords.Y = ( tox * -sin + toy * cos ) + originY + y;
         }
 
@@ -882,7 +884,7 @@ public class Actor
     /// </summary>
     public Vector2 LocalToAscendantCoordinates( Actor ascendant, Vector2 localCoords )
     {
-        Actor actor = this;
+        var actor = this;
 
         do
         {
@@ -933,13 +935,13 @@ public class Actor
         }
 
         shapes.Rect
-            (
-             Position.X, Position.Y,
-             Origin.X, Origin.Y,
-             Size.X, Size.Y,
-             _scale.X, _scale.Y,
-             _rotation
-            );
+        (
+            Position.X, Position.Y,
+            Origin.X, Origin.Y,
+            Size.X, Size.Y,
+            _scale.X, _scale.Y,
+            _rotation
+        );
     }
 
     private bool _debug;

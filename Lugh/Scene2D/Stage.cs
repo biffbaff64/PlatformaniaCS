@@ -19,4 +19,8 @@ public class Stage
     {
         return default;
     }
+
+    public void CalculateScissors( Rectangle tableBounds, Rectangle scissorBounds )
+    {
+    }
 }

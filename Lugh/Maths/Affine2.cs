@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using System.Xml.Schema;
 
 namespace Lugh.Maths;
 
@@ -67,7 +66,7 @@ public class Affine2 : ISerializable
     /// <returns>This matrix for the purposes of chaining.</returns>
     public Affine2 Set( Matrix3 matrix )
     {
-        float[] other = matrix.val;
+        float[] other = matrix.Val;
 
         M00 = other[ Matrix3.M00 ];
         M01 = other[ Matrix3.M01 ];
@@ -94,7 +93,7 @@ public class Affine2 : ISerializable
     /// <returns>This matrix for the purpose of chaining operations.</returns>
     public Affine2 Set( Matrix4 matrix )
     {
-        float[] other = matrix.val;
+        float[] other = matrix.Val;
 
         M00 = other[ Matrix4.M00 ];
         M01 = other[ Matrix4.M01 ];
@@ -163,8 +162,8 @@ public class Affine2 : ISerializable
     /// <returns></returns>
     public Affine2 SetToRotation( float degrees )
     {
-        float cos = MathUtils.cosDeg( degrees );
-        float sin = MathUtils.sinDeg( degrees );
+        float cos = MathUtils.CosDeg( degrees );
+        float sin = MathUtils.SinDeg( degrees );
 
         M00 = cos;
         M01 = -sin;

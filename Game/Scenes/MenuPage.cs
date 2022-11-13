@@ -86,28 +86,28 @@ public class MenuPage : IUIPage
     {
         if ( ButtonStart != null )
         {
-            ButtonStart.SetVisible( visible );
+            ButtonStart.IsVisible = visible;
         }
 
         if ( ButtonOptions != null )
         {
-            ButtonOptions.SetVisible( visible );
+            ButtonOptions.IsVisible = visible;
         }
 
         if ( ButtonCredits != null )
         {
-            ButtonCredits.SetVisible( visible );
+            ButtonCredits.IsVisible = visible;
         }
 
         if ( ButtonExit != null )
         {
-            ButtonExit.SetVisible( visible );
+            ButtonExit.IsVisible = visible;
         }
 
-        if ( _decoration != null )
-        {
-            _decoration.SetVisible( visible );
-        }
+//        if ( _decoration != null )
+//        {
+//            _decoration.IsVisible = visible;
+//        }
 
         _indicatorDrawable = visible;
     }

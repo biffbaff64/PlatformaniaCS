@@ -19,17 +19,17 @@ public class SnapshotArray< T > : Array< T >
     }
 
     public SnapshotArray( bool ordered, int capacity, Type arrayType )
-        : base( ordered, capacity, arrayType )
+            : base( ordered, capacity, arrayType )
     {
     }
 
     public SnapshotArray( bool ordered, int capacity )
-        : base( ordered, capacity )
+            : base( ordered, capacity )
     {
     }
 
     public SnapshotArray( bool ordered, T[] array, int startIndex, int count )
-        : base( ordered, array, startIndex, count )
+            : base( ordered, array, startIndex, count )
     {
     }
 
@@ -107,89 +107,90 @@ public class SnapshotArray< T > : Array< T >
         base.Set( index, value );
     }
 
-    public void Insert( int index, T value )
+    public new void Insert( int index, T value )
     {
         Modified();
         base.Insert( index, value );
     }
 
-    public void InsertRange( int index, int count )
+    public new void InsertRange( int index, int count )
     {
         Modified();
         base.InsertRange( index, count );
     }
 
-    public void Swap( int first, int second )
+    public new void Swap( int first, int second )
     {
         Modified();
         base.Swap( first, second );
     }
 
-    public bool RemoveValue( T value, bool identity )
+    public new bool RemoveValue( T value )
     {
         Modified();
-        return base.RemoveValue( value, identity );
+        return base.RemoveValue( value );
     }
 
-    public T RemoveIndex( int index )
+    public new T RemoveIndex( int index )
     {
         Modified();
         return base.RemoveIndex( index );
     }
 
-    public void RemoveRange( int start, int end )
+    public new void RemoveRange( int start, int end )
     {
         Modified();
         base.RemoveRange( start, end );
     }
 
-    public bool RemoveAll( Array<? extends T> array, bool Identity)
+    public bool RemoveAll( Array< T > array )
     {
         Modified();
-
-        return base.RemoveAll( array, identity );
+        return base.RemoveAll( array );
     }
 
-    public T Pop()
+    public new T Pop()
     {
         Modified();
         return base.Pop();
     }
 
-    public void Clear()
+    public new void Clear()
     {
         Modified();
         base.Clear();
     }
 
-    public void Sort()
+    public new void Sort()
     {
         Modified();
         base.Sort();
     }
 
+#if _SCENE2DCS_RELEASE
     public void Sort( Comparator<? base T> comparator)
     {
         Modified();
 
         base.Sort( comparator );
     }
+#endif
 
-    public void Reverse()
+    public new void Reverse()
     {
         Modified();
 
         base.Reverse();
     }
 
-    public void Shuffle()
+    public new void Shuffle()
     {
         Modified();
 
         base.Shuffle();
     }
 
-    public void Truncate( int newSize )
+    public new void Truncate( int newSize )
     {
         Modified();
 
@@ -204,8 +205,10 @@ public class SnapshotArray< T > : Array< T >
         return base.SetSize( newSize );
     }
 
+#if _SCENE2DCS_RELEASE
     public static SnapshotArray< T > With( T array )
     {
         return new SnapshotArray< T >( array );
     }
+#endif
 }

@@ -85,7 +85,10 @@ public class Array< T >
     {
         if ( index >= Size )
         {
-            throw new IndexOutOfRangeException( "index can't be >= size: " + index + " >= " + Size );
+            throw new IndexOutOfRangeException
+            (
+                "index can't be >= size: " + index + " >= " + Size
+            );
         }
 
         var items = this.Items;
@@ -114,14 +117,17 @@ public class Array< T >
         return value;
     }
 
-    public void insert( int index, T value )
+    public void Insert( int index, T value )
     {
         if ( index > Size )
         {
-            throw new IndexOutOfRangeException( "index can't be > size: " + index + " > " + Size );
+            throw new IndexOutOfRangeException
+            (
+                "index can't be > size: " + index + " > " + Size
+            );
         }
 
-        T[] items = this.Items;
+        var items = this.Items;
 
         if ( Size == items.Length )
         {
@@ -151,12 +157,85 @@ public class Array< T >
 
     protected T[] Resize( int newSize )
     {
-        var items = this.Items;
+        var items    = this.Items;
         var newItems = new T[ newSize ];
 
         Array.Copy( items, 0, newItems, 0, Math.Min( Size, newItems.Length ) );
         this.Items = newItems;
 
         return newItems;
+    }
+
+    /// <summary>
+    /// Returns the index of first occurrence of value in the array,
+    /// or -1 if no such value exists.
+    /// </summary>
+    public int IndexOf( T value )
+    {
+        var items = this.Items;
+
+        for ( int i = 0, n = Size; i < n; i++ )
+        {
+            if ( items[ i ].Equals( value ) )
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    protected void Set< T >( int index, T value )
+    {
+    }
+
+    protected void InsertRange( int index, int count )
+    {
+    }
+
+    protected void Swap( int first, int second )
+    {
+    }
+
+    protected void RemoveRange( int start, int end )
+    {
+    }
+
+    protected bool RemoveAll( object array )
+    {
+        return false;
+    }
+
+    /// <summary>
+    /// Removes and returns the item at size-1.
+    /// </summary>
+    protected T Pop()
+    {
+        return default;
+    }
+
+    protected void Clear()
+    {
+    }
+
+    protected void Sort()
+    {
+    }
+
+    protected void Reverse()
+    {
+    }
+
+    protected void Shuffle()
+    {
+    }
+
+    protected void Truncate( int newSize )
+    {
+    }
+
+    protected T[] SetSize( int newSize )
+    {
+        return new T[ newSize ];
     }
 }
