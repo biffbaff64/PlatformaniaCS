@@ -17,7 +17,7 @@ namespace Scene2DCS;
 public class Group : Actor, ICullable
 {
     public SnapshotArray< Actor > Children { get; set; }
-        = new SnapshotArray< Actor >( true, 4, typeof( Actor ));
+        = new SnapshotArray< Actor >( true, 4 );
 
     private Vector2 _tmp = new Vector2();
 

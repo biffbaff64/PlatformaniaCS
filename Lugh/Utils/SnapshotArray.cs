@@ -14,37 +14,22 @@ public class SnapshotArray< T > : Array< T >
     {
     }
 
-    public SnapshotArray( Array array ) : base( array )
-    {
-    }
-
-    public SnapshotArray( bool ordered, int capacity, Type arrayType )
-            : base( ordered, capacity, arrayType )
+    public SnapshotArray( int capacity ) : this( true, capacity )
     {
     }
 
     public SnapshotArray( bool ordered, int capacity )
-            : base( ordered, capacity )
+    {
+    }
+
+    public SnapshotArray( T[] array )
     {
     }
 
     public SnapshotArray( bool ordered, T[] array, int startIndex, int count )
-            : base( ordered, array, startIndex, count )
     {
     }
-
-    public SnapshotArray( Type arrayType ) : base( arrayType )
-    {
-    }
-
-    public SnapshotArray( int capacity ) : base( capacity )
-    {
-    }
-
-    public SnapshotArray( T[] array ) : base( array )
-    {
-    }
-
+    
     /// <summary>
     /// Returns the backing array, which is guaranteed to not be
     /// modified before <see cref="End"/>

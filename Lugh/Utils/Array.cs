@@ -79,7 +79,7 @@ public class Array< T >
     /// <param name="startIndex"></param>
     /// <param name="count"></param>
     public Array( bool ordered, T[] array, int startIndex, int count )
-        : this( ordered, count )
+            : this( ordered, count )
     {
         Items = new T[ ( array.Length - startIndex ) ];
 
@@ -89,6 +89,21 @@ public class Array< T >
         }
     }
 
+    public void Add( T value )
+    {
+        if ( Size == Items.Length )
+        {
+            Items = Resize( Math.Max( 8, ( int )( Size * 1.75f ) ) );
+        }
+
+        Items[ Size++ ] = value;
+    }
+
+    public void AddAll()
+    {
+        // TODO
+    }
+    
     /// <summary>
     /// Gets the item from the backing array at the specified index.
     /// </summary>
@@ -105,6 +120,112 @@ public class Array< T >
         return Items[ index ];
     }
 
+    protected void Set( int index, T value )
+    {
+        if ( index >= Size )
+        {
+            throw new IndexOutOfRangeException("index can't be >= size: " + index + " >= " + Size);
+        }
+
+        Items[ index ] = value;
+    }
+
+    /// <summary>
+    /// Insert the specified value at the supplied index.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="value"></param>
+    /// <exception cref="IndexOutOfRangeException"></exception>
+    public void Insert( int index, T value )
+    {
+        if ( index > Size )
+        {
+            throw new IndexOutOfRangeException
+            (
+                "index can't be > size: " + index + " > " + Size
+            );
+        }
+
+        var items = this.Items;
+
+        if ( Size == Items.Length )
+        {
+            Items = Resize( Math.Max( 8, ( int )( Size * 1.75f ) ) );
+        }
+
+        if ( Ordered )
+        {
+            Array.Copy
+            (
+                Items,
+                index,
+                Items,
+                index + 1,
+                Size  - index
+            );
+        }
+        else
+        {
+            Items[ Size ] = Items[ index ];
+        }
+
+        Size++;
+
+        Items[ index ] = value;
+    }
+
+    /// <summary>
+    /// Inserts the specified number of items at the specified index.
+    /// The new items will have values equal to the values at those
+    /// indices before the insertion. 
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="count"></param>
+    protected void InsertRange( int index, int count )
+    {
+    }
+
+    protected void Swap( int first, int second )
+    {
+    }
+
+    /// <summary>
+    /// Returns true if this array contains the specified value.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public bool Contains( T value )
+    {
+        var i = Size - 1;
+
+        while ( i >= 0 )
+        {
+            if ( Items[ i-- ].Equals( value ) )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    /// <summary>
+    /// Returns the index of first occurrence of value in the array,
+    /// or -1 if no such value exists.
+    /// </summary>
+    public int IndexOf( T value )
+    {
+        for ( int i = 0, n = Size; i < n; i++ )
+        {
+            if ( Items[ i ].Equals( value ) )
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     /// <summary>
     /// Removes the first instance of the specified value in the array.
     /// </summary>
@@ -112,11 +233,9 @@ public class Array< T >
     /// <returns>true if value was found and removed, false otherwise.</returns>
     public bool RemoveValue( T value )
     {
-        var items = this.Items;
-
         for ( int i = 0, n = Size; i < n; i++ )
         {
-            if ( items[ i ].Equals( value ) )
+            if ( Items[ i ].Equals( value ) )
             {
                 RemoveIndex( i );
 
@@ -135,120 +254,34 @@ public class Array< T >
         if ( index >= Size )
         {
             throw new IndexOutOfRangeException
-                (
-                 "index can't be >= size: " + index + " >= " + Size
-                );
+            (
+                "index can't be >= size: " + index + " >= " + Size
+            );
         }
 
-        var items = this.Items;
-        var value = items[ index ];
+        var value = Items[ index ];
 
         Size--;
 
         if ( Ordered )
         {
             Array.Copy
-                (
-                 items,
-                 index + 1,
-                 items,
-                 index,
-                 Size - index
-                );
+            (
+                Items,
+                index + 1,
+                Items,
+                index,
+                Size - index
+            );
         }
         else
         {
-            items[ index ] = items[ Size ];
+            Items[ index ] = Items[ Size ];
         }
 
-        items[ Size ] = default;
+        Items[ Size ] = default;
 
         return value;
-    }
-
-    public void Insert( int index, T value )
-    {
-        if ( index > Size )
-        {
-            throw new IndexOutOfRangeException
-                (
-                 "index can't be > size: " + index + " > " + Size
-                );
-        }
-
-        var items = this.Items;
-
-        if ( Size == items.Length )
-        {
-            items = Resize( Math.Max( 8, ( int )( Size * 1.75f ) ) );
-        }
-
-        if ( Ordered )
-        {
-            Array.Copy
-                (
-                 items,
-                 index,
-                 items,
-                 index + 1,
-                 Size - index
-                );
-        }
-        else
-        {
-            items[ Size ] = items[ index ];
-        }
-
-        Size++;
-
-        items[ index ] = value;
-    }
-
-    /// <summary>
-    /// Resizes the backing array to the specified new size.
-    /// </summary>
-    /// <param name="newSize"></param>
-    /// <returns></returns>
-    protected T[] Resize( int newSize )
-    {
-        var items    = this.Items;
-        var newItems = new T[ newSize ];
-
-        Array.Copy( items, 0, newItems, 0, Math.Min( Size, newItems.Length ) );
-        this.Items = newItems;
-
-        return newItems;
-    }
-
-    /// <summary>
-    /// Returns the index of first occurrence of value in the array,
-    /// or -1 if no such value exists.
-    /// </summary>
-    public int IndexOf( T value )
-    {
-        var items = this.Items;
-
-        for ( int i = 0, n = Size; i < n; i++ )
-        {
-            if ( items[ i ].Equals( value ) )
-            {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    protected void Set< T >( int index, T value )
-    {
-    }
-
-    protected void InsertRange( int index, int count )
-    {
-    }
-
-    protected void Swap( int first, int second )
-    {
     }
 
     protected void RemoveRange( int start, int end )
@@ -268,8 +301,69 @@ public class Array< T >
         return default;
     }
 
+    /// <summary>
+    /// Returns the item at size-1, but does not remove it.
+    /// </summary>
+    public T Peek()
+    {
+        return default;
+    }
+
+    /// <summary>
+    /// Returns the item at index 0.
+    /// </summary>
+    public T First()
+    {
+        return default;
+    }
+    
     protected void Clear()
     {
+    }
+
+    public T[] Shrink()
+    {
+        return default;
+    }
+
+    /// <summary>
+    /// Increases the size of the backing array to accommodate the
+    /// specified number of additional items. Useful before adding
+    /// many items to avoid multiple backing array resizes.
+    /// </summary>
+    /// <param name="additionalCapacity">The capacity to add.</param>
+    /// <returns>The resized array.</returns>
+    public T[] AddCapacity( int additionalCapacity )
+    {
+        return default;
+    }
+    
+    protected T[] SetSize( int newSize )
+    {
+        return new T[ newSize ];
+    }
+
+    /// <summary>
+    /// Resizes the backing array to the specified new size.
+    /// </summary>
+    /// <param name="newSize"></param>
+    /// <returns></returns>
+    protected T[] Resize( int newSize )
+    {
+        var items    = this.Items;
+        var newItems = new T[ newSize ];
+
+        Array.Copy
+        (
+            items,
+            0,
+            newItems,
+            0,
+            Math.Min( Size, newItems.Length )
+        );
+        this.Items = newItems;
+
+        return newItems;
     }
 
     protected void Sort()
@@ -286,10 +380,5 @@ public class Array< T >
 
     protected void Truncate( int newSize )
     {
-    }
-
-    protected T[] SetSize( int newSize )
-    {
-        return new T[ newSize ];
     }
 }
