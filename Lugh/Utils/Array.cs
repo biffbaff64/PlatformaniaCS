@@ -14,35 +14,29 @@ public class Array< T >
     public int  Size    { get; set; }
     public bool Ordered { get; set; }
 
-    public Array()
+    // ----------------------------------------------------
+    // Code
+    // ----------------------------------------------------
+    
+    public Array() : this( true, 16 )
     {
     }
 
-    public Array( Array array )
-    {
-    }
-
-    public Array( bool ordered, int capacity, Type arrayType )
+    public Array( int capacity ) : this( true, capacity )
     {
     }
 
     public Array( bool ordered, int capacity )
     {
-    }
-
-    public Array( bool ordered, T[] array, int startIndex, int count )
-    {
-    }
-
-    public Array( Type arrayType )
-    {
-    }
-
-    public Array( int capacity )
-    {
+        Ordered = ordered;
+        Items   = new T[capacity];
     }
 
     public Array( T[] array )
+    {
+    }
+
+    public Array( bool ordered, T[] array, int startIndex, int count )
     {
     }
 
