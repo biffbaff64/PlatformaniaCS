@@ -6,6 +6,12 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Lugh.Utils;
 
+/// <summary>
+/// A resizable, ordered or unordered array of objects.
+/// If unordered, this class avoids a memory copy when removing
+/// elements (the last element is moved to the removed element's position).
+/// </summary>
+/// <typeparam name="T"></typeparam>
 [SuppressMessage( "ReSharper", "MemberCanBeProtected.Global" )]
 public class Array< T >
 {
@@ -17,29 +23,78 @@ public class Array< T >
     // ----------------------------------------------------
     // Code
     // ----------------------------------------------------
-    
+
+    /// <summary>
+    /// Creates an ordered array with a capacity of 16.
+    /// </summary>
     public Array() : this( true, 16 )
     {
     }
 
+    /// <summary>
+    /// Creates an ordered array with the specified capacity.
+    /// </summary>
     public Array( int capacity ) : this( true, capacity )
     {
     }
 
+    /// <summary>
+    /// Creates an array with the specified capacity.
+    /// </summary>
+    /// <param name="ordered">
+    ///     If false, methods that remove elements may change the order
+    ///     of other elements in the array, which avoids a memory copy.
+    /// </param>
+    /// <param name="capacity">
+    ///     Any elements added beyond this will cause the backing array
+    ///     to be grown.
+    /// </param>
     public Array( bool ordered, int capacity )
     {
         Ordered = ordered;
-        Items   = new T[capacity];
+        Items   = new T[ capacity ];
     }
 
+    /// <summary>
+    /// Creates a new ordered array containing the elements in the specified
+    /// array. The new array will have the same type of backing array. The
+    /// capacity is set to the number of elements, so any subsequent elements
+    /// added will cause the backing array to be grown.
+    /// </summary>
     public Array( T[] array )
     {
+        Ordered = true;
+        Items   = array;
     }
 
+    /// <summary>
+    /// Creates a new array containing the elements in the specified array,
+    /// starting from the specified 'startIndex' to 'startIndex + count'.
+    /// The new array will have the same type of backing array. The capacity
+    /// is set to the number of elements, so any subsequent elements added
+    /// will cause the backing array to be grown.
+    /// </summary>
+    /// <param name="ordered"></param>
+    /// <param name="array"></param>
+    /// <param name="startIndex"></param>
+    /// <param name="count"></param>
     public Array( bool ordered, T[] array, int startIndex, int count )
+        : this( ordered, count )
     {
+        Items = new T[ ( array.Length - startIndex ) ];
+
+        for ( var i = 0; i < count; i++ )
+        {
+            Items[ i ] = array[ startIndex + i ];
+        }
     }
 
+    /// <summary>
+    /// Gets the item from the backing array at the specified index.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    /// <exception cref="IndexOutOfRangeException"></exception>
     public T Get( int index )
     {
         if ( index >= Size )
@@ -80,9 +135,9 @@ public class Array< T >
         if ( index >= Size )
         {
             throw new IndexOutOfRangeException
-            (
-                "index can't be >= size: " + index + " >= " + Size
-            );
+                (
+                 "index can't be >= size: " + index + " >= " + Size
+                );
         }
 
         var items = this.Items;
@@ -93,13 +148,13 @@ public class Array< T >
         if ( Ordered )
         {
             Array.Copy
-            (
-                items,
-                index + 1,
-                items,
-                index,
-                Size - index
-            );
+                (
+                 items,
+                 index + 1,
+                 items,
+                 index,
+                 Size - index
+                );
         }
         else
         {
@@ -116,9 +171,9 @@ public class Array< T >
         if ( index > Size )
         {
             throw new IndexOutOfRangeException
-            (
-                "index can't be > size: " + index + " > " + Size
-            );
+                (
+                 "index can't be > size: " + index + " > " + Size
+                );
         }
 
         var items = this.Items;
@@ -131,13 +186,13 @@ public class Array< T >
         if ( Ordered )
         {
             Array.Copy
-            (
-                items,
-                index,
-                items,
-                index + 1,
-                Size  - index
-            );
+                (
+                 items,
+                 index,
+                 items,
+                 index + 1,
+                 Size - index
+                );
         }
         else
         {
@@ -149,6 +204,11 @@ public class Array< T >
         items[ index ] = value;
     }
 
+    /// <summary>
+    /// Resizes the backing array to the specified new size.
+    /// </summary>
+    /// <param name="newSize"></param>
+    /// <returns></returns>
     protected T[] Resize( int newSize )
     {
         var items    = this.Items;
