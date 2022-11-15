@@ -46,6 +46,10 @@ public class MainGame : Microsoft.Xna.Framework.Game
         App.AppConfig.Setup();
     }
 
+    /// <summary>
+    /// Monogame uses this to load assets at the start of the game,
+    /// but I will be (eventually) using a LibGDX style assetManager.
+    /// </summary>
     protected override void LoadContent()
     {
     }
@@ -73,7 +77,7 @@ public class MainGame : Microsoft.Xna.Framework.Game
         }
         else
         {
-            App.Scene.Update();
+            App.Scene.Render( gameTime.GetElapsedSeconds() );
         }
     }
 

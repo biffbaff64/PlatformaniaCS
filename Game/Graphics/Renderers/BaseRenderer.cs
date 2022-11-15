@@ -11,9 +11,9 @@ public class BaseRenderer : IDisposable
     private const float DefaultParallaxZoom = 1.0f;
     private const float DefaultMapZoom      = 1.0f;
 
-    private SimpleVec3F   _cameraPos;
-    private HUDRenderer   _hudRenderer;
-    private WorldRenderer _worldRenderer;
+    private System.Numerics.Vector2 _cameraPos;
+    private HUDRenderer             _hudRenderer;
+    private WorldRenderer           _worldRenderer;
 
     public OrthoGameCamera    HudGameCamera      { get; set; }
     public OrthoGameCamera    OverlayCamera      { get; set; }
@@ -24,6 +24,7 @@ public class BaseRenderer : IDisposable
     public Zoom               HudZoom            { get; set; }
     public ParallaxBackground ParallaxBackground { get; set; }
     public ParallaxUtils      ParallaxUtils      { get; set; }
+    public bool               IsDrawingStage     { get; set; }
 
     public void Dispose()
     {
@@ -41,56 +42,56 @@ public class BaseRenderer : IDisposable
         // --------------------------------------------------------
 
         ParallaxCamera = new OrthoGameCamera
-            (
-             Gfx.ParallaxSceneWidth,
-             Gfx.ParallaxSceneHeight,
-             "Parallax Cam"
-            );
+        (
+            Gfx.ParallaxSceneWidth,
+            Gfx.ParallaxSceneHeight,
+            "Parallax Cam"
+        );
         ParallaxBackground = new ParallaxBackground();
         ParallaxUtils      = new ParallaxUtils();
 
         // --------------------------------------------------------
 
         TiledGameCamera = new OrthoGameCamera
-            (
-             Gfx.GameSceneWidth,
-             Gfx.GameSceneHeight,
-             "Tiled Cam"
-            );
+        (
+            Gfx.GameSceneWidth,
+            Gfx.GameSceneHeight,
+            "Tiled Cam"
+        );
 
         // --------------------------------------------------------
 
         SpriteGameCamera = new OrthoGameCamera
-            (
-             Gfx.GameSceneWidth,
-             Gfx.GameSceneHeight,
-             "Sprite Cam"
-            );
+        (
+            Gfx.GameSceneWidth,
+            Gfx.GameSceneHeight,
+            "Sprite Cam"
+        );
 
         // --------------------------------------------------------
 
         OverlayCamera = new OrthoGameCamera
-            (
-             Gfx.GameSceneWidth,
-             Gfx.GameSceneHeight,
-             "Overlay Cam"
-            );
+        (
+            Gfx.GameSceneWidth,
+            Gfx.GameSceneHeight,
+            "Overlay Cam"
+        );
 
         // --------------------------------------------------------
 
         HudGameCamera = new OrthoGameCamera
-            (
-             Gfx.HudSceneWidth,
-             Gfx.HudSceneHeight,
-             "HUD Cam"
-            );
+        (
+            Gfx.HudSceneWidth,
+            Gfx.HudSceneHeight,
+            "HUD Cam"
+        );
 
         // --------------------------------------------------------
 
         GameZoom = new Zoom();
         HudZoom  = new Zoom();
 
-        _cameraPos     = new SimpleVec3F();
+        _cameraPos     = new System.Numerics.Vector2();
         _worldRenderer = new WorldRenderer();
         _hudRenderer   = new HUDRenderer();
 
@@ -104,10 +105,11 @@ public class BaseRenderer : IDisposable
 
         // --------------------------------------------------------
 
+        IsDrawingStage                 = false;
         LughSystem.Inst().CamerasReady = true;
     }
 
-    public void Render()
+    public void Render( float delta )
     {
         var positionSet = false;
 
@@ -129,6 +131,11 @@ public class BaseRenderer : IDisposable
         DrawSprites();
         DrawOverlays();
         UpdateHudCamera();
+
+        if ( IsDrawingStage )
+        {
+            // TODO:
+        }
 
         GameZoom.Stop();
         HudZoom.Stop();
@@ -172,6 +179,16 @@ public class BaseRenderer : IDisposable
     {
         if ( HudGameCamera.IsInUse )
         {
+            App.SpriteBatch.Begin();
+
+            _cameraPos.X = 0;
+            _cameraPos.Y = 0;
+
+            HudGameCamera.SetPosition( _cameraPos );
+            
+            _hudRenderer.Render();
+
+            App.SpriteBatch.End();
         }
     }
 

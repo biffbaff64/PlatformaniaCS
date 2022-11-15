@@ -1,21 +1,22 @@
 // ##################################################
-#region using
 
+using MonoGame.Extended.ViewportAdapters;
+using PlatformaniaCS.Game.Core;
 using Vector2 = System.Numerics.Vector2;
 using Vector3 = System.Numerics.Vector3;
 
-#endregion using
 // ##################################################
 
 namespace PlatformaniaCS.Game.Graphics.Camera;
 
 public class OrthoGameCamera
 {
-    public string  Name             { get; set; }
-    public Vector3 LerpVector       { get; set; }
-    public bool    IsInUse          { get; set; }
-    public bool    IsLerpingEnabled { get; set; }
-    public float   DefaultZoom      { get; set; }
+    public ViewportAdapter ViewportAdapter  { get; set; }
+    public string          Name             { get; set; }
+    public Vector3         LerpVector       { get; set; }
+    public bool            IsInUse          { get; set; }
+    public bool            IsLerpingEnabled { get; set; }
+    public float           DefaultZoom      { get; set; }
 
     public OrthoGameCamera( float sceneWidth, float sceneHeight, string name )
     {
@@ -24,6 +25,12 @@ public class OrthoGameCamera
         IsLerpingEnabled = false;
         LerpVector       = new Vector3();
         DefaultZoom      = Zoom.DefaultZoom;
+        ViewportAdapter = new BoxingViewportAdapter
+        (
+            App.MainGame.Window,
+            App.MainGame.GraphicsDevice,
+            (int) sceneWidth, (int ) sceneHeight
+        );
     }
 
     public void SetPosition( Vector2 position )

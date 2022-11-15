@@ -4,7 +4,7 @@ using PlatformaniaCS.Game.UI;
 
 namespace PlatformaniaCS.Game.Scenes;
 
-public class MainScene : IScene, IDisposable
+public class MainScene : BaseScene
 {
     public EndgameManager     EndgameManager     { get; set; }
     public MainGameHandler    MainGameHandler    { get; set; }
@@ -16,7 +16,7 @@ public class MainScene : IScene, IDisposable
         FirstTime = true;
     }
 
-    public void Initialise()
+    public override void Initialise()
     {
         if ( FirstTime )
         {
@@ -34,11 +34,8 @@ public class MainScene : IScene, IDisposable
         }
     }
 
-    public void Update()
+    public override void Update()
     {
-        App.MapData.Update();
-        App.GameProgress.Update();
-
         if ( AppConfig.GameScreenActive )
         {
             switch ( App.AppState )
@@ -72,17 +69,22 @@ public class MainScene : IScene, IDisposable
         }
     }
 
-    public void Render( float delta )
+    public override void Render( float delta )
     {
+        App.MapData.Update();
+        App.GameProgress.Update();
+
         if ( AppConfig.GameScreenActive )
         {
-            App.BaseRenderer.Render();
+            Update();
+            
+            App.BaseRenderer.Render( delta );
 
             App.WorldModel.WorldStep();
         }
     }
 
-    public void Show()
+    public override void Show()
     {
         Trace.CheckPoint();
 
@@ -98,7 +100,7 @@ public class MainScene : IScene, IDisposable
         App.AppState = StateID._STATE_SETUP;
     }
 
-    public void Hide()
+    public override void Hide()
     {
         Trace.CheckPoint();
 
@@ -110,26 +112,9 @@ public class MainScene : IScene, IDisposable
         FirstTime = true;
     }
 
-    public void LoadImages()
+    private void LoadImages()
     {
     }
 
-    public string Name() => "Main Scene";
-
-    public void Resize( int width, int height )
-    {
-        App.BaseRenderer.ResizeCameras( width, height );
-    }
- 
-    public void Pause()
-    {
-    }
-
-    public void Resume()
-    {
-    }
-        
-    public void Dispose()
-    {
-    }
+    public override string Name() => "Main Scene";
 }

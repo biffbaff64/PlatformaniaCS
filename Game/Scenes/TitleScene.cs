@@ -12,35 +12,35 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace PlatformaniaCS.Game.Scenes;
 
-public class TitleScene : IScene, IDisposable
+public class TitleScene : BaseScene
 {
     private const int MenuPage    = 0;
     private const int OptionsPage = 1;
     private const int CreditsPage = 2;
     private const int ExitPage    = 3;
 
-    private Texture2D                _background;
-    private Texture2D                _foreground;
-    private MenuPage                 _menuPage;
-    private OptionsPage              _optionsPage;
-    private CreditsPage              _creditsPage;
-    private Dictionary<int, IUIPage> _pages;
-    private YesNoDialog              _exitDialog;
-    private int                      _currentPage;
+    private Texture2D                  _background;
+    private Texture2D                  _foreground;
+    private MenuPage                   _menuPage;
+    private OptionsPage                _optionsPage;
+    private CreditsPage                _creditsPage;
+    private Dictionary< int, IUIPage > _pages;
+    private YesNoDialog                _exitDialog;
+    private int                        _currentPage;
 
     public TitleScene()
     {
         Trace.CheckPoint();
     }
 
-    public void Initialise()
+    public override void Initialise()
     {
         Trace.CheckPoint();
 
         _menuPage    = new MenuPage();
         _optionsPage = new OptionsPage();
         _creditsPage = new CreditsPage();
-        _pages       = new Dictionary<int, IUIPage>();
+        _pages       = new Dictionary< int, IUIPage >();
 
         _currentPage = MenuPage;
 
@@ -52,8 +52,51 @@ public class TitleScene : IScene, IDisposable
         _menuPage.Show();
     }
 
-    public void Update()
+    public override void Update()
     {
+    }
+
+    private void ChangePageTo( int nextPage )
+    {
+        Trace.CheckPoint();
+        Trace.Info( "currentPage: ", _currentPage );
+        Trace.Info( "nextPage: ",    nextPage );
+
+        if ( _currentPage == ExitPage )
+        {
+            _exitDialog?.Dispose();
+            _exitDialog = null;
+        }
+
+        if ( _currentPage != ExitPage )
+        {
+            if ( _pages[ _currentPage ] != null )
+            {
+                _pages[ _currentPage ].Hide();
+                _pages[ _currentPage ].Dispose();
+            }
+        }
+
+        _currentPage = nextPage;
+
+        if ( _currentPage != ExitPage )
+        {
+            if ( _pages[ _currentPage ] != null )
+            {
+                _pages[ _currentPage ].Initialise();
+                _pages[ _currentPage ].Show();
+            }
+        }
+    }
+
+    public override void Render( float delta )
+    {
+        if ( App.AppState == StateID._STATE_MAIN_MENU )
+        {
+            Update();
+            
+            App.BaseRenderer.Render( delta );
+        }
     }
 
     public void Draw()
@@ -61,11 +104,11 @@ public class TitleScene : IScene, IDisposable
         if ( App.AppState == StateID._STATE_MAIN_MENU )
         {
             App.SpriteBatch.Draw
-                (
-                 _background,
-                 new Rectangle( 0, 0, Gfx.DesktopWidth, Gfx.DesktopHeight ),
-                 Color.White
-                );
+            (
+                _background,
+                new Rectangle( 0, 0, Gfx.DesktopWidth, Gfx.DesktopHeight ),
+                Color.White
+            );
 
             switch ( _currentPage )
             {
@@ -106,12 +149,7 @@ public class TitleScene : IScene, IDisposable
         }
     }
 
-    public void Render( float delta )
-    {
-        App.BaseRenderer.Render();
-    }
-
-    public void Show()
+    public override void Show()
     {
         Trace.CheckPoint();
 
@@ -123,7 +161,7 @@ public class TitleScene : IScene, IDisposable
         }
 
         LughSystem.Inst().CurrentScreenID = ScreenID._MAIN_MENU;
-        App.AppState                     = StateID._STATE_MAIN_MENU;
+        App.AppState                      = StateID._STATE_MAIN_MENU;
 
         LoadImages();
 
@@ -133,32 +171,19 @@ public class TitleScene : IScene, IDisposable
         Initialise();
     }
 
-    public void Hide()
+    public override void Hide()
     {
         Trace.CheckPoint();
 
         Dispose();
     }
 
-    public void LoadImages()
+    private void LoadImages()
     {
         Trace.CheckPoint();
 
-        _background = App.MainGame.Content.Load<Texture2D>( "title_background" );
-        _foreground = App.MainGame.Content.Load<Texture2D>( "title_foreground" );
-    }
-
-    public void Resize( int width, int height )
-    {
-        App.BaseRenderer.ResizeCameras( width, height );
-    }
-
-    public void Pause()
-    {
-    }
-
-    public void Resume()
-    {
+        _background = App.MainGame.Content.Load< Texture2D >( "title_background" );
+        _foreground = App.MainGame.Content.Load< Texture2D >( "title_foreground" );
     }
 
     public void Dispose()
@@ -182,48 +207,15 @@ public class TitleScene : IScene, IDisposable
         _background = null;
     }
 
-    public string Name() => "Title Scene";
-
-    private void ChangePageTo( int nextPage )
-    {
-        Trace.CheckPoint();
-        Trace.Info( "currentPage: ", _currentPage );
-        Trace.Info( "nextPage: ",    nextPage );
-
-        if ( _currentPage == ExitPage )
-        {
-            _exitDialog?.Dispose();
-            _exitDialog = null;
-        }
-
-        if ( _currentPage != ExitPage )
-        {
-            if ( _pages[ _currentPage ] != null )
-            {
-                _pages[ _currentPage ].Hide();
-                _pages[ _currentPage ].Dispose();
-            }
-        }
-
-        _currentPage = nextPage;
-
-        if ( _currentPage != ExitPage )
-        {
-            if ( _pages[ _currentPage ] != null )
-            {
-                _pages[ _currentPage ].Initialise();
-                _pages[ _currentPage ].Show();
-            }
-        }
-    }
+    public override string Name() => "Title Scene";
 
     private void DrawForeground()
     {
         App.SpriteBatch.Draw
-            (
-             _foreground,
-             new Rectangle( 0, 0, Gfx.DesktopWidth, Gfx.DesktopHeight ),
-             Color.White
-            );
+        (
+            _foreground,
+            new Rectangle( 0, 0, Gfx.DesktopWidth, Gfx.DesktopHeight ),
+            Color.White
+        );
     }
 }
