@@ -179,13 +179,10 @@ public class BaseRenderer : IDisposable
     {
         if ( HudGameCamera.IsInUse )
         {
-            App.SpriteBatch.Begin();
-
-            _cameraPos.X = 0;
-            _cameraPos.Y = 0;
-
-            HudGameCamera.SetPosition( _cameraPos );
+            var matrix = HudGameCamera.Camera.GetViewMatrix();
             
+            App.SpriteBatch.Begin( transformMatrix: matrix );
+
             _hudRenderer.Render();
 
             App.SpriteBatch.End();

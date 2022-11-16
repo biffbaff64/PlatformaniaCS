@@ -1,4 +1,5 @@
-﻿
+﻿using Microsoft.Xna.Framework.Graphics;
+
 namespace PlatformaniaCS.Game.Graphics;
 
 public static class Gfx
@@ -116,12 +117,12 @@ public static class Gfx
 
     public static void SetSceneDimensions()
     {
-        HudSceneWidth       = ( HudWidth           / PPM );
-        HudSceneHeight      = ( HudHeight          / PPM );
-        GameSceneWidth      = ( ViewWidth          / PPM );
-        GameSceneHeight     = ( ViewHeight         / PPM );
-        ParallaxSceneWidth  = ( ParallaxViewWidth  / PPM );
-        ParallaxSceneHeight = ( ParallaxViewHeight / PPM );
+//        HudSceneWidth       = ( HudWidth           / PPM );
+//        HudSceneHeight      = ( HudHeight          / PPM );
+//        GameSceneWidth      = ( ViewWidth          / PPM );
+//        GameSceneHeight     = ( ViewHeight         / PPM );
+//        ParallaxSceneWidth  = ( ParallaxViewWidth  / PPM );
+//        ParallaxSceneHeight = ( ParallaxViewHeight / PPM );
     }
 
     public static SimpleVec2F GetScreenSizeInMeters()
@@ -139,4 +140,7 @@ public static class Gfx
     }
 
     public static float GetPixelsToMeters( float pixels ) => pixels * PixelsToMeters;
+
+    public static int GetDisplayWidth()  => GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+    public static int GetDisplayHeight() => GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 }

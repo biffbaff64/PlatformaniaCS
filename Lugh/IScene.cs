@@ -10,13 +10,13 @@ public interface IScene
     /// <summary>
     /// Called when the scene should update itself.
     /// </summary>
-    void Update();
+    void Update( GameTime gameTime );
 
     /// <summary>
     /// Called when the scene should render itself.
     /// </summary>
-    /// <param name="delta">The time in seconds since the last render.</param>
-    void Render( float delta );
+    /// <param name="gameTime">The time in seconds since the last render.</param>
+    void Render( GameTime gameTime );
 
     /// <summary>
     /// Called when the application is resized. This can happen at any
@@ -56,9 +56,4 @@ public interface IScene
     /// Returns the name of this scene.
     /// </summary>
     string Name();
-
-    /// <summary>
-    /// Called when this scene should release all resources.
-    /// </summary>
-    void Dispose();
 }

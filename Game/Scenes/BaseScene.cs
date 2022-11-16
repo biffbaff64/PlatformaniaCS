@@ -2,15 +2,15 @@
 
 public abstract class BaseScene : IScene, IDisposable
 {
-    public BaseScene()
+    protected BaseScene()
     {
     }
 
     public abstract void Initialise();
 
-    public abstract void Update();
+    public abstract void Update( GameTime gameTime );
 
-    public abstract void Render( float delta );
+    public abstract void Render( GameTime gameTime );
 
     public abstract void Show();
 
@@ -27,10 +27,6 @@ public abstract class BaseScene : IScene, IDisposable
     }
 
     public void Resume()
-    {
-    }
-
-    void IScene.Dispose()
     {
     }
 

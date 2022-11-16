@@ -31,9 +31,9 @@ public class LughSystem
     public ImageButton            BackButton           { get; set; }
     public IScene                 CurrentScene         { get; set; }
 
-    private static readonly LughSystem instance = new();
+    private static readonly LughSystem Instance = new LughSystem();
 
-    public static LughSystem Inst() => instance;
+    public static LughSystem Inst() => Instance;
 
     public int LogLevel { get; set; }
 

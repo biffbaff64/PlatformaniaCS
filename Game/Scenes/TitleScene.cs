@@ -2,8 +2,10 @@
 
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Graphics;
+using PlatformaniaCS.Game.Graphics.Camera;
 using PlatformaniaCS.Game.UI;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -52,7 +54,7 @@ public class TitleScene : BaseScene
         _menuPage.Show();
     }
 
-    public override void Update()
+    public override void Update( GameTime gameTime )
     {
     }
 
@@ -89,13 +91,13 @@ public class TitleScene : BaseScene
         }
     }
 
-    public override void Render( float delta )
+    public override void Render( GameTime gameTime )
     {
         if ( App.AppState == StateID._STATE_MAIN_MENU )
         {
-            Update();
-            
-            App.BaseRenderer.Render( delta );
+            Update( gameTime );
+
+            App.BaseRenderer.Render( gameTime.GetElapsedSeconds() );
         }
     }
 
@@ -106,7 +108,7 @@ public class TitleScene : BaseScene
             App.SpriteBatch.Draw
             (
                 _background,
-                new Rectangle( 0, 0, Gfx.DesktopWidth, Gfx.DesktopHeight ),
+                new Rectangle( 0, 0, Gfx.HudWidth, Gfx.HudHeight ),
                 Color.White
             );
 
@@ -214,7 +216,7 @@ public class TitleScene : BaseScene
         App.SpriteBatch.Draw
         (
             _foreground,
-            new Rectangle( 0, 0, Gfx.DesktopWidth, Gfx.DesktopHeight ),
+            new Rectangle( 0, 0, Gfx.HudWidth, Gfx.HudHeight ),
             Color.White
         );
     }

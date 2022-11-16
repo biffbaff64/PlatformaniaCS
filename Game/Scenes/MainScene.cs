@@ -34,7 +34,7 @@ public class MainScene : BaseScene
         }
     }
 
-    public override void Update()
+    public override void Update( GameTime gameTime )
     {
         if ( AppConfig.GameScreenActive )
         {
@@ -69,16 +69,16 @@ public class MainScene : BaseScene
         }
     }
 
-    public override void Render( float delta )
+    public override void Render( GameTime gameTime )
     {
         App.MapData.Update();
         App.GameProgress.Update();
 
         if ( AppConfig.GameScreenActive )
         {
-            Update();
+            Update( gameTime );
             
-            App.BaseRenderer.Render( delta );
+            App.BaseRenderer.Render( gameTime.GetElapsedSeconds() );
 
             App.WorldModel.WorldStep();
         }

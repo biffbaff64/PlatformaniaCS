@@ -11,12 +11,13 @@ namespace PlatformaniaCS.Game.Graphics.Camera;
 
 public class OrthoGameCamera
 {
-    public ViewportAdapter ViewportAdapter  { get; set; }
-    public string          Name             { get; set; }
-    public Vector3         LerpVector       { get; set; }
-    public bool            IsInUse          { get; set; }
-    public bool            IsLerpingEnabled { get; set; }
-    public float           DefaultZoom      { get; set; }
+    public ViewportAdapter    ViewportAdapter  { get; set; }
+    public OrthographicCamera Camera           { get; set; }
+    public string             Name             { get; set; }
+    public Vector3            LerpVector       { get; set; }
+    public bool               IsInUse          { get; set; }
+    public bool               IsLerpingEnabled { get; set; }
+    public float              DefaultZoom      { get; set; }
 
     public OrthoGameCamera( float sceneWidth, float sceneHeight, string name )
     {
@@ -25,12 +26,16 @@ public class OrthoGameCamera
         IsLerpingEnabled = false;
         LerpVector       = new Vector3();
         DefaultZoom      = Zoom.DefaultZoom;
+
         ViewportAdapter = new BoxingViewportAdapter
         (
             App.MainGame.Window,
             App.MainGame.GraphicsDevice,
-            (int) sceneWidth, (int ) sceneHeight
+            ( int )(sceneWidth * Gfx.PPM),
+            ( int )(sceneHeight * Gfx.PPM)
         );
+
+        Camera = new OrthographicCamera( ViewportAdapter );
     }
 
     public void SetPosition( Vector2 position )

@@ -1,12 +1,8 @@
 ﻿using System.Diagnostics;
-
 using Microsoft.Xna.Framework.Graphics;
-
 using MonoGame.Extended.ViewportAdapters;
-
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Graphics;
-
 using Trace = Lugh.Utils.Trace;
 
 namespace PlatformaniaCS.Game.UI;
@@ -25,16 +21,16 @@ public class SplashScreen
         Trace.CheckPoint();
 
         _stopwatch  = Stopwatch.StartNew();
-        _background = AssetUtils.LoadAsset<Texture2D>( assetName );
+        _background = AssetUtils.LoadAsset< Texture2D >( assetName );
         _batch      = new SpriteBatch( App.MainGame.GraphicsDevice );
 
         var viewportAdapter = new BoxingViewportAdapter
-            (
-             App.MainGame.Window,
-             App.MainGame.GraphicsDevice,
-             Gfx.DesktopWidth,
-             Gfx.DesktopHeight
-            );
+        (
+            App.MainGame.Window,
+            App.MainGame.GraphicsDevice,
+            Gfx.DesktopWidth,
+            Gfx.DesktopHeight
+        );
 
         _camera = new OrthographicCamera( viewportAdapter );
 
@@ -58,11 +54,11 @@ public class SplashScreen
             _batch.Begin( transformMatrix: transformMatrix );
 
             _batch.Draw
-                (
-                 _background,
-                 new Rectangle( 0, 0, Gfx.DesktopWidth, Gfx.DesktopHeight ),
-                 Color.White
-                );
+            (
+                _background,
+                new Rectangle( 0, 0, Gfx.DesktopWidth, Gfx.DesktopHeight ),
+                Color.White
+            );
 
             _batch.End();
         }
@@ -79,7 +75,7 @@ public class SplashScreen
 
         _camera = null;
         _camera = null;
-        
+
         _batch.Dispose();
         _batch = null;
     }

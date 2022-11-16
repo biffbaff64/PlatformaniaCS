@@ -25,7 +25,7 @@ public class MainGame : Microsoft.Xna.Framework.Game
     protected override void Initialize()
     {
         base.Initialize();
-        
+
         LughSystem.Inst().Setup();
         LughSystem.Inst().LogLevel = LughSystem.LogDebug;
 
@@ -57,7 +57,7 @@ public class MainGame : Microsoft.Xna.Framework.Game
     protected override void Update( GameTime gameTime )
     {
         if ( GamePad.GetState( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed
-             || Keyboard.GetState().IsKeyDown( Keys.Escape ) )
+          || Keyboard.GetState().IsKeyDown( Keys.Escape ) )
         {
             Exit();
         }
@@ -71,13 +71,13 @@ public class MainGame : Microsoft.Xna.Framework.Game
                 _splashScreen.Dispose();
 
                 Trace.Dbg( message: "Splashscreen Closed." );
-                
+
                 App.AppConfig.CloseStartup();
             }
         }
         else
         {
-            App.Scene.Render( gameTime.GetElapsedSeconds() );
+            App.Scene.Render( gameTime );
         }
     }
 
@@ -94,7 +94,7 @@ public class MainGame : Microsoft.Xna.Framework.Game
         }
         else
         {
-            App.Scene.Render( 0f );
+            App.Scene.Render( gameTime );
         }
     }
 }
