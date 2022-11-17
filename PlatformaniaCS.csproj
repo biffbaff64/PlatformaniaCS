@@ -31,6 +31,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Box2DSharp" Version="0.6.0" />
+        <PackageReference Include="ILNumerics.Toolboxes.Interpolation" Version="6.0.148" />
         <PackageReference Include="MonoGame.Extended" Version="3.8.0" />
         <PackageReference Include="MonoGame.Extended.Graphics" Version="3.8.0" />
         <PackageReference Include="MonoGame.Extended.Tiled" Version="3.8.0" />
