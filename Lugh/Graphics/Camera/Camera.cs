@@ -1,7 +1,5 @@
 ﻿namespace Lugh.Graphics.Camera;
 
-using Vector3 = Maths.Vector3;
-
 public abstract class Camera
 {
     // the position of the camera
@@ -63,26 +61,48 @@ public abstract class Camera
     /// <param name="z">The z-coordinate of the point to look at.</param>
     public void LookAt( float x, float y, float z )
     {
-        _tmpVec.Set( x, y, z ).Sub( Position ).Nor();
+        _tmpVec.X = x;
+        _tmpVec.Y = y;
+        _tmpVec.Z = z;
 
-        if ( !_tmpVec.IsZero() )
+        Vector3.Subtract( _tmpVec, Position );
+
+        _tmpVec.Normalize();
+
+        if ( !_tmpVec.Equals( Vector3.Zero ) )
         {
             float dot = _tmpVec.Dot( Up ); // up and direction must ALWAYS be orthonormal vectors
 
             if ( Math.Abs( dot - 1 ) < 0.000000001f )
             {
                 // Collinear
-                Up.Set( Direction ).Scl( -1 );
+                Up = new Vector3
+                {
+                        X = Direction.X,
+                        Y = Direction.Y,
+                        Z = Direction.Z
+                };
+
+                Up *= -1;
             }
             else if ( Math.Abs( dot + 1 ) < 0.000000001f )
             {
                 // Collinear opposite
-                Up.X = Direction.X;
-                Up.Y = Direction.Y;
-                Up.Z = Direction.Z;
+                Up = new Vector3
+                {
+                        X = Direction.X,
+                        Y = Direction.Y,
+                        Z = Direction.Z
+                };
             }
 
-            Direction.Set( _tmpVec );
+            Direction = new Vector3
+            {
+                    X = _tmpVec.X,
+                    Y = _tmpVec.Y,
+                    Z = _tmpVec.Z
+            };
+            
             NormalizeUp();
         }
     }
