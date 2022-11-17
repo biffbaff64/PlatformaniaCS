@@ -61,9 +61,7 @@ public abstract class Camera
     /// <param name="z">The z-coordinate of the point to look at.</param>
     public void LookAt( float x, float y, float z )
     {
-        _tmpVec.X = x;
-        _tmpVec.Y = y;
-        _tmpVec.Z = z;
+        _tmpVec = VectorUtils.Set( x, y, z );
 
         Vector3.Subtract( _tmpVec, Position );
 
@@ -71,39 +69,107 @@ public abstract class Camera
 
         if ( !_tmpVec.Equals( Vector3.Zero ) )
         {
-            float dot = _tmpVec.Dot( Up ); // up and direction must ALWAYS be orthonormal vectors
+            var dot = Vector3.Dot( _tmpVec, Up ); // up and direction must ALWAYS be orthonormal vectors
 
             if ( Math.Abs( dot - 1 ) < 0.000000001f )
             {
                 // Collinear
-                Up = new Vector3
-                {
-                        X = Direction.X,
-                        Y = Direction.Y,
-                        Z = Direction.Z
-                };
-
-                Up *= -1;
+                Up = VectorUtils.Set( Direction );
+                Up = VectorUtils.Scl( Up, -1 );
             }
             else if ( Math.Abs( dot + 1 ) < 0.000000001f )
             {
                 // Collinear opposite
-                Up = new Vector3
-                {
-                        X = Direction.X,
-                        Y = Direction.Y,
-                        Z = Direction.Z
-                };
+                Up = VectorUtils.Set( Direction );
             }
 
-            Direction = new Vector3
-            {
-                    X = _tmpVec.X,
-                    Y = _tmpVec.Y,
-                    Z = _tmpVec.Z
-            };
-            
+            Direction = VectorUtils.Set( _tmpVec );
+
             NormalizeUp();
         }
+    }
+
+    /// <summary>
+    /// Recalculates the direction of the camera to look at the point (x, y, z).
+    /// </summary>
+    /// <param name="target">The target point to look at.</param>
+    public void LookAt( Vector3 target )
+    {
+        this.LookAt( target.X, target.Y, target.Z );
+    }
+
+    /// <summary>
+    /// Normalizes the up vector by first calculating the right vector
+    /// via a cross product between direction and up, and then recalculating
+    /// the up vector via a cross product between right and direction. 
+    /// </summary>
+    public void NormalizeUp()
+    {
+        _tmpVec = VectorUtils.Set( Direction );
+
+        Up = VectorUtils.Set( _tmpVec );
+        Up = Vector3.Cross( Up, Direction );
+        Up.Normalize();
+    }
+
+    /// <summary>
+    /// Rotates the direction and up vector of this camera by the given
+    /// angle around the given axis. The direction and up vector will
+    /// not be 'orthogonalized'.
+    /// </summary>
+    /// <param name="angle">The angle.</param>
+    /// <param name="axisX">The x-component of the axis.</param>
+    /// <param name="axisY">The y-component of the axis.</param>
+    /// <param name="axisZ">The z-component of the axis.</param>
+    public void Rotate( float angle, float axisX, float axisY, float axisZ )
+    {
+    }
+
+    /// <summary>
+    /// Rotates the direction and up vector of this camera by the given
+    /// angle around the given axis. The direction and up vector will
+    /// not be 'orthogonalized'.
+    /// </summary>
+    /// <param name="axis">The axis to rotate around.</param>
+    /// <param name="angle">The angle, in degrees.</param>
+    public void Rotate( Vector3 axis, float angle )
+    {
+    }
+
+    /// <summary>
+    /// Rotates the direction and up vector of this camera by the given
+    /// rotation matrix. The direction and up vector will not be 'orthogonalized'.
+    /// </summary>
+    /// <param name="transform">The rotation matrix.</param>
+    public void Rotate( Matrix4 transform )
+    {
+    }
+
+    /// <summary>
+    /// Rotates the direction and up vector of this camera by the given
+    /// Quaternion. The direction and up vector will not be 'orthogonalized'.
+    /// </summary>
+    /// <param name="quat"></param>
+    public void Rotate( Quaternion quat )
+    {
+    }
+
+    /// <summary>
+    /// Rotates the direction and up vector of this camera by the given
+    /// angle around the given axis, with the axis attached to given point.
+    /// The direction and up vector will not be 'orthogonalized'.
+    /// </summary>
+    /// <param name="point">The point to attach the axis to.</param>
+    /// <param name="axis">The axis to rotate around.</param>
+    /// <param name="angle">The angle, in degrees.</param>
+    public void RotateAround( Vector3 point, Vector3 axis, float angle )
+    {
+    }
+
+    /// <summary>
+    /// Transform the position, direction and up vector by the given matrix.
+    /// </summary>
+    public void Transform( Matrix4 transform )
+    {
     }
 }

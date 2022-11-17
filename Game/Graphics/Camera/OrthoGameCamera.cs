@@ -2,6 +2,7 @@
 
 using MonoGame.Extended.ViewportAdapters;
 using PlatformaniaCS.Game.Core;
+using OrthographicCamera = MonoGame.Extended.OrthographicCamera;
 using Vector2 = System.Numerics.Vector2;
 using Vector3 = System.Numerics.Vector3;
 
@@ -31,8 +32,8 @@ public class OrthoGameCamera
         (
             App.MainGame.Window,
             App.MainGame.GraphicsDevice,
-            ( int )(sceneWidth * Gfx.PPM),
-            ( int )(sceneHeight * Gfx.PPM)
+            ( int )( sceneWidth  * Gfx.PPM ),
+            ( int )( sceneHeight * Gfx.PPM )
         );
 
         Camera = new OrthographicCamera( ViewportAdapter );
