@@ -12,6 +12,7 @@ global using MonoGame.Extended;
 global using Lugh;
 global using Lugh.Entities;
 global using Lugh.Graphics;
+global using Lugh.Graphics.Camera;
 global using Lugh.Input;
 global using Lugh.Logging;
 global using Lugh.Maths;
