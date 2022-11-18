@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Graphics;
+using Scene2DCS.Utils;
 
 namespace Lugh.Graphics.Camera;
 
@@ -35,7 +36,7 @@ public abstract class Viewport
 
         if ( centerCamera )
         {
-            Camera.Position.Set( WorldWidth / 2, WorldHeight / 2, 0 );
+            Camera.Position = VectorUtils.Set( WorldWidth / 2, WorldHeight / 2, 0 );
         }
 
         Camera.Update();
@@ -138,7 +139,7 @@ public abstract class Viewport
     /// <param name="scissor"></param>
     public void CalculateScissors( Matrix4 batchTransform, Rectangle area, Rectangle scissor )
     {
-        ScissorStack.calculateScissors( Camera, ScreenX, ScreenY, ScreenWidth, ScreenHeight, batchTransform, area, scissor );
+        ScissorStack.CalculateScissors( Camera, ScreenX, ScreenY, ScreenWidth, ScreenHeight, batchTransform, area, scissor );
     }
 
     /// <summary>
@@ -152,8 +153,8 @@ public abstract class Viewport
         _tmp.X = worldCoords.X;
         _tmp.Y = worldCoords.Y;
         _tmp.Z = 0;
-        
-        _tmp.mul( transformMatrix );
+
+        _tmp = VectorUtils.Mul( _tmp, transformMatrix );
 
         Camera.Project( _tmp, ScreenX, ScreenY, ScreenWidth, ScreenHeight );
 

@@ -172,4 +172,59 @@ public abstract class Camera
     public void Transform( Matrix4 transform )
     {
     }
+
+    /// <summary>
+    /// Moves the camera by the given amount on each axis.
+    /// </summary>
+    /// <param name="x">The displacement on the x-axis.</param>
+    /// <param name="y">The displacement on the y-axis.</param>
+    /// <param name="z">The displacement on the z-axis.</param>
+    public void Translate( float x, float y, float z )
+    {
+    }
+
+    /// <summary>
+    /// Moves the camera by the given vector.
+    /// </summary>
+    /// <param name="vector3">The displacement vector.</param>
+    public void Translate( Vector3 vector3 )
+    {
+    }
+
+    /// <summary>
+    /// Function to translate a point given in screen coordinates to
+    /// world space. It's the same as GLU gluUnProject, but does not
+    /// rely on OpenGL. The x- and y-coordinate of vec are assumed to
+    /// be in screen coordinates (origin is the top left corner, y
+    /// pointing down, x pointing to the right) as reported by the touch
+    /// methods in Input. A z-coordinate of 0 will return a point on the
+    /// near plane, a z-coordinate of 1 will return a point on the far
+    /// plane. This method allows you to specify the viewport position#
+    /// and dimensions in the coordinate system expected by
+    /// GL20.glViewport(int, int, int, int), with the origin in the bottom
+    /// left corner of the screen.
+    /// </summary>
+    /// <param name="screenCoords"></param>
+    /// <param name="viewportX"></param>
+    /// <param name="viewportY"></param>
+    /// <param name="viewportWidth"></param>
+    /// <param name="viewportHeight"></param>
+    /// <returns></returns>
+    public Vector3 unproject( Vector3 screenCoords, float viewportX, float viewportY, float viewportWidth, float viewportHeight )
+    {
+        return default;
+    }
+
+    public void Unproject( Vector3 tmp, int screenX, int screenY, int screenWidth, int screenHeight )
+    {
+    }
+
+    public void Project( Vector3 tmp, int screenX, int screenY, int screenWidth, int screenHeight )
+    {
+    }
+
+    public Ray GetPickRay( float screenX, float screenY, int i, int screenY1, int screenWidth, int screenHeight )
+    {
+        return default;
+    }
 }

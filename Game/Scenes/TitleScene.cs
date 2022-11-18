@@ -108,7 +108,13 @@ public class TitleScene : BaseScene
             App.SpriteBatch.Draw
             (
                 _background,
-                new Rectangle( 0, 0, Gfx.HudWidth, Gfx.HudHeight ),
+                new Rectangle
+                (
+                    0,
+                    0,
+                    Gfx.HudWidth,
+                    Gfx.HudHeight
+                ),
                 Color.White
             );
 

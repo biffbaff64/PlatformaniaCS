@@ -61,4 +61,15 @@ public abstract class VectorUtils
 
         return tmpVec;
     }
+
+    public static Vector3 Mul( Vector3 v, Matrix4 matrix )
+    {
+        var l_mat = matrix.Val;
+
+        return Set
+        (
+            v.X * l_mat[Matrix4.M00] + v.Y * l_mat[Matrix4.M01] + v.Z * l_mat[Matrix4.M02] + l_mat[Matrix4.M03],
+            v.X * l_mat[Matrix4.M10] + v.Y * l_mat[Matrix4.M11] + v.Z * l_mat[Matrix4.M12] + l_mat[Matrix4.M13],
+            v.X * l_mat[Matrix4.M20] + v.Y * l_mat[Matrix4.M21] + v.Z * l_mat[Matrix4.M22] + l_mat[Matrix4.M23]        );
+    }
 }

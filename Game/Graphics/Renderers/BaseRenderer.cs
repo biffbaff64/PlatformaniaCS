@@ -47,6 +47,7 @@ public class BaseRenderer : IDisposable
             Gfx.ParallaxSceneHeight,
             "Parallax Cam"
         );
+        
         ParallaxBackground = new ParallaxBackground();
         ParallaxUtils      = new ParallaxUtils();
 

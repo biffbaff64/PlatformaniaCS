@@ -11,4 +11,8 @@ public class ScissorStack
     {
         return default;
     }
+
+    public static void CalculateScissors( Camera camera, int screenX, int screenY, int screenWidth, int screenHeight, Matrix4 batchTransform, Rectangle area, Rectangle scissor )
+    {
+    }
 }
