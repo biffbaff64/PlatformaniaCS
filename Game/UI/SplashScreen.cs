@@ -16,6 +16,7 @@ public class SplashScreen
     private SpriteBatch        _batch;
     private Texture2D          _background;
     private Stopwatch          _stopwatch;
+    private string             _assetName;
 
     public void Setup( string assetName )
     {
@@ -23,6 +24,7 @@ public class SplashScreen
 
         _stopwatch  = Stopwatch.StartNew();
         _background = AssetUtils.LoadAsset< Texture2D >( assetName );
+        _assetName  = assetName;
         _batch      = new SpriteBatch( App.MainGame.GraphicsDevice );
 
         var viewportAdapter = new BoxingViewportAdapter
@@ -69,6 +71,8 @@ public class SplashScreen
     {
         Trace.CheckPoint();
 
+        AssetUtils.UnloadAsset( _assetName );
+        
         _background.Dispose();
         _background = null;
 

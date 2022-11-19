@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
+﻿
 using PlatformaniaCS.Game.Core;
 
 namespace PlatformaniaCS.Game.Graphics;

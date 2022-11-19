@@ -1,12 +1,13 @@
 ﻿// ##################################################
 
 using System.Collections.Generic;
+
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Graphics;
-using PlatformaniaCS.Game.Graphics.Camera;
 using PlatformaniaCS.Game.UI;
+
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -35,6 +36,10 @@ public class TitleScene : BaseScene
         Trace.CheckPoint();
     }
 
+    /// <summary>
+    /// Initialise the Title scene, create the array of pages,
+    /// and set the initial page to the options menu.
+    /// </summary>
     public override void Initialise()
     {
         Trace.CheckPoint();
@@ -69,8 +74,7 @@ public class TitleScene : BaseScene
             _exitDialog?.Dispose();
             _exitDialog = null;
         }
-
-        if ( _currentPage != ExitPage )
+        else
         {
             if ( _pages[ _currentPage ] != null )
             {
@@ -106,37 +110,34 @@ public class TitleScene : BaseScene
         if ( App.AppState == StateID._STATE_MAIN_MENU )
         {
             App.SpriteBatch.Draw
-            (
-                _background,
-                new Rectangle
                 (
-                    0,
-                    0,
-                    Gfx.HudWidth,
-                    Gfx.HudHeight
-                ),
-                Color.White
-            );
+                 _background,
+                 new Rectangle
+                     (
+                      0,
+                      0,
+                      Gfx.HudWidth,
+                      Gfx.HudHeight
+                     ),
+                 Color.White
+                );
 
             switch ( _currentPage )
             {
                 case MenuPage:
-                {
-                    DrawForeground();
-
-                    _pages[ _currentPage ].Draw();
-
-                    break;
-                }
-
                 case OptionsPage:
                 case CreditsPage:
                 {
                     DrawForeground();
 
-                    if ( LughSystem.Inst().BackButton is { IsVisible: true } )
+                    _pages[ _currentPage ].Draw();
+
+                    if ( _currentPage != MenuPage )
                     {
-                        LughSystem.Inst().BackButton.Position.Set( 20, 20 );
+                        if ( LughSystem.Inst().BackButton is { IsVisible: true } )
+                        {
+                            LughSystem.Inst().BackButton.Position.Set( 20, 20 );
+                        }
                     }
 
                     break;
@@ -174,7 +175,7 @@ public class TitleScene : BaseScene
         LoadImages();
 
         App.BaseRenderer.ResetCameraZoom();
-        App.BaseRenderer.EnableCamera( CamID._PARALLAX, CamID._HUD, CamID._STAGE );
+        App.BaseRenderer.EnableCamera( CamID._HUD, CamID._STAGE );
 
         Initialise();
     }
@@ -190,8 +191,8 @@ public class TitleScene : BaseScene
     {
         Trace.CheckPoint();
 
-        _background = App.MainGame.Content.Load< Texture2D >( "title_background" );
-        _foreground = App.MainGame.Content.Load< Texture2D >( "title_foreground" );
+        _background = AssetUtils.LoadAsset< Texture2D >( "title_background" );
+        _foreground = AssetUtils.LoadAsset< Texture2D >( "title_foreground" );
     }
 
     public void Dispose()
@@ -211,6 +212,9 @@ public class TitleScene : BaseScene
         _menuPage    = null;
         _exitDialog  = null;
 
+        AssetUtils.UnloadAsset( "title_background" );
+        AssetUtils.UnloadAsset( "title_foreground" );
+
         _foreground = null;
         _background = null;
     }
@@ -220,10 +224,10 @@ public class TitleScene : BaseScene
     private void DrawForeground()
     {
         App.SpriteBatch.Draw
-        (
-            _foreground,
-            new Rectangle( 0, 0, Gfx.HudWidth, Gfx.HudHeight ),
-            Color.White
-        );
+            (
+             _foreground,
+             new Rectangle( 0, 0, Gfx.HudWidth, Gfx.HudHeight ),
+             Color.White
+            );
     }
 }

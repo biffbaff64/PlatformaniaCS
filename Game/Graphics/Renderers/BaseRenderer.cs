@@ -40,7 +40,8 @@ public class BaseRenderer : IDisposable
         LughSystem.Inst().CamerasReady = false;
 
         // --------------------------------------------------------
-
+        // Camera used for parallax scrolling backgrounds.
+        
         ParallaxCamera = new OrthoGameCamera
         (
             Gfx.ParallaxSceneWidth,
@@ -52,7 +53,8 @@ public class BaseRenderer : IDisposable
         ParallaxUtils      = new ParallaxUtils();
 
         // --------------------------------------------------------
-
+        // Camera used for displaying Tiled Maps.
+        
         TiledGameCamera = new OrthoGameCamera
         (
             Gfx.GameSceneWidth,
@@ -61,7 +63,8 @@ public class BaseRenderer : IDisposable
         );
 
         // --------------------------------------------------------
-
+        // Camera used for displaying Sprites.
+        
         SpriteGameCamera = new OrthoGameCamera
         (
             Gfx.GameSceneWidth,
@@ -70,7 +73,9 @@ public class BaseRenderer : IDisposable
         );
 
         // --------------------------------------------------------
-
+        // Secondary Camera used for display Tiled Map layers
+        // intended for drawing on top of the sprite layer.
+        
         OverlayCamera = new OrthoGameCamera
         (
             Gfx.GameSceneWidth,
@@ -79,7 +84,8 @@ public class BaseRenderer : IDisposable
         );
 
         // --------------------------------------------------------
-
+        // Camera used for displaying the HUD.
+        
         HudGameCamera = new OrthoGameCamera
         (
             Gfx.HudSceneWidth,
@@ -180,10 +186,12 @@ public class BaseRenderer : IDisposable
     {
         if ( HudGameCamera.IsInUse )
         {
-            var matrix = HudGameCamera.Camera.GetViewMatrix();
+//            var matrix = HudGameCamera.Camera.GetViewMatrix();
             
-            App.SpriteBatch.Begin( transformMatrix: matrix );
+//            App.SpriteBatch.Begin( transformMatrix: matrix );
 
+            App.SpriteBatch.Begin();
+            
             _hudRenderer.Render();
 
             App.SpriteBatch.End();
