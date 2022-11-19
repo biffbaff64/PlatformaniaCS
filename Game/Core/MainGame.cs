@@ -62,22 +62,6 @@ public class MainGame : Microsoft.Xna.Framework.Game
             Exit();
         }
 
-        if ( Keyboard.GetState().IsKeyDown( Keys.Up ) )
-        {
-            App.BaseRenderer.HudGameCamera.Camera.Move
-            (
-                -Vector2.UnitY * 200 * gameTime.GetElapsedSeconds()
-            );
-        }
-
-        if ( Keyboard.GetState().IsKeyDown( Keys.Down ) )
-        {
-            App.BaseRenderer.HudGameCamera.Camera.Move
-            (
-                Vector2.UnitY * 200 * gameTime.GetElapsedSeconds()
-            );
-        }
-
         if ( _splashScreen.IsAvailable )
         {
             _splashScreen.Update();

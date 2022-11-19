@@ -1,5 +1,6 @@
 // ##################################################
 
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.ViewportAdapters;
 using PlatformaniaCS.Game.Core;
 using OrthographicCamera = MonoGame.Extended.OrthographicCamera;
@@ -12,8 +13,7 @@ namespace PlatformaniaCS.Game.Graphics.Camera;
 
 public class OrthoGameCamera
 {
-    public ViewportAdapter    ViewportAdapter  { get; set; }
-    public OrthographicCamera Camera           { get; set; }
+    public RenderTarget2D     RenderTarget2D   { get; set; }
     public string             Name             { get; set; }
     public Vector3            LerpVector       { get; set; }
     public bool               IsInUse          { get; set; }
@@ -28,15 +28,12 @@ public class OrthoGameCamera
         LerpVector       = new Vector3();
         DefaultZoom      = Zoom.DefaultZoom;
 
-        ViewportAdapter = new BoxingViewportAdapter
+        RenderTarget2D = new RenderTarget2D
         (
-            App.MainGame.Window,
             App.MainGame.GraphicsDevice,
             ( int )( sceneWidth  * Gfx.PPM ),
             ( int )( sceneHeight * Gfx.PPM )
         );
-
-        Camera = new OrthographicCamera( ViewportAdapter );
     }
 
     public void SetPosition( Vector2 position )

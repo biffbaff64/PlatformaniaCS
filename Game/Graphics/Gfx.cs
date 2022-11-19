@@ -117,12 +117,12 @@ public static class Gfx
 
     public static void SetSceneDimensions()
     {
-//        HudSceneWidth       = ( HudWidth           / PPM );
-//        HudSceneHeight      = ( HudHeight          / PPM );
-//        GameSceneWidth      = ( ViewWidth          / PPM );
-//        GameSceneHeight     = ( ViewHeight         / PPM );
-//        ParallaxSceneWidth  = ( ParallaxViewWidth  / PPM );
-//        ParallaxSceneHeight = ( ParallaxViewHeight / PPM );
+        HudSceneWidth       = ( HudWidth           / PPM );
+        HudSceneHeight      = ( HudHeight          / PPM );
+        GameSceneWidth      = ( ViewWidth          / PPM );
+        GameSceneHeight     = ( ViewHeight         / PPM );
+        ParallaxSceneWidth  = ( ParallaxViewWidth  / PPM );
+        ParallaxSceneHeight = ( ParallaxViewHeight / PPM );
     }
 
     public static SimpleVec2F GetScreenSizeInMeters()
