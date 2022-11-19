@@ -9,6 +9,7 @@ using PlatformaniaCS.Game.Graphics;
 using PlatformaniaCS.Game.UI;
 
 using Color = Microsoft.Xna.Framework.Color;
+using OrthographicCamera = MonoGame.Extended.OrthographicCamera;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 // ##################################################
@@ -105,7 +106,7 @@ public class TitleScene : BaseScene
         }
     }
 
-    public void Draw()
+    public void Draw( OrthographicCamera camera )
     {
         if ( App.AppState == StateID._STATE_MAIN_MENU )
         {
@@ -118,6 +119,12 @@ public class TitleScene : BaseScene
                       0,
                       Gfx.HudWidth,
                       Gfx.HudHeight
+                     ),
+                 new Rectangle
+                     (
+                      0, 0,
+                      _background.Width,
+                      _background.Height
                      ),
                  Color.White
                 );

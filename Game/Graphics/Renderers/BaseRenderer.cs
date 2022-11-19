@@ -11,9 +11,9 @@ public class BaseRenderer : IDisposable
     private const float DefaultParallaxZoom = 1.0f;
     private const float DefaultMapZoom      = 1.0f;
 
-    private System.Numerics.Vector2 _cameraPos;
-    private HUDRenderer             _hudRenderer;
-    private WorldRenderer           _worldRenderer;
+    private Vector2       _cameraPos;
+    private HUDRenderer   _hudRenderer;
+    private WorldRenderer _worldRenderer;
 
     public OrthoGameCamera    HudGameCamera      { get; set; }
     public OrthoGameCamera    OverlayCamera      { get; set; }
@@ -41,64 +41,64 @@ public class BaseRenderer : IDisposable
 
         // --------------------------------------------------------
         // Camera used for parallax scrolling backgrounds.
-        
+
         ParallaxCamera = new OrthoGameCamera
-        (
-            Gfx.ParallaxSceneWidth,
-            Gfx.ParallaxSceneHeight,
-            "Parallax Cam"
-        );
-        
+            (
+             Gfx.ParallaxSceneWidth,
+             Gfx.ParallaxSceneHeight,
+             "Parallax Cam"
+            );
+
         ParallaxBackground = new ParallaxBackground();
         ParallaxUtils      = new ParallaxUtils();
 
         // --------------------------------------------------------
         // Camera used for displaying Tiled Maps.
-        
+
         TiledGameCamera = new OrthoGameCamera
-        (
-            Gfx.GameSceneWidth,
-            Gfx.GameSceneHeight,
-            "Tiled Cam"
-        );
+            (
+             Gfx.GameSceneWidth,
+             Gfx.GameSceneHeight,
+             "Tiled Cam"
+            );
 
         // --------------------------------------------------------
         // Camera used for displaying Sprites.
-        
+
         SpriteGameCamera = new OrthoGameCamera
-        (
-            Gfx.GameSceneWidth,
-            Gfx.GameSceneHeight,
-            "Sprite Cam"
-        );
+            (
+             Gfx.GameSceneWidth,
+             Gfx.GameSceneHeight,
+             "Sprite Cam"
+            );
 
         // --------------------------------------------------------
         // Secondary Camera used for display Tiled Map layers
         // intended for drawing on top of the sprite layer.
-        
+
         OverlayCamera = new OrthoGameCamera
-        (
-            Gfx.GameSceneWidth,
-            Gfx.GameSceneHeight,
-            "Overlay Cam"
-        );
+            (
+             Gfx.GameSceneWidth,
+             Gfx.GameSceneHeight,
+             "Overlay Cam"
+            );
 
         // --------------------------------------------------------
         // Camera used for displaying the HUD.
-        
+
         HudGameCamera = new OrthoGameCamera
-        (
-            Gfx.HudSceneWidth,
-            Gfx.HudSceneHeight,
-            "HUD Cam"
-        );
+            (
+             Gfx.HudSceneWidth,
+             Gfx.HudSceneHeight,
+             "HUD Cam"
+            );
 
         // --------------------------------------------------------
 
         GameZoom = new Zoom();
         HudZoom  = new Zoom();
 
-        _cameraPos     = new System.Numerics.Vector2();
+        _cameraPos     = new Vector2();
         _worldRenderer = new WorldRenderer();
         _hudRenderer   = new HUDRenderer();
 
@@ -186,12 +186,8 @@ public class BaseRenderer : IDisposable
     {
         if ( HudGameCamera.IsInUse )
         {
-//            var matrix = HudGameCamera.Camera.GetViewMatrix();
-            
-//            App.SpriteBatch.Begin( transformMatrix: matrix );
-
             App.SpriteBatch.Begin();
-            
+
             _hudRenderer.Render();
 
             App.SpriteBatch.End();

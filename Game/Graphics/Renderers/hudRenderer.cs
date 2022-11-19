@@ -12,7 +12,7 @@ public class HUDRenderer
             {
                 case StateID._STATE_MAIN_MENU:
                 {
-                    App.TitleScene?.Draw();
+                    App.TitleScene?.Draw( App.BaseRenderer.HudGameCamera.Camera );
                     break;
                 }
 
