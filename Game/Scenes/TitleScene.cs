@@ -1,10 +1,13 @@
 ﻿// ##################################################
 
 using System.Collections.Generic;
+
 using Microsoft.Xna.Framework.Graphics;
+
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Graphics;
 using PlatformaniaCS.Game.UI;
+
 using Color = Microsoft.Xna.Framework.Color;
 using OrthographicCamera = MonoGame.Extended.OrthographicCamera;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -103,28 +106,11 @@ public class TitleScene : BaseScene
         }
     }
 
-    public void Draw( /*OrthographicCamera camera*/ )
+    public void Draw()
     {
         if ( App.AppState == StateID._STATE_MAIN_MENU )
         {
-            App.SpriteBatch.Draw
-            (
-                _background,
-                new Rectangle
-                (
-                    0,
-                    0,
-                    Gfx.HudWidth,
-                    Gfx.HudHeight
-                ),
-                new Rectangle
-                (
-                    0, 0,
-                    _background.Width,
-                    _background.Height
-                ),
-                Color.White
-            );
+            DrawImage( _background );
 
             switch ( _currentPage )
             {
@@ -132,7 +118,7 @@ public class TitleScene : BaseScene
                 case OptionsPage:
                 case CreditsPage:
                 {
-                    DrawForeground();
+                    DrawImage( _foreground );
 
                     _pages[ _currentPage ].Draw();
 
@@ -149,7 +135,7 @@ public class TitleScene : BaseScene
 
                 case ExitPage:
                 {
-                    DrawForeground();
+                    DrawImage( _foreground );
                     break;
                 }
 
@@ -225,13 +211,13 @@ public class TitleScene : BaseScene
 
     public override string Name() => "Title Scene";
 
-    private void DrawForeground()
+    private void DrawImage( Texture2D texture2D )
     {
         App.SpriteBatch.Draw
-        (
-            _foreground,
-            new Rectangle( 0, 0, Gfx.HudWidth, Gfx.HudHeight ),
-            Color.White
-        );
+            (
+             texture2D,
+             new Rectangle( 0, 0, Gfx.HudWidth, Gfx.HudHeight ),
+             Color.White
+            );
     }
 }

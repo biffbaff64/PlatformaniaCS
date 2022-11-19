@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+
 using PlatformaniaCS.Game.Config;
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Graphics.Camera;
@@ -44,11 +45,11 @@ public class BaseRenderer : IDisposable
         // Camera used for parallax scrolling backgrounds.
 
         ParallaxCamera = new OrthoGameCamera
-        (
-            Gfx.ParallaxSceneWidth,
-            Gfx.ParallaxSceneHeight,
-            "Parallax Cam"
-        );
+            (
+             Gfx.ParallaxSceneWidth,
+             Gfx.ParallaxSceneHeight,
+             "Parallax Cam"
+            );
 
         ParallaxBackground = new ParallaxBackground();
         ParallaxUtils      = new ParallaxUtils();
@@ -57,42 +58,42 @@ public class BaseRenderer : IDisposable
         // Camera used for displaying Tiled Maps.
 
         TiledGameCamera = new OrthoGameCamera
-        (
-            Gfx.GameSceneWidth,
-            Gfx.GameSceneHeight,
-            "Tiled Cam"
-        );
+            (
+             Gfx.GameSceneWidth,
+             Gfx.GameSceneHeight,
+             "Tiled Cam"
+            );
 
         // --------------------------------------------------------
         // Camera used for displaying Sprites.
 
         SpriteGameCamera = new OrthoGameCamera
-        (
-            Gfx.GameSceneWidth,
-            Gfx.GameSceneHeight,
-            "Sprite Cam"
-        );
+            (
+             Gfx.GameSceneWidth,
+             Gfx.GameSceneHeight,
+             "Sprite Cam"
+            );
 
         // --------------------------------------------------------
         // Secondary Camera used for display Tiled Map layers
         // intended for drawing on top of the sprite layer.
 
         OverlayCamera = new OrthoGameCamera
-        (
-            Gfx.GameSceneWidth,
-            Gfx.GameSceneHeight,
-            "Overlay Cam"
-        );
+            (
+             Gfx.GameSceneWidth,
+             Gfx.GameSceneHeight,
+             "Overlay Cam"
+            );
 
         // --------------------------------------------------------
         // Camera used for displaying the HUD.
 
         HudGameCamera = new OrthoGameCamera
-        (
-            Gfx.HudSceneWidth,
-            Gfx.HudSceneHeight,
-            "HUD Cam"
-        );
+            (
+             Gfx.DesktopWidth,
+             Gfx.DesktopHeight,
+             "HUD Cam"
+            );
 
         // --------------------------------------------------------
 
@@ -188,6 +189,7 @@ public class BaseRenderer : IDisposable
         if ( HudGameCamera.IsInUse )
         {
             App.MainGame.GraphicsDevice.SetRenderTarget( HudGameCamera.RenderTarget2D );
+            App.MainGame.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
             App.MainGame.GraphicsDevice.Clear( ClearOptions.Target, Color.Black, 1.0f, 0 );
 
             App.SpriteBatch.Begin();
@@ -197,14 +199,14 @@ public class BaseRenderer : IDisposable
             App.MainGame.GraphicsDevice.SetRenderTarget( null );
 
             App.SpriteBatch.Begin();
+
             App.SpriteBatch.Draw
-            (
-                HudGameCamera.RenderTarget2D,
-                new Rectangle
-                        (
-                            ),
-                Color.White
-            );
+                (
+                 HudGameCamera.RenderTarget2D,
+                 new Rectangle( 0, 0, Gfx.HudWidth, Gfx.HudHeight ),
+                 Color.White
+                );
+
             App.SpriteBatch.End();
         }
     }
