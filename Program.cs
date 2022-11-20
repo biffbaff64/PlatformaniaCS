@@ -1,9 +1,8 @@
 ﻿// ##################################################
-#region using
 
 using PlatformaniaCS.Game.Core;
+using PlatformaniaCS.Game.Graphics;
 
-#endregion using
 // ##################################################
 
 namespace PlatformaniaCS;

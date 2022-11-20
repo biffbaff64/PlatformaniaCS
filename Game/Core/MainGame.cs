@@ -17,6 +17,10 @@ public class MainGame : Microsoft.Xna.Framework.Game
     {
         App.GraphicsDeviceManager = new GraphicsDeviceManager( this );
 
+        App.GraphicsDeviceManager.PreferredBackBufferWidth  = Gfx.DesktopWidth;
+        App.GraphicsDeviceManager.PreferredBackBufferHeight = Gfx.DesktopHeight;
+        App.GraphicsDeviceManager.ApplyChanges();
+        
         Window.AllowUserResizing = false;
         Content.RootDirectory    = "Content/bin/Assets";
         IsMouseVisible           = true;
@@ -34,8 +38,6 @@ public class MainGame : Microsoft.Xna.Framework.Game
         Trace.CheckPoint();
 
         App.MainGame = this;
-
-        Gfx.SetDesktopDimensions();
 
         _splashScreen = new SplashScreen();
         _splashScreen.Setup( GameAssets.SplashScreenAsset );

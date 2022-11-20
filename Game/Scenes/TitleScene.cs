@@ -217,6 +217,7 @@ public class TitleScene : BaseScene
             (
              texture2D,
              new Rectangle( 0, 0, Gfx.HudWidth, Gfx.HudHeight ),
+             new Rectangle( 0, 0, texture2D.Width, texture2D.Height ),
              Color.White
             );
     }

@@ -129,6 +129,8 @@ public class Settings : IDisposable
 
     public void ResetToDefaults()
     {
+        Trace.CheckPoint();
+        
         if ( Prefs != null )
         {
             Prefs.PutBoolean( DefaultOn,  PrefTrueDefault );
