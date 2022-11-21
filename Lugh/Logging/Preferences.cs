@@ -2,9 +2,11 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.XPath;
+using System.Threading.Tasks;
+using ILNumerics.Core.Platforms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 // ##################################################
 
@@ -12,9 +14,24 @@ namespace Lugh.Logging;
 
 public class Preferences
 {
-    private readonly string                       _filePath;
-    private readonly string                       _propertiesFile;
-    private readonly Dictionary< string, object > _properties;
+    public class Entry
+    {
+        [JsonProperty( "key" )]
+        public string Key { get; set; }
+
+        [JsonProperty( "value" )]
+        public object Value { get; set; }
+    }
+
+    public class Root
+    {
+        public List< Entry > Entries { get; set; }
+    }
+
+    private readonly string _filePath;
+    private readonly string _propertiesFile;
+
+    private Dictionary< string, object > _properties;
 
     public Preferences( string fileName )
     {
@@ -29,7 +46,31 @@ public class Preferences
             CreateSettingsFile();
         }
 
-        LoadXml();
+        LoadJson();
+    }
+
+    private void LoadJson()
+    {
+        using var r = new StreamReader( _filePath + _propertiesFile );
+
+        var json    = r.ReadToEnd();
+        var objList = JsonSerializer.Deserialize< Root[] >( json );
+        
+        _properties.Clear();
+
+        foreach ( var obj in objList )
+        {
+            foreach ( var entry in obj.Entries )
+            {
+                _properties.Add( entry.Key, entry.Value );
+            }
+        }
+
+        r.Close();
+    }
+
+    private void CreateSettingsFile()
+    {
     }
 
     // TODO:
@@ -153,6 +194,7 @@ public class Preferences
 
     public void Clear()
     {
+        _properties.Clear();
     }
 
     public void Remove( string key )
@@ -161,39 +203,5 @@ public class Preferences
 
     public void Flush()
     {
-    }
-
-    private void LoadXml()
-    {
-        XmlReaderSettings settings = new XmlReaderSettings
-        {
-                IgnoreWhitespace = true
-        };
-
-        // From: https://dotnetcoretutorials.com/2020/04/23/how-to-parse-xml-in-net-core/
-        
-        using ( var fileStream = File.Open( _filePath + _propertiesFile, FileMode.Open ) )
-        {
-            //Load the file and create a navigator object. 
-            XPathDocument xPath     = new XPathDocument(fileStream);
-            var           navigator = xPath.CreateNavigator();
-
-            //Compile the query with a namespace prefix. 
-            XPathExpression query = navigator.Compile("ns:MyDocument/ns:MyProperty");
-
-            //Do some BS to get the default namespace to actually be called ns. 
-            var nameSpace = new XmlNamespaceManager(navigator.NameTable);
-            nameSpace.AddNamespace("ns", "http://www.dotnetcoretutorials.com/namespace");
-            query.SetContext(nameSpace);
-
-            Console.WriteLine("My Property Value : " + navigator.SelectSingleNode(query).Value);
-        }
-    }
-
-    private void CreateSettingsFile()
-    {
-        var doc = new XDocument();
-
-        doc.Save( _filePath + _propertiesFile );
     }
 }

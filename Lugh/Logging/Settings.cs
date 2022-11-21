@@ -77,7 +77,7 @@ public class Settings : IDisposable
 
         try
         {
-            Prefs = new Preferences( "config.xml" );
+            Prefs = new Preferences( "config.json" );
         }
         catch ( Exception e )
         {
