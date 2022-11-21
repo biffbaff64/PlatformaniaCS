@@ -130,7 +130,7 @@ public class Settings : IDisposable
     public void ResetToDefaults()
     {
         Trace.CheckPoint();
-        
+
         if ( Prefs != null )
         {
             Prefs.PutBoolean( DefaultOn,  PrefTrueDefault );
@@ -181,6 +181,46 @@ public class Settings : IDisposable
 
     public void DebugReport()
     {
+        Trace.CheckPoint();
+
+        // ---------- Configuration ----------
+        Trace.Info( ShaderProgram,  Prefs.GetBoolean( ShaderProgram ) );
+        Trace.Info( UsingAshleyECS, Prefs.GetBoolean( UsingAshleyECS ) );
+        Trace.Info( Box2DPhysics,   Prefs.GetBoolean( Box2DPhysics ) );
+        Trace.Info( Installed,      Prefs.GetBoolean( Installed ) );
+        Trace.Info( ShowHints,      Prefs.GetBoolean( ShowHints ) );
+        Trace.Info( Vibrations,     Prefs.GetBoolean( Vibrations ) );
+        Trace.Info( MusicEnabled,   Prefs.GetBoolean( MusicEnabled ) );
+        Trace.Info( SoundsEnabled,  Prefs.GetBoolean( SoundsEnabled ) );
+        Trace.Info( JoystickLeft,   Prefs.GetBoolean( JoystickLeft ) );
+
+        Trace.Info( FxVolume,    Prefs.GetInteger( FxVolume ) );
+        Trace.Info( MusicVolume, Prefs.GetInteger( MusicVolume ) );
+
+        // ---------- Google Services ----------
+        Trace.Info( PlayServices, Prefs.GetBoolean( PlayServices ) );
+        Trace.Info( Achievements, Prefs.GetBoolean( Achievements ) );
+        Trace.Info( Challenges,   Prefs.GetBoolean( Challenges ) );
+        Trace.Info( Events,       Prefs.GetBoolean( Events ) );
+        Trace.Info( SignInStatus, Prefs.GetBoolean( SignInStatus ) );
+
+        // ------------------- Development Flags -------------------
+        Trace.Info( MenuScene,        Prefs.GetBoolean( MenuScene ) );
+        Trace.Info( LevelSelect,      Prefs.GetBoolean( LevelSelect ) );
+        Trace.Info( ScrollDemo,       Prefs.GetBoolean( ScrollDemo ) );
+        Trace.Info( SpriteBoxes,      Prefs.GetBoolean( SpriteBoxes ) );
+        Trace.Info( TileBoxes,        Prefs.GetBoolean( TileBoxes ) );
+        Trace.Info( ButtonBoxes,      Prefs.GetBoolean( ButtonBoxes ) );
+        Trace.Info( ShowFPS,          Prefs.GetBoolean( ShowFPS ) );
+        Trace.Info( ShowDebug,        Prefs.GetBoolean( ShowDebug ) );
+        Trace.Info( Spawnpoints,      Prefs.GetBoolean( Spawnpoints ) );
+        Trace.Info( MenuHeaps,        Prefs.GetBoolean( MenuHeaps ) );
+        Trace.Info( CullSprites,      Prefs.GetBoolean( CullSprites ) );
+        Trace.Info( GlProfiler,       Prefs.GetBoolean( GlProfiler ) );
+        Trace.Info( AndroidOnDesktop, Prefs.GetBoolean( AndroidOnDesktop ) );
+        Trace.Info( Autoplay,         Prefs.GetBoolean( Autoplay ) );
+        Trace.Info( DisableEnemies,   Prefs.GetBoolean( DisableEnemies ) );
+        Trace.Info( DisablePlayer,    Prefs.GetBoolean( DisablePlayer ) );
     }
 
     public void Dispose()
