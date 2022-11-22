@@ -2,6 +2,7 @@
 
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+
 using PlatformaniaCS.Game.Audio;
 using PlatformaniaCS.Game.Config;
 using PlatformaniaCS.Game.Entities;
@@ -97,6 +98,7 @@ public abstract class App
         // GraphicsDeviceManager is created in MainGame().
         // SpriteBatch is created in MainGame().
         // AppConfig is created in MainGame().
+        // Settings is created in MainGame().
 
         // -------------------------------------------------
         AppState    = StateID._INACTIVE;
@@ -105,7 +107,6 @@ public abstract class App
         EntityData  = new EntityData();
 
         // -------------------------------------------------
-        Settings     = new Settings();
         Assets       = new AssetUtils();
         GameAudio    = new GameAudio();
         InputManager = new InputManager();

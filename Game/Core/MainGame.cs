@@ -37,6 +37,8 @@ public class MainGame : Microsoft.Xna.Framework.Game
         Trace.OpenDebugFile( "log.txt", true );
         Trace.CheckPoint();
 
+        // Initialise the preferences object for in-game settings.
+        App.Settings = new Settings();
         App.MainGame = this;
 
         _splashScreen = new SplashScreen();

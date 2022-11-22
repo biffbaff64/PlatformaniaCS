@@ -2,11 +2,8 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
-using ILNumerics.Core.Platforms;
+
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 // ##################################################
 
@@ -14,22 +11,19 @@ namespace Lugh.Logging;
 
 public class Preferences
 {
+    public class Root
+    {
+        public List< Entry > Entries { get; set; } = new List< Entry >();
+    }
+
     public class Entry
     {
-        [JsonProperty( "key" )]
         public string Key { get; set; }
-
-        [JsonProperty( "value" )]
         public object Value { get; set; }
     }
 
-    public class Root
-    {
-        public List< Entry > Entries { get; set; }
-    }
-
-    private readonly string _filePath;
-    private readonly string _propertiesFile;
+    private string _filePath;
+    private string _propertiesFile;
 
     private Dictionary< string, object > _properties;
 
@@ -51,22 +45,18 @@ public class Preferences
 
     private void LoadJson()
     {
-        using var r = new StreamReader( _filePath + _propertiesFile );
-
-        var json    = r.ReadToEnd();
-        var objList = JsonSerializer.Deserialize< Root[] >( json );
-        
         _properties.Clear();
 
-        foreach ( var obj in objList )
+        var json = File.ReadAllText( _filePath + _propertiesFile );
+        var resultData = JsonConvert.DeserializeObject< Root >( json );
+
+        if ( resultData != null )
         {
-            foreach ( var entry in obj.Entries )
+            if ( resultData.Entries != null )
             {
-                _properties.Add( entry.Key, entry.Value );
+                Trace.Info( resultData.Entries.Count.ToString() );
             }
         }
-
-        r.Close();
     }
 
     private void CreateSettingsFile()
@@ -74,7 +64,7 @@ public class Preferences
     }
 
     // TODO:
-    // Organise the following PutXXXX methods better.
+    // Organise the following PutXXXX aqnd GetXXXX methods better.
     // They all do essentially the same thing except for
     // the TYPE of argument 'val'.
     // These methods have been put as fillers until library is working.
