@@ -27,12 +27,11 @@ public class BaseRenderer : IDisposable
     public ParallaxUtils      ParallaxUtils      { get; set; }
     public bool               IsDrawingStage     { get; set; }
 
-    public void Dispose()
-    {
-    }
-
     /// <summary>
-    ///     Create all game cameras and associated viewports.
+    /// Create all game cameras and associated viewports.
+    /// <remarks>
+    /// For 'Camera' read 'RenderTarget2D' until my Camera utils are finished.
+    /// </remarks>
     /// </summary>
     public void CreateCameras()
     {
@@ -283,5 +282,9 @@ public class BaseRenderer : IDisposable
         SpriteGameCamera.IsInUse = false;
         OverlayCamera.IsInUse    = false;
         HudGameCamera.IsInUse    = false;
+    }
+
+    public void Dispose()
+    {
     }
 }
