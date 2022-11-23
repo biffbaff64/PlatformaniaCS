@@ -2,7 +2,11 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 // ##################################################
 
@@ -47,9 +51,24 @@ public class Preferences
         _properties.Clear();
 
         var json = File.ReadAllText( _filePath + _propertiesFile );
-        var resultData = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
 
-        Trace.Info( "" + resultData.Count );
+        var parent     = JObject.Parse( json );
+        var resultData = parent.Value< JObject >( "properties" ).Properties();
+
+        var enumerable = resultData as JProperty[] ?? resultData.ToArray();
+
+        var resultDict = enumerable.ToDictionary
+            (
+                k => k.Name,
+                v => v.Value
+            );
+
+        foreach ( var obj in resultDict )
+        {
+            _properties.Add( obj.Key, obj.Value  );
+        }
+
+        Trace.Info( "Objects found: " + _properties.Count);
     }
 
     private void CreateSettingsFile()
