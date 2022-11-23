@@ -2,8 +2,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-
-using Newtonsoft.Json;
+using System.Text.Json;
 
 // ##################################################
 
@@ -18,7 +17,7 @@ public class Preferences
 
     public class Entry
     {
-        public string Key { get; set; }
+        public string Key   { get; set; }
         public object Value { get; set; }
     }
 
@@ -48,15 +47,9 @@ public class Preferences
         _properties.Clear();
 
         var json = File.ReadAllText( _filePath + _propertiesFile );
-        var resultData = JsonConvert.DeserializeObject< Root >( json );
+        var resultData = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
 
-        if ( resultData != null )
-        {
-            if ( resultData.Entries != null )
-            {
-                Trace.Info( resultData.Entries.Count.ToString() );
-            }
-        }
+        Trace.Info( "" + resultData.Count );
     }
 
     private void CreateSettingsFile()
