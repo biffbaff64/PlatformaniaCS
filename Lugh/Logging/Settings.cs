@@ -8,53 +8,52 @@ namespace Lugh.Logging;
 
 public class Settings : IDisposable
 {
-    public class GS
+    public class Gs
     {
-        public bool SpriteBoxes      { get; set; } // Shows sprite AABB Boxes
-        public bool TileBoxes        { get; set; } // Shows game tile AABB Boxes
-        public bool AndroidOnDesktop { get; set; } //
-        public bool Box2DPhysics     { get; set; } // Enables Box2D Physics
-        public bool UsingAshleyECS   { get; set; } // Enables use of Ashley Entity Component System
-
         //
         // Development options
-        public bool ScrollDemo     { get; set; } // Enables Game Scroll Demo mode
-        public bool ButtonBoxes    { get; set; } // Shows GameButton bounding boxes
-        public bool ShowFPS        { get; set; } // Shows current FPS on-screen
-        public bool ShowDebug      { get; set; } // Enables on-screen debug printing
-        public bool Spawnpoints    { get; set; } // Shows spawn point tiles from game map
-        public bool MenuHeaps      { get; set; } // Show Heap Sizes on Menu Page if true
-        public bool MenuScene      { get; set; } //
-        public bool LevelSelect    { get; set; } //
-        public bool CullSprites    { get; set; } // Enables Sprite Culling when off screen
-        public bool GlProfiler     { get; set; } // Enables/Disables the LibGdx OpenGL Profiler
-        public bool DisableEnemies { get; set; } //
-        public bool DisablePlayer  { get; set; } //
-        public bool Autoplay       { get; set; } //
-        public bool IntroPanel     { get; set; } //
+        public bool GsSpriteBoxes      { get; set; } = false; // Shows sprite AABB Boxes
+        public bool GsTileBoxes        { get; set; } = false; // Shows game tile AABB Boxes
+        public bool GsAndroidOnDesktop { get; set; } = false; //
+        public bool GsScrollDemo       { get; set; } = false; // Enables Game Scroll Demo mode
+        public bool GsButtonBoxes      { get; set; } = false; // Shows GameButton bounding boxes
+        public bool GsShowFPS          { get; set; } = false; // Shows current FPS on-screen
+        public bool GsShowDebug        { get; set; } = false; // Enables on-screen debug printing
+        public bool GsSpawnpoints      { get; set; } = false; // Shows spawn point tiles from game map
+        public bool GsMenuHeaps        { get; set; } = false; // Show Heap Sizes on Menu Page if true
+        public bool GsCullSprites      { get; set; } = false; // Enables Sprite Culling when off screen
+        public bool GsGlProfiler       { get; set; } = false; // Enables/Disables the LibGdx OpenGL Profiler
+        public bool GsDisableEnemies   { get; set; } = false; //
+        public bool GsDisablePlayer    { get; set; } = false; //
+        public bool GsAutoplay         { get; set; } = false; //
+        public bool GsMenuScene        { get; set; } = false; //
+        public bool GsIntroPanel       { get; set; } = false; //
+        public bool GsLevelSelect      { get; set; } = false; //
 
         //
         // Configuration settings
-        public bool Installed     { get; set; } //
-        public bool ShaderProgram { get; set; } // Enables/Disables global shader program
+        public bool GsBox2DPhysics   { get; set; } = true;  // Enables Box2D Physics
+        public bool GsUsingAshleyECS { get; set; } = false; // Enables use of Ashley Entity Component System
+        public bool GsInstalled      { get; set; } = false; //
+        public bool GsShaderProgram  { get; set; } = false; // Enables/Disables global shader program
 
         //
         // Game settings
-        public bool Vibrations    { get; set; } // Enables/Disables device vibrations
-        public bool ShowHints     { get; set; } // Enables/Disables In-Game Hints
-        public bool JoystickLeft  { get; set; } // Controls Joystick screen pos ( left or right )
-        public bool MusicEnabled  { get; set; } // Enables/Disables Music
-        public bool SoundsEnabled { get; set; } // Enables/Disables Sound FX
-        public int  MusicVolume   { get; set; } //
-        public int  FxVolume      { get; set; } //
+        public bool GsVibrations    { get; set; } = true; // Enables/Disables device vibrations
+        public bool GsShowHints     { get; set; } = true; // Enables/Disables In-Game Hints
+        public bool GsJoystickLeft  { get; set; } = true; // Controls Joystick screen pos ( left or right )
+        public bool GsMusicEnabled  { get; set; } = true; // Enables/Disables Music
+        public bool GsSoundsEnabled { get; set; } = true; // Enables/Disables Sound FX
+        public int  GsMusicVolume   { get; set; } = 4;    //
+        public int  GsFxVolume      { get; set; } = 6;    //
 
         //
         // Google Play Store
-        public bool PlayServices { get; set; } // Enables Google Play Services
-        public bool SignInStatus { get; set; } // Google Services sign in status (Android)
-        public bool Achievements { get; set; } // Enables In-Game Achievements
-        public bool Challenges   { get; set; } // Enables In-Game challenges
-        public bool Events       { get; set; } // Enables In-Game events
+        public bool GsPlayServices { get; set; } = false; // Enables Google Play Services
+        public bool GsSignInStatus { get; set; } = false; // Google Services sign in status (Android)
+        public bool GsAchievements { get; set; } = false; // Enables In-Game Achievements
+        public bool GsChallenges   { get; set; } = false; // Enables In-Game challenges
+        public bool GsEvents       { get; set; } = false; // Enables In-Game events
     }
 
     //

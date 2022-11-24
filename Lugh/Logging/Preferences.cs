@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 // ##################################################
@@ -14,22 +13,13 @@ namespace Lugh.Logging;
 
 public class Preferences
 {
-    public class Root
-    {
-        public List< Entry > Entries { get; set; } = new List< Entry >();
-    }
+    private readonly string _filePath;
+    private readonly string _propertiesFile;
 
-    public class Entry
-    {
-        public string Key   { get; set; }
-        public object Value { get; set; }
-    }
+    private readonly Dictionary< string, object > _properties;
 
-    private string _filePath;
-    private string _propertiesFile;
-
-    private Dictionary< string, object > _properties;
-
+    private readonly Settings.Gs _gSettings = new Settings.Gs();
+    
     public Preferences( string fileName )
     {
         Trace.CheckPoint();
@@ -38,14 +28,20 @@ public class Preferences
         _propertiesFile = fileName;
         _properties     = new Dictionary< string, object >();
 
-        if ( !File.Exists( _filePath + _propertiesFile ) )
+        if ( !File.Exists( _filePath + "GSettings.json" ) )
         {
-            CreateSettingsFile();
+            CreateGSettingsFile();
         }
 
+        LoadGSettings();
+        
         LoadJson();
     }
 
+    private void LoadGSettings()
+    {
+    }
+    
     private void LoadJson()
     {
         _properties.Clear();
@@ -59,27 +55,35 @@ public class Preferences
 
         var resultDict = enumerable.ToDictionary
             (
-                k => k.Name,
-                v => v.Value
+             k => k.Name,
+             v => v.Value
             );
 
         foreach ( var obj in resultDict )
         {
-            _properties.Add( obj.Key, obj.Value  );
+            _properties.Add( obj.Key, obj.Value );
         }
 
-        Trace.Info( "Objects found: " + _properties.Count);
+        Trace.Info( "Objects found: " + _properties.Count );
     }
 
-    private void CreateSettingsFile()
+    private void CreateGSettingsFile()
     {
+        var opt = new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        };
+
+        var json = JsonSerializer.Serialize< Settings.Gs >( _gSettings, opt );
+        
+        File.WriteAllText( _filePath + "GSettings.json", json );
     }
 
     // TODO:
-    // Organise the following PutXXXX aqnd GetXXXX methods better.
+    // Organise the following PutXXXX and GetXXXX methods better.
     // They all do essentially the same thing except for
     // the TYPE of argument 'val'.
-    // These methods have been put as fillers until library is working.
+    // These methods have been included as fillers until library is working.
     public void PutBoolean( string key, bool val )
     {
         if ( !_properties.ContainsKey( key ) )
