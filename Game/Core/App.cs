@@ -25,6 +25,7 @@ public abstract class App
     // -------------------------------------------------
     // Objects created on power-up (Essential Objects)
     public static AppConfig             AppConfig             { get; set; }
+    public static AppSettings           AppSettings           { get; set; }
     public static StateID               AppState              { get; set; }
     public static GameAudio             GameAudio             { get; set; }
     public static GraphicsDeviceManager GraphicsDeviceManager { get; set; }
@@ -98,6 +99,7 @@ public abstract class App
         // GraphicsDeviceManager is created in MainGame().
         // SpriteBatch is created in MainGame().
         // AppConfig is created in MainGame().
+        // AppSettings is created in MainGame().
         // Settings is created in MainGame().
 
         // -------------------------------------------------

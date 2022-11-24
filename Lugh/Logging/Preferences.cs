@@ -17,8 +17,6 @@ public class Preferences
     private readonly string _propertiesFile;
 
     private readonly Dictionary< string, object > _properties;
-
-    private readonly Settings.Gs _gSettings = new Settings.Gs();
     
     public Preferences( string fileName )
     {
@@ -26,22 +24,16 @@ public class Preferences
 
         _filePath       = Environment.GetFolderPath( Environment.SpecialFolder.UserProfile ) + "//.prefs//";
         _propertiesFile = fileName;
-        _properties     = new Dictionary< string, object >();
-
+        _properties = new Dictionary< string, object >();
+        
         if ( !File.Exists( _filePath + "GSettings.json" ) )
         {
             CreateGSettingsFile();
         }
 
-        LoadGSettings();
-        
         LoadJson();
     }
 
-    private void LoadGSettings()
-    {
-    }
-    
     private void LoadJson()
     {
         _properties.Clear();
@@ -66,7 +58,7 @@ public class Preferences
 
         Trace.Info( "Objects found: " + _properties.Count );
     }
-
+    
     private void CreateGSettingsFile()
     {
         var opt = new JsonSerializerOptions()
@@ -74,7 +66,7 @@ public class Preferences
             WriteIndented = true
         };
 
-        var json = JsonSerializer.Serialize< Settings.Gs >( _gSettings, opt );
+        var json = JsonSerializer.Serialize< Dictionary<string, object> >( _properties, opt );
         
         File.WriteAllText( _filePath + "GSettings.json", json );
     }

@@ -8,54 +8,6 @@ namespace Lugh.Logging;
 
 public class Settings : IDisposable
 {
-    public class Gs
-    {
-        //
-        // Development options
-        public bool GsSpriteBoxes      { get; set; } = false; // Shows sprite AABB Boxes
-        public bool GsTileBoxes        { get; set; } = false; // Shows game tile AABB Boxes
-        public bool GsAndroidOnDesktop { get; set; } = false; //
-        public bool GsScrollDemo       { get; set; } = false; // Enables Game Scroll Demo mode
-        public bool GsButtonBoxes      { get; set; } = false; // Shows GameButton bounding boxes
-        public bool GsShowFPS          { get; set; } = false; // Shows current FPS on-screen
-        public bool GsShowDebug        { get; set; } = false; // Enables on-screen debug printing
-        public bool GsSpawnpoints      { get; set; } = false; // Shows spawn point tiles from game map
-        public bool GsMenuHeaps        { get; set; } = false; // Show Heap Sizes on Menu Page if true
-        public bool GsCullSprites      { get; set; } = false; // Enables Sprite Culling when off screen
-        public bool GsGlProfiler       { get; set; } = false; // Enables/Disables the LibGdx OpenGL Profiler
-        public bool GsDisableEnemies   { get; set; } = false; //
-        public bool GsDisablePlayer    { get; set; } = false; //
-        public bool GsAutoplay         { get; set; } = false; //
-        public bool GsMenuScene        { get; set; } = false; //
-        public bool GsIntroPanel       { get; set; } = false; //
-        public bool GsLevelSelect      { get; set; } = false; //
-
-        //
-        // Configuration settings
-        public bool GsBox2DPhysics   { get; set; } = true;  // Enables Box2D Physics
-        public bool GsUsingAshleyECS { get; set; } = false; // Enables use of Ashley Entity Component System
-        public bool GsInstalled      { get; set; } = false; //
-        public bool GsShaderProgram  { get; set; } = false; // Enables/Disables global shader program
-
-        //
-        // Game settings
-        public bool GsVibrations    { get; set; } = true; // Enables/Disables device vibrations
-        public bool GsShowHints     { get; set; } = true; // Enables/Disables In-Game Hints
-        public bool GsJoystickLeft  { get; set; } = true; // Controls Joystick screen pos ( left or right )
-        public bool GsMusicEnabled  { get; set; } = true; // Enables/Disables Music
-        public bool GsSoundsEnabled { get; set; } = true; // Enables/Disables Sound FX
-        public int  GsMusicVolume   { get; set; } = 4;    //
-        public int  GsFxVolume      { get; set; } = 6;    //
-
-        //
-        // Google Play Store
-        public bool GsPlayServices { get; set; } = false; // Enables Google Play Services
-        public bool GsSignInStatus { get; set; } = false; // Google Services sign in status (Android)
-        public bool GsAchievements { get; set; } = false; // Enables In-Game Achievements
-        public bool GsChallenges   { get; set; } = false; // Enables In-Game challenges
-        public bool GsEvents       { get; set; } = false; // Enables In-Game events
-    }
-
     //
     // Defaults
     public const bool PrefFalseDefault = false;
@@ -234,44 +186,44 @@ public class Settings : IDisposable
         else
         {
             // ---------- Configuration ----------
-            Trace.Info( message: ShaderProgram,  args: _prefsObj.GetBoolean( key: ShaderProgram ) );
-            Trace.Info( message: UsingAshleyECS, args: _prefsObj.GetBoolean( key: UsingAshleyECS ) );
-            Trace.Info( message: Box2DPhysics,   args: _prefsObj.GetBoolean( key: Box2DPhysics ) );
-            Trace.Info( message: Installed,      args: _prefsObj.GetBoolean( key: Installed ) );
-            Trace.Info( message: ShowHints,      args: _prefsObj.GetBoolean( key: ShowHints ) );
-            Trace.Info( message: Vibrations,     args: _prefsObj.GetBoolean( key: Vibrations ) );
-            Trace.Info( message: JoystickLeft,   args: _prefsObj.GetBoolean( key: JoystickLeft ) );
+            Trace.Info( message: ShaderProgram + " : " + _prefsObj.GetBoolean( key: ShaderProgram ) );
+            Trace.Info( message: UsingAshleyECS + " : " + _prefsObj.GetBoolean( key: UsingAshleyECS ) );
+            Trace.Info( message: Box2DPhysics + " : " + _prefsObj.GetBoolean( key: Box2DPhysics ) );
+            Trace.Info( message: Installed + " : " + _prefsObj.GetBoolean( key: Installed ) );
+            Trace.Info( message: ShowHints + " : " + _prefsObj.GetBoolean( key: ShowHints ) );
+            Trace.Info( message: Vibrations + " : " + _prefsObj.GetBoolean( key: Vibrations ) );
+            Trace.Info( message: JoystickLeft + " : " + _prefsObj.GetBoolean( key: JoystickLeft ) );
 
             // --------------- Audio ---------------
-            Trace.Info( message: FxVolume,      args: _prefsObj.GetInteger( key: FxVolume ) );
-            Trace.Info( message: MusicVolume,   args: _prefsObj.GetInteger( key: MusicVolume ) );
-            Trace.Info( message: MusicEnabled,  args: _prefsObj.GetBoolean( key: MusicEnabled ) );
-            Trace.Info( message: SoundsEnabled, args: _prefsObj.GetBoolean( key: SoundsEnabled ) );
+            Trace.Info( message: FxVolume + " : " + _prefsObj.GetInteger( key: FxVolume ) );
+            Trace.Info( message: MusicVolume + " : " + _prefsObj.GetInteger( key: MusicVolume ) );
+            Trace.Info( message: MusicEnabled + " : " + _prefsObj.GetBoolean( key: MusicEnabled ) );
+            Trace.Info( message: SoundsEnabled + " : " + _prefsObj.GetBoolean( key: SoundsEnabled ) );
 
             // ---------- Google Services ----------
-            Trace.Info( message: PlayServices, args: _prefsObj.GetBoolean( key: PlayServices ) );
-            Trace.Info( message: Achievements, args: _prefsObj.GetBoolean( key: Achievements ) );
-            Trace.Info( message: Challenges,   args: _prefsObj.GetBoolean( key: Challenges ) );
-            Trace.Info( message: Events,       args: _prefsObj.GetBoolean( key: Events ) );
-            Trace.Info( message: SignInStatus, args: _prefsObj.GetBoolean( key: SignInStatus ) );
+            Trace.Info( message: PlayServices + " : " + _prefsObj.GetBoolean( key: PlayServices ) );
+            Trace.Info( message: Achievements + " : " + _prefsObj.GetBoolean( key: Achievements ) );
+            Trace.Info( message: Challenges + " : " + _prefsObj.GetBoolean( key: Challenges ) );
+            Trace.Info( message: Events + " : " + _prefsObj.GetBoolean( key: Events ) );
+            Trace.Info( message: SignInStatus + " : " + _prefsObj.GetBoolean( key: SignInStatus ) );
 
             // ------------------- Development Flags -------------------
-            Trace.Info( message: MenuScene,        args: _prefsObj.GetBoolean( key: MenuScene ) );
-            Trace.Info( message: LevelSelect,      args: _prefsObj.GetBoolean( key: LevelSelect ) );
-            Trace.Info( message: ScrollDemo,       args: _prefsObj.GetBoolean( key: ScrollDemo ) );
-            Trace.Info( message: SpriteBoxes,      args: _prefsObj.GetBoolean( key: SpriteBoxes ) );
-            Trace.Info( message: TileBoxes,        args: _prefsObj.GetBoolean( key: TileBoxes ) );
-            Trace.Info( message: ButtonBoxes,      args: _prefsObj.GetBoolean( key: ButtonBoxes ) );
-            Trace.Info( message: ShowFPS,          args: _prefsObj.GetBoolean( key: ShowFPS ) );
-            Trace.Info( message: ShowDebug,        args: _prefsObj.GetBoolean( key: ShowDebug ) );
-            Trace.Info( message: Spawnpoints,      args: _prefsObj.GetBoolean( key: Spawnpoints ) );
-            Trace.Info( message: MenuHeaps,        args: _prefsObj.GetBoolean( key: MenuHeaps ) );
-            Trace.Info( message: CullSprites,      args: _prefsObj.GetBoolean( key: CullSprites ) );
-            Trace.Info( message: GlProfiler,       args: _prefsObj.GetBoolean( key: GlProfiler ) );
-            Trace.Info( message: AndroidOnDesktop, args: _prefsObj.GetBoolean( key: AndroidOnDesktop ) );
-            Trace.Info( message: Autoplay,         args: _prefsObj.GetBoolean( key: Autoplay ) );
-            Trace.Info( message: DisableEnemies,   args: _prefsObj.GetBoolean( key: DisableEnemies ) );
-            Trace.Info( message: DisablePlayer,    args: _prefsObj.GetBoolean( key: DisablePlayer ) );
+            Trace.Info( message: MenuScene + " : " + _prefsObj.GetBoolean( key: MenuScene ) );
+            Trace.Info( message: LevelSelect + " : " + _prefsObj.GetBoolean( key: LevelSelect ) );
+            Trace.Info( message: ScrollDemo + " : " + _prefsObj.GetBoolean( key: ScrollDemo ) );
+            Trace.Info( message: SpriteBoxes + " : " + _prefsObj.GetBoolean( key: SpriteBoxes ) );
+            Trace.Info( message: TileBoxes + " : " + _prefsObj.GetBoolean( key: TileBoxes ) );
+            Trace.Info( message: ButtonBoxes + " : " + _prefsObj.GetBoolean( key: ButtonBoxes ) );
+            Trace.Info( message: ShowFPS + " : " + _prefsObj.GetBoolean( key: ShowFPS ) );
+            Trace.Info( message: ShowDebug + " : " + _prefsObj.GetBoolean( key: ShowDebug ) );
+            Trace.Info( message: Spawnpoints + " : " + _prefsObj.GetBoolean( key: Spawnpoints ) );
+            Trace.Info( message: MenuHeaps + " : " + _prefsObj.GetBoolean( key: MenuHeaps ) );
+            Trace.Info( message: CullSprites + " : " + _prefsObj.GetBoolean( key: CullSprites ) );
+            Trace.Info( message: GlProfiler + " : " + _prefsObj.GetBoolean( key: GlProfiler ) );
+            Trace.Info( message: AndroidOnDesktop + " : " + _prefsObj.GetBoolean( key: AndroidOnDesktop ) );
+            Trace.Info( message: Autoplay + " : " + _prefsObj.GetBoolean( key: Autoplay ) );
+            Trace.Info( message: DisableEnemies + " : " + _prefsObj.GetBoolean( key: DisableEnemies ) );
+            Trace.Info( message: DisablePlayer + " : " + _prefsObj.GetBoolean( key: DisablePlayer ) );
         }
     }
 
