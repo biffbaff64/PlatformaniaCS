@@ -95,7 +95,7 @@ public class Settings : IDisposable
         try
         {
             _filePath       = Environment.GetFolderPath( Environment.SpecialFolder.UserProfile ) + "//.prefs//";
-            _propertiesFile = "platformaniacs.preferences";
+            _propertiesFile = "platformaniacs.json";
             _preferences    = new Dictionary< string, object >();
 
             if ( !File.Exists( _filePath + _propertiesFile ) )
@@ -133,16 +133,14 @@ public class Settings : IDisposable
 
         var resultDict = enumerable.ToDictionary
             (
-             k => k.Name,
-             v => v.Value
+                 k => k.Name,
+                 v => v.Value
             );
 
         foreach ( var obj in resultDict )
         {
             _preferences.Add( obj.Key, obj.Value );
         }
-
-        Trace.Info( "Objects found: " + _preferences.Count );
     }
 
     /// <summary>
@@ -155,7 +153,7 @@ public class Settings : IDisposable
             WriteIndented = true
         };
 
-        var json = JsonSerializer.Serialize< Dictionary< string, object > >( _preferences, opt );
+        var json = JsonSerializer.Serialize( _preferences, opt );
 
         File.WriteAllText( _filePath + _propertiesFile, json );
     }
@@ -177,7 +175,7 @@ public class Settings : IDisposable
     {
         if ( _preferences.ContainsKey( preference ) )
         {
-            var index = _preferences[ preference ] = true;
+            _preferences[ preference ] = true;
 
             WriteSettingsJson();
         }
@@ -190,7 +188,7 @@ public class Settings : IDisposable
     {
         if ( _preferences.ContainsKey( preference ) )
         {
-            var index = _preferences[ preference ] = false;
+            _preferences[ preference ] = false;
 
             WriteSettingsJson();
         }
@@ -204,7 +202,7 @@ public class Settings : IDisposable
         if ( _preferences.ContainsKey( preference )
              && _preferences[ preference ] is bool )
         {
-            var index = _preferences[ preference ] = !( bool )_preferences[ preference ];
+            _preferences[ preference ] = !( bool )_preferences[ preference ];
 
             WriteSettingsJson();
         }
@@ -395,82 +393,45 @@ public class Settings : IDisposable
 
         _preferences.Clear();
 
-        _preferences.Add
-            (
-             "game settings", new Dictionary< string, object >
-                 {
-                    { ShaderProgram,  PrefFalseDefault },
-                    { UsingAshleyECS, PrefFalseDefault },
-                    { Box2DPhysics,   PrefTrueDefault },
-                    { Installed,      PrefFalseDefault },
-                    { ShowHints,      PrefTrueDefault },
-                    { Vibrations,     PrefTrueDefault },
-                    { JoystickLeft,   PrefTrueDefault },
+        // ---------- Configuration ----------
+        _preferences.Add( ShaderProgram,  PrefFalseDefault );
+        _preferences.Add( UsingAshleyECS, PrefFalseDefault );
+        _preferences.Add( Box2DPhysics,   PrefTrueDefault );
+        _preferences.Add( Installed,      PrefFalseDefault );
+        _preferences.Add( ShowHints,      PrefTrueDefault );
+        _preferences.Add( Vibrations,     PrefTrueDefault );
+        _preferences.Add( JoystickLeft,   PrefTrueDefault );
 
-                    // --------------- Audio ---------------
-                    { FxVolume,      AudioData.DefaultFxVolume },
-                    { MusicVolume,   AudioData.DefaultMusicVolume },
-                    { MusicEnabled,  PrefTrueDefault },
-                    { SoundsEnabled, PrefTrueDefault },
+        // --------------- Audio ---------------
+        _preferences.Add( FxVolume,      AudioData.DefaultFxVolume );
+        _preferences.Add( MusicVolume,   AudioData.DefaultMusicVolume );
+        _preferences.Add( MusicEnabled,  PrefTrueDefault );
+        _preferences.Add( SoundsEnabled, PrefTrueDefault );
 
-                    // ---------- Google Services ----------
-                    { PlayServices, PrefFalseDefault },
-                    { Achievements, PrefFalseDefault },
-                    { Challenges,   PrefFalseDefault },
-                    { Events,       PrefFalseDefault },
-                    { SignInStatus, PrefFalseDefault },
+        // ---------- Google Services ----------
+        _preferences.Add( PlayServices, PrefFalseDefault );
+        _preferences.Add( Achievements, PrefFalseDefault );
+        _preferences.Add( Challenges,   PrefFalseDefault );
+        _preferences.Add( Events,       PrefFalseDefault );
+        _preferences.Add( SignInStatus, PrefFalseDefault );
 
-                    // ------------------- Development Flags -------------------
-                    { MenuScene,        PrefTrueDefault },
-                    { LevelSelect,      PrefTrueDefault },
-                    { ScrollDemo,       PrefFalseDefault },
-                    { SpriteBoxes,      PrefFalseDefault },
-                    { TileBoxes,        PrefFalseDefault },
-                    { ButtonBoxes,      PrefFalseDefault },
-                    { ShowFPS,          PrefFalseDefault },
-                    { ShowDebug,        PrefFalseDefault },
-                    { Spawnpoints,      PrefFalseDefault },
-                    { MenuHeaps,        PrefFalseDefault },
-                    { CullSprites,      PrefTrueDefault },
-                    { GlProfiler,       PrefFalseDefault },
-                    { AndroidOnDesktop, PrefFalseDefault },
-                    { Autoplay,         PrefFalseDefault },
-                    { DisableEnemies,   PrefTrueDefault },
-                    { DisablePlayer,    PrefTrueDefault },
-                 });
-
-//        _preferences.Add( ShaderProgram,  PrefFalseDefault );
-//        _preferences.Add( UsingAshleyECS, PrefFalseDefault );
-//        _preferences.Add( Box2DPhysics,   PrefTrueDefault );
-//        _preferences.Add( Installed,      PrefFalseDefault );
-//        _preferences.Add( ShowHints,      PrefTrueDefault );
-//        _preferences.Add( Vibrations,     PrefTrueDefault );
-//        _preferences.Add( JoystickLeft,   PrefTrueDefault );
-//        _preferences.Add( FxVolume,      AudioData.DefaultFxVolume );
-//        _preferences.Add( MusicVolume,   AudioData.DefaultMusicVolume );
-//        _preferences.Add( MusicEnabled,  PrefTrueDefault );
-//        _preferences.Add( SoundsEnabled, PrefTrueDefault );
-//        _preferences.Add( PlayServices, PrefFalseDefault );
-//        _preferences.Add( Achievements, PrefFalseDefault );
-//        _preferences.Add( Challenges,   PrefFalseDefault );
-//        _preferences.Add( Events,       PrefFalseDefault );
-//        _preferences.Add( SignInStatus, PrefFalseDefault );
-//        _preferences.Add( MenuScene,        PrefTrueDefault );
-//        _preferences.Add( LevelSelect,      PrefTrueDefault );
-//        _preferences.Add( ScrollDemo,       PrefFalseDefault );
-//        _preferences.Add( SpriteBoxes,      PrefFalseDefault );
-//        _preferences.Add( TileBoxes,        PrefFalseDefault );
-//        _preferences.Add( ButtonBoxes,      PrefFalseDefault );
-//        _preferences.Add( ShowFPS,          PrefFalseDefault );
-//        _preferences.Add( ShowDebug,        PrefFalseDefault );
-//        _preferences.Add( Spawnpoints,      PrefFalseDefault );
-//        _preferences.Add( MenuHeaps,        PrefFalseDefault );
-//        _preferences.Add( CullSprites,      PrefTrueDefault );
-//        _preferences.Add( GlProfiler,       PrefFalseDefault );
-//        _preferences.Add( AndroidOnDesktop, PrefFalseDefault );
-//        _preferences.Add( Autoplay,         PrefFalseDefault );
-//        _preferences.Add( DisableEnemies,   PrefTrueDefault );
-//        _preferences.Add( DisablePlayer,    PrefTrueDefault );
+        // ------------------- Development Flags -------------------
+        _preferences.Add( MenuScene,        PrefTrueDefault );
+        _preferences.Add( LevelSelect,      PrefTrueDefault );
+        _preferences.Add( ScrollDemo,       PrefFalseDefault );
+        _preferences.Add( SpriteBoxes,      PrefFalseDefault );
+        _preferences.Add( TileBoxes,        PrefFalseDefault );
+        _preferences.Add( ButtonBoxes,      PrefFalseDefault );
+        _preferences.Add( ShowFPS,          PrefFalseDefault );
+        _preferences.Add( ShowDebug,        PrefFalseDefault );
+        _preferences.Add( Spawnpoints,      PrefFalseDefault );
+        _preferences.Add( MenuHeaps,        PrefFalseDefault );
+        _preferences.Add( CullSprites,      PrefTrueDefault );
+        _preferences.Add( GlProfiler,       PrefFalseDefault );
+        _preferences.Add( AndroidOnDesktop, PrefFalseDefault );
+        _preferences.Add( Autoplay,         PrefFalseDefault );
+        _preferences.Add( DisableEnemies,   PrefTrueDefault );
+        _preferences.Add( DisablePlayer,    PrefTrueDefault );
     }
 
     /// <summary>

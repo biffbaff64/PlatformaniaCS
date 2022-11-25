@@ -49,7 +49,6 @@ public class AppConfig
         App.WorldModel.CreateWorld();
         App.Assets.Initialise();
         App.Settings.FreshInstallCheck();
-        App.Settings.DebugReport();
 
         App.BaseRenderer.CreateCameras();
         App.WorldModel.CreateB2DRenderer();
@@ -69,6 +68,7 @@ public class AppConfig
         Trace.CheckPoint();
 
         App.Developer.ConfigReport();
+        App.Settings.DebugReport();
 
         // Development option, to allow skipping of the main menu
         // and moving straight to the game scene.
