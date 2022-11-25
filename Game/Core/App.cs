@@ -25,7 +25,6 @@ public abstract class App
     // -------------------------------------------------
     // Objects created on power-up (Essential Objects)
     public static AppConfig             AppConfig             { get; set; }
-    public static AppSettings           AppSettings           { get; set; }
     public static StateID               AppState              { get; set; }
     public static GameAudio             GameAudio             { get; set; }
     public static GraphicsDeviceManager GraphicsDeviceManager { get; set; }

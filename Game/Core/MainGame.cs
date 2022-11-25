@@ -1,6 +1,7 @@
 ﻿// ##################################################
 
 using Microsoft.Xna.Framework.Input;
+
 using PlatformaniaCS.Game.Config;
 using PlatformaniaCS.Game.Graphics;
 using PlatformaniaCS.Game.UI;
@@ -20,7 +21,7 @@ public class MainGame : Microsoft.Xna.Framework.Game
         App.GraphicsDeviceManager.PreferredBackBufferWidth  = Gfx.DesktopWidth;
         App.GraphicsDeviceManager.PreferredBackBufferHeight = Gfx.DesktopHeight;
         App.GraphicsDeviceManager.ApplyChanges();
-        
+
         Window.AllowUserResizing = false;
         Content.RootDirectory    = "Content/bin/Assets";
         IsMouseVisible           = true;
@@ -38,10 +39,8 @@ public class MainGame : Microsoft.Xna.Framework.Game
         Trace.CheckPoint();
 
         // Initialise the preferences object for in-game settings.
-        App.AppSettings = new AppSettings();
-        App.Settings    = new Settings();
-
-        App.MainGame    = this;
+        App.Settings = new Settings();
+        App.MainGame = this;
 
         _splashScreen = new SplashScreen();
         _splashScreen.Setup( GameAssets.SplashScreenAsset );
@@ -63,7 +62,7 @@ public class MainGame : Microsoft.Xna.Framework.Game
     protected override void Update( GameTime gameTime )
     {
         if ( GamePad.GetState( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed
-          || Keyboard.GetState().IsKeyDown( Keys.Escape ) )
+             || Keyboard.GetState().IsKeyDown( Keys.Escape ) )
         {
             Exit();
         }
