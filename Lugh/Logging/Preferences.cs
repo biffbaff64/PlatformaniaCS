@@ -26,9 +26,9 @@ public class Preferences
         _propertiesFile = fileName;
         _properties = new Dictionary< string, object >();
         
-        if ( !File.Exists( _filePath + "GSettings.json" ) )
+        if ( !File.Exists( _filePath + _propertiesFile ) )
         {
-            CreateGSettingsFile();
+            CreateSettingsFile();
         }
 
         LoadJson();
@@ -58,8 +58,8 @@ public class Preferences
 
         Trace.Info( "Objects found: " + _properties.Count );
     }
-    
-    private void CreateGSettingsFile()
+
+    private void CreateSettingsFile()
     {
         var opt = new JsonSerializerOptions()
         {
@@ -68,7 +68,7 @@ public class Preferences
 
         var json = JsonSerializer.Serialize< Dictionary<string, object> >( _properties, opt );
         
-        File.WriteAllText( _filePath + "GSettings.json", json );
+        File.WriteAllText( _filePath + _propertiesFile, json );
     }
 
     // TODO:

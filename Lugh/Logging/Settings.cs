@@ -1,5 +1,13 @@
 ﻿// ##################################################
 
+
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+
+using Newtonsoft.Json.Linq;
+
 using PlatformaniaCS.Game.Audio;
 
 // ##################################################
@@ -66,13 +74,29 @@ public class Settings : IDisposable
 
     private readonly Preferences _prefsObj;
 
+    private readonly string _filePath;
+    private readonly string _propertiesFile;
+
+    private readonly Dictionary< string, object > _properties;
+
     public Settings()
     {
         Trace.CheckPoint();
 
         try
         {
-            _prefsObj = new Preferences( "config.json" );
+//            _prefsObj = new Preferences( "config.json" );
+
+            _filePath       = Environment.GetFolderPath( Environment.SpecialFolder.UserProfile ) + "//.prefs//";
+            _propertiesFile = "platformaniacs.json";
+            _properties     = new Dictionary< string, object >();
+
+            if ( !File.Exists( _filePath + _propertiesFile ) )
+            {
+                CreateSettingsFile();
+            }
+
+            LoadJson();
         }
         catch ( Exception e )
         {
@@ -80,34 +104,71 @@ public class Settings : IDisposable
         }
     }
 
+    private void LoadJson()
+    {
+        _properties.Clear();
+
+        var json = File.ReadAllText( _filePath + _propertiesFile );
+
+        var parent     = JObject.Parse( json );
+        var resultData = parent.Value< JObject >( "properties" ).Properties();
+
+        var enumerable = resultData as JProperty[] ?? resultData.ToArray();
+
+        var resultDict = enumerable.ToDictionary
+            (
+             k => k.Name,
+             v => v.Value
+            );
+
+        foreach ( var obj in resultDict )
+        {
+            _properties.Add( obj.Key, obj.Value );
+        }
+
+        Trace.Info( "Objects found: " + _properties.Count );
+    }
+
+    private void CreateSettingsFile()
+    {
+        var opt = new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        };
+
+        var json = JsonSerializer.Serialize< Dictionary< string, object > >( _properties, opt );
+
+        File.WriteAllText( _filePath + _propertiesFile, json );
+    }
+
     public bool IsEnabled( string  pref ) => _prefsObj != null && _prefsObj.GetBoolean( pref );
     public bool IsDisabled( string pref ) => _prefsObj != null && !_prefsObj.GetBoolean( pref );
 
     public void Enable( string preference )
     {
-        if ( _prefsObj != null )
-        {
-            _prefsObj.PutBoolean( preference, true );
-            _prefsObj.Flush();
-        }
+//        if ( _prefsObj != null )
+//        {
+//            _prefsObj.PutBoolean( preference, true );
+//            _prefsObj.Flush();
+//        }
     }
 
     public void Disable( string preference )
     {
-        if ( _prefsObj != null )
-        {
-            _prefsObj.PutBoolean( preference, false );
-            _prefsObj.Flush();
-        }
+//        if ( _prefsObj != null )
+//        {
+//            _prefsObj.PutBoolean( preference, false );
+//            _prefsObj.Flush();
+//        }
     }
 
     public void ToggleState( string preference )
     {
-        if ( _prefsObj != null )
-        {
-            _prefsObj.PutBoolean( preference, !_prefsObj.GetBoolean( preference ) );
-            _prefsObj.Flush();
-        }
+//        if ( _prefsObj != null )
+//        {
+//            _prefsObj.PutBoolean( preference, !_prefsObj.GetBoolean( preference ) );
+//            _prefsObj.Flush();
+//        }
     }
 
     public void FreshInstallCheck()
@@ -126,53 +187,97 @@ public class Settings : IDisposable
     {
         Trace.CheckPoint();
 
-        if ( _prefsObj != null )
-        {
-            _prefsObj.PutBoolean( key: DefaultOn,  val: PrefTrueDefault );
-            _prefsObj.PutBoolean( key: DefaultOff, val: PrefFalseDefault );
+        _properties.Clear();
+
+        // ---------- Configuration ----------
+        _properties.Add( ShaderProgram,  PrefFalseDefault );
+        _properties.Add( UsingAshleyECS, PrefFalseDefault );
+        _properties.Add( Box2DPhysics,   PrefTrueDefault );
+        _properties.Add( Installed,      PrefFalseDefault );
+        _properties.Add( ShowHints,      PrefTrueDefault );
+        _properties.Add( Vibrations,     PrefTrueDefault );
+        _properties.Add( JoystickLeft,   PrefTrueDefault );
+
+        // --------------- Audio ---------------
+        _properties.Add( FxVolume,      AudioData.DefaultFxVolume );
+        _properties.Add( MusicVolume,   AudioData.DefaultMusicVolume );
+        _properties.Add( MusicEnabled,  PrefTrueDefault );
+        _properties.Add( SoundsEnabled, PrefTrueDefault );
+
+        // ---------- Google Services ----------
+        _properties.Add( PlayServices, PrefFalseDefault );
+        _properties.Add( Achievements, PrefFalseDefault );
+        _properties.Add( Challenges,   PrefFalseDefault );
+        _properties.Add( Events,       PrefFalseDefault );
+        _properties.Add( SignInStatus, PrefFalseDefault );
+
+        // ------------------- Development Flags -------------------
+        _properties.Add( MenuScene,        PrefTrueDefault );
+        _properties.Add( LevelSelect,      PrefTrueDefault );
+        _properties.Add( ScrollDemo,       PrefFalseDefault );
+        _properties.Add( SpriteBoxes,      PrefFalseDefault );
+        _properties.Add( TileBoxes,        PrefFalseDefault );
+        _properties.Add( ButtonBoxes,      PrefFalseDefault );
+        _properties.Add( ShowFPS,          PrefFalseDefault );
+        _properties.Add( ShowDebug,        PrefFalseDefault );
+        _properties.Add( Spawnpoints,      PrefFalseDefault );
+        _properties.Add( MenuHeaps,        PrefFalseDefault );
+        _properties.Add( CullSprites,      PrefTrueDefault );
+        _properties.Add( GlProfiler,       PrefFalseDefault );
+        _properties.Add( AndroidOnDesktop, PrefFalseDefault );
+        _properties.Add( Autoplay,         PrefFalseDefault );
+        _properties.Add( DisableEnemies,   PrefTrueDefault );
+        _properties.Add( DisablePlayer,    PrefTrueDefault );
+
+        // ================================================
+
+//        if ( _prefsObj != null )
+//        {
+//            _prefsObj.PutBoolean( key: DefaultOn,  val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: DefaultOff, val: PrefFalseDefault );
 
             // ---------- Configuration ----------
-            _prefsObj.PutBoolean( key: ShaderProgram,  val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: UsingAshleyECS, val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: Box2DPhysics,   val: PrefTrueDefault );
-            _prefsObj.PutBoolean( key: Installed,      val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: ShowHints,      val: PrefTrueDefault );
-            _prefsObj.PutBoolean( key: Vibrations,     val: PrefTrueDefault );
-            _prefsObj.PutBoolean( key: JoystickLeft,   val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: ShaderProgram,  val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: UsingAshleyECS, val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: Box2DPhysics,   val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: Installed,      val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: ShowHints,      val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: Vibrations,     val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: JoystickLeft,   val: PrefTrueDefault );
 
             // --------------- Audio ---------------
-            _prefsObj.PutInteger( key: FxVolume,    val: AudioData.DefaultFxVolume );
-            _prefsObj.PutInteger( key: MusicVolume, val: AudioData.DefaultMusicVolume );
-            _prefsObj.PutBoolean( key: MusicEnabled,  val: PrefTrueDefault );
-            _prefsObj.PutBoolean( key: SoundsEnabled, val: PrefTrueDefault );
+//            _prefsObj.PutInteger( key: FxVolume,    val: AudioData.DefaultFxVolume );
+//            _prefsObj.PutInteger( key: MusicVolume, val: AudioData.DefaultMusicVolume );
+//            _prefsObj.PutBoolean( key: MusicEnabled,  val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: SoundsEnabled, val: PrefTrueDefault );
 
             // ---------- Google Services ----------
-            _prefsObj.PutBoolean( key: PlayServices, val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: Achievements, val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: Challenges,   val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: Events,       val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: SignInStatus, val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: PlayServices, val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: Achievements, val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: Challenges,   val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: Events,       val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: SignInStatus, val: PrefFalseDefault );
 
             // ------------------- Development Flags -------------------
-            _prefsObj.PutBoolean( key: MenuScene,        val: PrefTrueDefault );
-            _prefsObj.PutBoolean( key: LevelSelect,      val: PrefTrueDefault );
-            _prefsObj.PutBoolean( key: ScrollDemo,       val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: SpriteBoxes,      val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: TileBoxes,        val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: ButtonBoxes,      val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: ShowFPS,          val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: ShowDebug,        val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: Spawnpoints,      val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: MenuHeaps,        val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: CullSprites,      val: PrefTrueDefault );
-            _prefsObj.PutBoolean( key: GlProfiler,       val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: AndroidOnDesktop, val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: Autoplay,         val: PrefFalseDefault );
-            _prefsObj.PutBoolean( key: DisableEnemies,   val: PrefTrueDefault );
-            _prefsObj.PutBoolean( key: DisablePlayer,    val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: MenuScene,        val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: LevelSelect,      val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: ScrollDemo,       val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: SpriteBoxes,      val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: TileBoxes,        val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: ButtonBoxes,      val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: ShowFPS,          val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: ShowDebug,        val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: Spawnpoints,      val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: MenuHeaps,        val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: CullSprites,      val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: GlProfiler,       val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: AndroidOnDesktop, val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: Autoplay,         val: PrefFalseDefault );
+//            _prefsObj.PutBoolean( key: DisableEnemies,   val: PrefTrueDefault );
+//            _prefsObj.PutBoolean( key: DisablePlayer,    val: PrefTrueDefault );
 
-            _prefsObj.Flush();
-        }
+//            _prefsObj.Flush();
+//        }
     }
 
     public void DebugReport()
