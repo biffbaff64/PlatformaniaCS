@@ -216,7 +216,7 @@ public static class Trace
             {
                 foreach ( var arg in args )
                 {
-                    sb.Append( " " );
+                    sb.Append(' ');
                     sb.Append( arg );
                 }
             }
@@ -258,7 +258,7 @@ public static class Trace
         {
             foreach ( var arg in args )
             {
-                sb.Append( " " );
+                sb.Append( ' ' );
                 sb.Append( arg );
             }
         }
@@ -358,13 +358,12 @@ public static class Trace
     {
         if ( File.Exists( debugFilePath + debugFileName ) )
         {
-            using ( var fs = File.Open( debugFilePath + debugFileName, FileMode.Append ) )
-            {
-                var debugLine = new UTF8Encoding( true ).GetBytes( text + "\n" );
-                fs.Write( debugLine, 0, debugLine.Length );
+            using var fs = File.Open( debugFilePath + debugFileName, FileMode.Append );
+
+            var debugLine = new UTF8Encoding( true ).GetBytes( text + "\n" );
+            fs.Write( debugLine, 0, debugLine.Length );
                     
-                fs.Close();
-            }
+            fs.Close();
         }
     }
 }

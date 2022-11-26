@@ -1,12 +1,14 @@
 ﻿// ##################################################
 
-
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters;
 using System.Text.Json;
+using System.Xml.Linq;
 
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using PlatformaniaCS.Game.Audio;
@@ -26,25 +28,19 @@ public class Settings : IDisposable
     public const string DefaultOff = "default off";
 
     //
-    // TO BE REMOVED
-    public const string SpriteBoxes      = "sprite boxes";    // Shows sprite AABB Boxes
-    public const string TileBoxes        = "tile boxes";      // Shows game tile AABB Boxes
-    public const string AndroidOnDesktop = "android desktop"; //
-    public const string Box2DPhysics     = "using box2d";     // Enables Box2D Physics
-    public const string UsingAshleyECS   = "ashley ecs";      // Enables use of Ashley Entity Component System
-
-    //
     // Development options
+    public const string SpriteBoxes    = "sprite boxes";    // Shows sprite AABB Boxes
+    public const string TileBoxes      = "tile boxes";      // Shows game tile AABB Boxes
+    public const string Box2DPhysics   = "using box2d";     // Enables Box2D Physics
+    public const string UsingAshleyECS = "ashley ecs";      // Enables use of Ashley Entity Component System
     public const string ScrollDemo     = "scroll demo";     // Enables Game Scroll Demo mode
     public const string ButtonBoxes    = "button boxes";    // Shows GameButton bounding boxes
     public const string ShowFPS        = "show fps";        // Shows current FPS on-screen
     public const string ShowDebug      = "show debug";      // Enables on-screen debug printing
     public const string Spawnpoints    = "spawn points";    // Shows spawn point tiles from game map
-    public const string MenuHeaps      = "menu heaps";      // Show Heap Sizes on Menu Page if true
     public const string MenuScene      = "menu scene";      //
     public const string LevelSelect    = "level select";    //
     public const string CullSprites    = "cull sprites";    // Enables Sprite Culling when off screen
-    public const string GlProfiler     = "gl profiler";     // Enables/Disables the LibGdx OpenGL Profiler
     public const string DisableEnemies = "disable enemies"; //
     public const string DisablePlayer  = "disable player";  //
     public const string Autoplay       = "autoplay";        //
@@ -73,17 +69,22 @@ public class Settings : IDisposable
     public const string Challenges   = "challenges";     // Enables In-Game challenges
     public const string Events       = "events";         // Enables In-Game events
 
-    /// <summary>
-    /// Storage file details.
-    /// </summary>
-    private readonly string _filePath;
+    // ----------------------------------------------------
 
+    private readonly string _filePath;
     private readonly string _propertiesFile;
 
-    /// <summary>
-    /// Dictionary holding preferences information.
-    /// </summary>
-    private readonly Dictionary< string, object > _preferences;
+    private Dictionary< string, object > _preferences;
+
+    // ----------------------------------------------------
+
+    private class Entry
+    {
+        public string Key   { get; set; }
+        public object Value { get; set; }
+    }
+
+    // ----------------------------------------------------
 
     /// <summary>
     /// In-App preferences management.
@@ -94,7 +95,8 @@ public class Settings : IDisposable
 
         try
         {
-            _filePath       = Environment.GetFolderPath( Environment.SpecialFolder.UserProfile ) + "//.prefs//";
+            _filePath = Environment.GetFolderPath( Environment.SpecialFolder.UserProfile ) + "//.prefs//";
+
             _propertiesFile = "platformaniacs.json";
             _preferences    = new Dictionary< string, object >();
 
@@ -105,10 +107,10 @@ public class Settings : IDisposable
                     ResetToDefaults();
                 }
 
-                WriteSettingsJson();
+                WritePreferences();
             }
 
-            LoadPreferencesJson();
+            LoadPreferences();
         }
         catch ( Exception e )
         {
@@ -117,54 +119,64 @@ public class Settings : IDisposable
     }
 
     /// <summary>
-    /// Load the Json file holding preferences data, and
+    /// Load the file holding preferences data, and
     /// populate the Dictionary.
     /// </summary>
-    private void LoadPreferencesJson()
+    private void LoadPreferences()
     {
-        _preferences.Clear();
+//        _preferences.Clear();
 
-        var json = File.ReadAllText( _filePath + _propertiesFile );
+//        var json = File.ReadAllText( _filePath + _propertiesFile );
 
-        var parent     = JObject.Parse( json );
-        var resultData = parent.Value< JObject >( "properties" ).Properties();
+//        var parent = JObject.Parse( json );
+//        var resultData = parent.Value< JObject >( "properties" ).Properties();
 
-        var enumerable = resultData as JProperty[] ?? resultData.ToArray();
+//        var enumerable = resultData as JProperty[] ?? resultData.ToArray();
 
-        var resultDict = enumerable.ToDictionary
-            (
-                 k => k.Name,
-                 v => v.Value
-            );
+//        var resultDict = enumerable.ToDictionary
+//            (
+//             k => k.Name,
+//             v => v.Value
+//            );
 
-        foreach ( var obj in resultDict )
-        {
-            _preferences.Add( obj.Key, obj.Value );
-        }
+//        foreach ( var obj in resultDict )
+//        {
+//            _preferences.Add( obj.Key, obj.Value );
+//        }
     }
 
     /// <summary>
     /// Write the preferences Dictionary to file.
     /// </summary>
-    private void WriteSettingsJson()
+    /// TODO: Learn the CORRECT way of doing this. Json Serialisation ??
+    private void WritePreferences()
     {
-        var opt = new JsonSerializerOptions()
-        {
-            WriteIndented = true
-        };
+//        var str = "{\n\"properties\": {\n";
+//        var entryNum = 1;
 
-        var json = JsonSerializer.Serialize( _preferences, opt );
+//        foreach ( var entry in _preferences )
+//        {
+//            str += "\"entry" + entryNum++ + "\": {\n";
+//            str += "\"key\": ";
+//            str += "\"" + entry.Key + "\"";
+//            str += ",\n";
+//            str += "\"value\": ";
+//            str += "\"" + entry.Value + "\"\n";
+//            str += "},\n";
+//        }
 
-        File.WriteAllText( _filePath + _propertiesFile, json );
+//        str += "}\n}\n";
+
+//        File.WriteAllText( _filePath + _propertiesFile, str.ToLower() );
     }
 
     /// <summary>
-    /// 
+    /// Returns TRUE if the specified preference is enabled.
     /// </summary>
     public bool IsEnabled( string pref ) => GetBoolean( pref );
 
     /// <summary>
-    /// 
+    /// Returns TRUE if the specified preference is disabled.
     /// </summary>
     public bool IsDisabled( string pref ) => !GetBoolean( pref );
 
@@ -177,7 +189,7 @@ public class Settings : IDisposable
         {
             _preferences[ preference ] = true;
 
-            WriteSettingsJson();
+            WritePreferences();
         }
     }
 
@@ -190,7 +202,7 @@ public class Settings : IDisposable
         {
             _preferences[ preference ] = false;
 
-            WriteSettingsJson();
+            WritePreferences();
         }
     }
 
@@ -199,12 +211,11 @@ public class Settings : IDisposable
     /// </summary>
     public void ToggleState( string preference )
     {
-        if ( _preferences.ContainsKey( preference )
-             && _preferences[ preference ] is bool )
+        if ( _preferences.ContainsKey( preference ) && _preferences[ preference ] is bool )
         {
             _preferences[ preference ] = !( bool )_preferences[ preference ];
 
-            WriteSettingsJson();
+            WritePreferences();
         }
     }
 
@@ -228,7 +239,7 @@ public class Settings : IDisposable
             _preferences[ key ] = val;
         }
 
-        WriteSettingsJson();
+        WritePreferences();
     }
 
     /// <summary>
@@ -245,7 +256,7 @@ public class Settings : IDisposable
             _preferences[ key ] = val;
         }
 
-        WriteSettingsJson();
+        WritePreferences();
     }
 
     /// <summary>
@@ -262,7 +273,7 @@ public class Settings : IDisposable
             _preferences[ key ] = val;
         }
 
-        WriteSettingsJson();
+        WritePreferences();
     }
 
     /// <summary>
@@ -279,7 +290,7 @@ public class Settings : IDisposable
             _preferences[ key ] = val;
         }
 
-        WriteSettingsJson();
+        WritePreferences();
     }
 
     /// <summary>
@@ -296,7 +307,7 @@ public class Settings : IDisposable
             _preferences[ key ] = val;
         }
 
-        WriteSettingsJson();
+        WritePreferences();
     }
 
     /// <summary>
@@ -416,22 +427,19 @@ public class Settings : IDisposable
         _preferences.Add( SignInStatus, PrefFalseDefault );
 
         // ------------------- Development Flags -------------------
-        _preferences.Add( MenuScene,        PrefTrueDefault );
-        _preferences.Add( LevelSelect,      PrefTrueDefault );
-        _preferences.Add( ScrollDemo,       PrefFalseDefault );
-        _preferences.Add( SpriteBoxes,      PrefFalseDefault );
-        _preferences.Add( TileBoxes,        PrefFalseDefault );
-        _preferences.Add( ButtonBoxes,      PrefFalseDefault );
-        _preferences.Add( ShowFPS,          PrefFalseDefault );
-        _preferences.Add( ShowDebug,        PrefFalseDefault );
-        _preferences.Add( Spawnpoints,      PrefFalseDefault );
-        _preferences.Add( MenuHeaps,        PrefFalseDefault );
-        _preferences.Add( CullSprites,      PrefTrueDefault );
-        _preferences.Add( GlProfiler,       PrefFalseDefault );
-        _preferences.Add( AndroidOnDesktop, PrefFalseDefault );
-        _preferences.Add( Autoplay,         PrefFalseDefault );
-        _preferences.Add( DisableEnemies,   PrefTrueDefault );
-        _preferences.Add( DisablePlayer,    PrefTrueDefault );
+        _preferences.Add( MenuScene,      PrefTrueDefault );
+        _preferences.Add( LevelSelect,    PrefTrueDefault );
+        _preferences.Add( ScrollDemo,     PrefFalseDefault );
+        _preferences.Add( SpriteBoxes,    PrefFalseDefault );
+        _preferences.Add( TileBoxes,      PrefFalseDefault );
+        _preferences.Add( ButtonBoxes,    PrefFalseDefault );
+        _preferences.Add( ShowFPS,        PrefFalseDefault );
+        _preferences.Add( ShowDebug,      PrefFalseDefault );
+        _preferences.Add( Spawnpoints,    PrefFalseDefault );
+        _preferences.Add( CullSprites,    PrefTrueDefault );
+        _preferences.Add( Autoplay,       PrefFalseDefault );
+        _preferences.Add( DisableEnemies, PrefTrueDefault );
+        _preferences.Add( DisablePlayer,  PrefTrueDefault );
     }
 
     /// <summary>
@@ -442,44 +450,41 @@ public class Settings : IDisposable
         Trace.CheckPoint();
 
         // ---------- Configuration ----------
-        Trace.Info( message: ShaderProgram + " : " + GetBoolean( key: ShaderProgram ) );
-        Trace.Info( message: UsingAshleyECS + " : " + GetBoolean( key: UsingAshleyECS ) );
-        Trace.Info( message: Box2DPhysics + " : " + GetBoolean( key: Box2DPhysics ) );
-        Trace.Info( message: Installed + " : " + GetBoolean( key: Installed ) );
-        Trace.Info( message: ShowHints + " : " + GetBoolean( key: ShowHints ) );
-        Trace.Info( message: Vibrations + " : " + GetBoolean( key: Vibrations ) );
-        Trace.Info( message: JoystickLeft + " : " + GetBoolean( key: JoystickLeft ) );
+        Trace.Info( message: ShaderProgram + " : " + ( GetBoolean( ShaderProgram ) ? "true" : "false" ) );
+        Trace.Info( message: UsingAshleyECS + " : " + GetBoolean( UsingAshleyECS ) );
+        Trace.Info( message: Box2DPhysics + " : " + GetBoolean( Box2DPhysics ) );
+        Trace.Info( message: Installed + " : " + GetBoolean( Installed ) );
+        Trace.Info( message: ShowHints + " : " + GetBoolean( ShowHints ) );
+        Trace.Info( message: Vibrations + " : " + GetBoolean( Vibrations ) );
+        Trace.Info( message: JoystickLeft + " : " + GetBoolean( JoystickLeft ) );
 
         // --------------- Audio ---------------
-        Trace.Info( message: FxVolume + " : " + GetInteger( key: FxVolume ) );
-        Trace.Info( message: MusicVolume + " : " + GetInteger( key: MusicVolume ) );
-        Trace.Info( message: MusicEnabled + " : " + GetBoolean( key: MusicEnabled ) );
-        Trace.Info( message: SoundsEnabled + " : " + GetBoolean( key: SoundsEnabled ) );
+        Trace.Info( message: FxVolume + " : " + GetInteger( FxVolume ) );
+        Trace.Info( message: MusicVolume + " : " + GetInteger( MusicVolume ) );
+        Trace.Info( message: MusicEnabled + " : " + GetBoolean( MusicEnabled ) );
+        Trace.Info( message: SoundsEnabled + " : " + GetBoolean( SoundsEnabled ) );
 
         // ---------- Google Services ----------
-        Trace.Info( message: PlayServices + " : " + GetBoolean( key: PlayServices ) );
-        Trace.Info( message: Achievements + " : " + GetBoolean( key: Achievements ) );
-        Trace.Info( message: Challenges + " : " + GetBoolean( key: Challenges ) );
-        Trace.Info( message: Events + " : " + GetBoolean( key: Events ) );
-        Trace.Info( message: SignInStatus + " : " + GetBoolean( key: SignInStatus ) );
+        Trace.Info( message: PlayServices + " : " + GetBoolean( PlayServices ) );
+        Trace.Info( message: Achievements + " : " + GetBoolean( Achievements ) );
+        Trace.Info( message: Challenges + " : " + GetBoolean( Challenges ) );
+        Trace.Info( message: Events + " : " + GetBoolean( Events ) );
+        Trace.Info( message: SignInStatus + " : " + GetBoolean( SignInStatus ) );
 
         // ------------------- Development Flags -------------------
-        Trace.Info( message: MenuScene + " : " + GetBoolean( key: MenuScene ) );
-        Trace.Info( message: LevelSelect + " : " + GetBoolean( key: LevelSelect ) );
-        Trace.Info( message: ScrollDemo + " : " + GetBoolean( key: ScrollDemo ) );
-        Trace.Info( message: SpriteBoxes + " : " + GetBoolean( key: SpriteBoxes ) );
-        Trace.Info( message: TileBoxes + " : " + GetBoolean( key: TileBoxes ) );
-        Trace.Info( message: ButtonBoxes + " : " + GetBoolean( key: ButtonBoxes ) );
-        Trace.Info( message: ShowFPS + " : " + GetBoolean( key: ShowFPS ) );
-        Trace.Info( message: ShowDebug + " : " + GetBoolean( key: ShowDebug ) );
-        Trace.Info( message: Spawnpoints + " : " + GetBoolean( key: Spawnpoints ) );
-        Trace.Info( message: MenuHeaps + " : " + GetBoolean( key: MenuHeaps ) );
-        Trace.Info( message: CullSprites + " : " + GetBoolean( key: CullSprites ) );
-        Trace.Info( message: GlProfiler + " : " + GetBoolean( key: GlProfiler ) );
-        Trace.Info( message: AndroidOnDesktop + " : " + GetBoolean( key: AndroidOnDesktop ) );
-        Trace.Info( message: Autoplay + " : " + GetBoolean( key: Autoplay ) );
-        Trace.Info( message: DisableEnemies + " : " + GetBoolean( key: DisableEnemies ) );
-        Trace.Info( message: DisablePlayer + " : " + GetBoolean( key: DisablePlayer ) );
+        Trace.Info( message: MenuScene + " : " + GetBoolean( MenuScene ) );
+        Trace.Info( message: LevelSelect + " : " + GetBoolean( LevelSelect ) );
+        Trace.Info( message: ScrollDemo + " : " + GetBoolean( ScrollDemo ) );
+        Trace.Info( message: SpriteBoxes + " : " + GetBoolean( SpriteBoxes ) );
+        Trace.Info( message: TileBoxes + " : " + GetBoolean( TileBoxes ) );
+        Trace.Info( message: ButtonBoxes + " : " + GetBoolean( ButtonBoxes ) );
+        Trace.Info( message: ShowFPS + " : " + GetBoolean( ShowFPS ) );
+        Trace.Info( message: ShowDebug + " : " + GetBoolean( ShowDebug ) );
+        Trace.Info( message: Spawnpoints + " : " + GetBoolean( Spawnpoints ) );
+        Trace.Info( message: CullSprites + " : " + GetBoolean( CullSprites ) );
+        Trace.Info( message: Autoplay + " : " + GetBoolean( Autoplay ) );
+        Trace.Info( message: DisableEnemies + " : " + GetBoolean( DisableEnemies ) );
+        Trace.Info( message: DisablePlayer + " : " + GetBoolean( DisablePlayer ) );
     }
 
     public void Dispose()

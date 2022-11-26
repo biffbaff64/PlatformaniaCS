@@ -9,9 +9,9 @@ namespace PlatformaniaCS.Game.Config;
 
 public class Developer
 {
-    public StateID DeveloperPanelState { get; set; }
-    public bool    IsDevMode           { get; set; }
-    public bool    IsGodMode           { get; set; }
+    public StateID DeveloperPanelState { get; private set; }
+    public bool    IsDevMode           { get; private set; }
+    public bool    IsGodMode           { get; private set; }
 
     public void SetTempDeveloperSettings()
     {
@@ -21,7 +21,8 @@ public class Developer
             Trace.Dbg( message: "Temporary Development Settings" );
 
             IsGodMode = false;
-
+//            IsGodMode = true;
+            
             string[] disableList =
             {
                 Settings.ShowFPS,
@@ -110,16 +111,16 @@ public class Developer
             Trace.Dbg( message: "isDevMode()         : ", args: IsDevMode );
             Trace.Dbg( message: "isGodMode()         : ", args: IsGodMode );
             Trace.Divider();
-            Trace.Dbg( message: "DESKTOP_WIDTH      : ", args: Gfx.DesktopWidth );
-            Trace.Dbg( message: "DESKTOP_HEIGHT     : ", args: Gfx.DesktopHeight );
-            Trace.Dbg( message: "VIEW_WIDTH         : ", args: Gfx.ViewWidth );
-            Trace.Dbg( message: "VIEW_HEIGHT        : ", args: Gfx.ViewHeight );
-            Trace.Dbg( message: "HUD_WIDTH          : ", args: Gfx.HudWidth );
-            Trace.Dbg( message: "HUD_HEIGHT         : ", args: Gfx.HudHeight );
-            Trace.Dbg( message: "GAME_SCENE_WIDTH   : ", args: Gfx.GameSceneWidth );
-            Trace.Dbg( message: "GAME_SCENE_HEIGHT  : ", args: Gfx.GameSceneHeight );
-            Trace.Dbg( message: "HUD_SCENE_WIDTH    : ", args: Gfx.HudSceneWidth );
-            Trace.Dbg( message: "HUD_SCENE_HEIGHT   : ", args: Gfx.HudSceneHeight );
+            Trace.Dbg( message: "DESKTOP_WIDTH       : ", args: Gfx.DesktopWidth );
+            Trace.Dbg( message: "DESKTOP_HEIGHT      : ", args: Gfx.DesktopHeight );
+            Trace.Dbg( message: "VIEW_WIDTH          : ", args: Gfx.ViewWidth );
+            Trace.Dbg( message: "VIEW_HEIGHT         : ", args: Gfx.ViewHeight );
+            Trace.Dbg( message: "HUD_WIDTH           : ", args: Gfx.HudWidth );
+            Trace.Dbg( message: "HUD_HEIGHT          : ", args: Gfx.HudHeight );
+            Trace.Dbg( message: "GAME_SCENE_WIDTH    : ", args: Gfx.GameSceneWidth );
+            Trace.Dbg( message: "GAME_SCENE_HEIGHT   : ", args: Gfx.GameSceneHeight );
+            Trace.Dbg( message: "HUD_SCENE_WIDTH     : ", args: Gfx.HudSceneWidth );
+            Trace.Dbg( message: "HUD_SCENE_HEIGHT    : ", args: Gfx.HudSceneHeight );
             Trace.Divider();
             Trace.Dbg( message: "_PPM                : " + Gfx.PPM );
             Trace.Divider();
