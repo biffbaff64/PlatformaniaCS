@@ -1,12 +1,21 @@
 ﻿// Global using directives
 
 global using System;
-global using System.Configuration;
+global using System.Collections.Generic;
+
+// --------------------------------------
+//
+global using Newtonsoft.Json;
+global using Newtonsoft.Json.Linq;
 
 // --------------------------------------
 // XNA / Monogame
 global using Microsoft.Xna.Framework;
 global using MonoGame.Extended;
+
+// --------------------------------------
+//
+global using PlatformaniaCS.Game.Audio;
 
 // --------------------------------------
 // Lugh Utils Library

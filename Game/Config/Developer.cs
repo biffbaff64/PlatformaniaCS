@@ -25,34 +25,34 @@ public class Developer
             
             string[] disableList =
             {
-                Settings.ShowFPS,
-                Settings.CullSprites,
-                Settings.ButtonBoxes,
-                Settings.DisablePlayer,
-                Settings.ShaderProgram,
-                Settings.TileBoxes,
-                Settings.ScrollDemo,
-                Settings.SpriteBoxes,
-                Settings.LevelSelect,
-                Settings.MenuScene,
+                Preferences.ShowFPS,
+                Preferences.CullSprites,
+                Preferences.ButtonBoxes,
+                Preferences.DisablePlayer,
+                Preferences.ShaderProgram,
+                Preferences.TileBoxes,
+                Preferences.ScrollDemo,
+                Preferences.SpriteBoxes,
+                Preferences.LevelSelect,
+                Preferences.MenuScene,
             };
 
             string[] enableList =
             {
-                Settings.ShowDebug,
-                Settings.Box2DPhysics,
-                Settings.Vibrations,
-                Settings.Installed,
+                Preferences.ShowDebug,
+                Preferences.Box2DPhysics,
+                Preferences.Vibrations,
+                Preferences.Installed,
             };
 
             foreach ( var str in disableList )
             {
-                App.Settings.Disable( str );
+                App.Preferences.Disable( str );
             }
 
             foreach ( var str in enableList )
             {
-                App.Settings.Enable( str );
+                App.Preferences.Enable( str );
             }
         }
     }

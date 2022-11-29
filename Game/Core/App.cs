@@ -29,7 +29,7 @@ public abstract class App
     public static GameAudio             GameAudio             { get; set; }
     public static GraphicsDeviceManager GraphicsDeviceManager { get; set; }
     public static SpriteBatch           SpriteBatch           { get; set; }
-    public static Settings              Settings              { get; set; }
+    public static Preferences              Preferences              { get; set; }
     public static BaseRenderer          BaseRenderer          { get; set; }
     public static MainGame              MainGame              { get; set; }
     public static WorldModel            WorldModel            { get; set; }
@@ -141,7 +141,7 @@ public abstract class App
 
         SpriteBatch.Dispose();
         Assets.Dispose();
-        Settings.Dispose();
+        Preferences.Dispose();
         MapData.Dispose();
 
         MapData = null;

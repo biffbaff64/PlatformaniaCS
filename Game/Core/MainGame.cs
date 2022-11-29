@@ -39,7 +39,7 @@ public class MainGame : Microsoft.Xna.Framework.Game
         Trace.CheckPoint();
 
         // Initialise the preferences object for in-game settings.
-        App.Settings = new Settings();
+        App.Preferences = new Preferences();
         App.MainGame = this;
 
         _splashScreen = new SplashScreen();

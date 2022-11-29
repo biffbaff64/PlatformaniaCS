@@ -1,0 +1,120 @@
+{
+  "properties": {
+    "entry1": {
+      "key": "shader program",
+      "value": "false"
+    },
+    "entry2": {
+      "key": "ashley ecs",
+      "value": "false"
+    },
+    "entry3": {
+      "key": "using box2d",
+      "value": "true"
+    },
+    "entry4": {
+      "key": "installed",
+      "value": "true"
+    },
+    "entry5": {
+      "key": "show hints",
+      "value": "true"
+    },
+    "entry6": {
+      "key": "vibrations",
+      "value": "true"
+    },
+    "entry7": {
+      "key": "joystick pos",
+      "value": "true"
+    },
+    "entry8": {
+      "key": "fx volume",
+      "value": "6"
+    },
+    "entry9": {
+      "key": "music volume",
+      "value": "4"
+    },
+    "entry10": {
+      "key": "music enabled",
+      "value": "true"
+    },
+    "entry11": {
+      "key": "sound enabled",
+      "value": "true"
+    },
+    "entry12": {
+      "key": "play services",
+      "value": "false"
+    },
+    "entry13": {
+      "key": "achievements",
+      "value": "false"
+    },
+    "entry14": {
+      "key": "challenges",
+      "value": "false"
+    },
+    "entry15": {
+      "key": "events",
+      "value": "false"
+    },
+    "entry16": {
+      "key": "sign in status",
+      "value": "false"
+    },
+    "entry17": {
+      "key": "menu scene",
+      "value": "false"
+    },
+    "entry18": {
+      "key": "level select",
+      "value": "false"
+    },
+    "entry19": {
+      "key": "scroll demo",
+      "value": "false"
+    },
+    "entry20": {
+      "key": "sprite boxes",
+      "value": "false"
+    },
+    "entry21": {
+      "key": "tile boxes",
+      "value": "false"
+    },
+    "entry22": {
+      "key": "button boxes",
+      "value": "false"
+    },
+    "entry23": {
+      "key": "show fps",
+      "value": "false"
+    },
+    "entry24": {
+      "key": "show debug",
+      "value": "true"
+    },
+    "entry25": {
+      "key": "spawn points",
+      "value": "false"
+    },
+    "entry26": {
+      "key": "cull sprites",
+      "value": "false"
+    },
+    "entry27": {
+      "key": "autoplay",
+      "value": "false"
+    },
+    "entry28": {
+      "key": "disable enemies",
+      "value": "true"
+    },
+    "entry29": {
+      "key": "disable player",
+      "value": "false"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<appsettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <preferences>
+        <entry key="achievements" type="Bool" value="False"/>
+        <entry key="autoplay" type="Bool" value="False"/>
+        <entry key="using ecs" type="Bool" value="False"/>
+        <entry key="challenges" type="Bool" value="False"/>
+        <entry key="events" type="Bool" value="False"/>
+        <entry key="installed" type="Bool" value="False"/>
+        <entry key="spawn points" type="Bool" value="False"/>
+        <entry key="vibrations" type="Bool" value="False"/>
+        <entry key="button boxes" type="Bool" value="False"/>
+        <entry key="cull sprites" type="Bool" value="False"/>
+        <entry key="disable enemies" type="Bool" value="False"/>
+        <entry key="disable player" type="Bool" value="False"/>
+        <entry key="intro panel" type="Bool" value="False"/>
+        <entry key="level select" type="Bool" value="False"/>
+        <entry key="menu scene" type="Bool" value="False"/>
+        <entry key="music enabled" type="Bool" value="False"/>
+        <entry key="fx enabled" type="Bool" value="False"/>
+        <entry key="fx volume" type="Int" value="False"/>
+        <entry key="music volume" type="Int" value="False"/>
+        <entry key="scroll demo" type="Bool" value="False"/>
+        <entry key="shader program" type="Bool" value="False"/>
+        <entry key="show debug" type="Bool" value="False"/>
+        <entry key="show hints" type="Bool" value="False"/>
+        <entry key="using box2d" type="Bool" value="False"/>
+        <entry key="show fps" type="Bool" value="False"/>
+    </preferences>
+</appsettings>

@@ -204,7 +204,7 @@ public class MainGameHandler
                 // ---------------------------------------------
                 if ( _isWaitingForPlayer && ( App.GetPlayer().ActionState == ActionStates._STANDING ) )
                 {
-                    if ( App.Settings.IsEnabled( Settings.IntroPanel ) )
+                    if ( App.Preferences.IsEnabled( Preferences.IntroPanel ) )
                     {
                         App.Hud.IntroPanel = new IntroPanel();
                         App.Hud.IntroPanel.Create();

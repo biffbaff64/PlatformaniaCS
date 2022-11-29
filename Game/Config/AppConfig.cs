@@ -35,7 +35,6 @@ public class AppConfig
 
         Stats.Setup( "PlatformaniaCS.meters" );
 
-        //
         // These essential objects have now been created.
         // Setup/Initialise for any essential objects required
         // before TitleScene can be created is mostly
@@ -48,7 +47,7 @@ public class AppConfig
 
         App.WorldModel.CreateWorld();
         App.Assets.Initialise();
-        App.Settings.FreshInstallCheck();
+        App.Preferences.FreshInstallCheck();
 
         App.BaseRenderer.CreateCameras();
         App.WorldModel.CreateB2DRenderer();
@@ -68,11 +67,11 @@ public class AppConfig
         Trace.CheckPoint();
 
         App.Developer.ConfigReport();
-        App.Settings.DebugReport();
+        App.Preferences.DebugReport();
 
         // Development option, to allow skipping of the main menu
         // and moving straight to the game scene.
-        if ( App.Developer.IsDevMode && App.Settings.IsDisabled( Settings.MenuScene ) )
+        if ( App.Developer.IsDevMode && App.Preferences.IsDisabled( Preferences.MenuScene ) )
         {
             Trace.Dbg( message: "Triggering Main Scene." );
 
