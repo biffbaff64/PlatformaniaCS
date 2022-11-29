@@ -10,28 +10,20 @@ namespace Lugh.Logging;
 
 public class Preferences : IDisposable
 {
-    //
-    // Defaults
+    // ----------------------------------------------------
+
     public const bool PrefFalseDefault = false;
     public const bool PrefTrueDefault  = true;
 
     public const string DefaultOn  = "default on";
     public const string DefaultOff = "default off";
-
-    // ----------------------------------------------------
+    
+   // ----------------------------------------------------
 
     private readonly string _filePath;
     private readonly string _propertiesFile;
 
     private Dictionary< string, object > _preferences;
-
-    // ----------------------------------------------------
-
-    public class Entry
-    {
-        public string Key   { get; set; }
-        public object Value { get; set; }
-    }
 
     // ----------------------------------------------------
 
@@ -99,6 +91,9 @@ public class Preferences : IDisposable
     /// </summary>
     private void Flush()
     {
+        var json = JsonConvert.SerializeObject( _preferences );
+        
+        File.WriteAllText( _filePath + _propertiesFile, json );
     }
 
     /// <summary>

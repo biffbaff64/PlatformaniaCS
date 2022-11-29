@@ -1,6 +1,7 @@
 ﻿// ##################################################
 
 using PlatformaniaCS.Game.Audio;
+using PlatformaniaCS.Game.Config;
 using PlatformaniaCS.Game.Graphics;
 using PlatformaniaCS.Game.UI;
 
@@ -204,7 +205,7 @@ public class MainGameHandler
                 // ---------------------------------------------
                 if ( _isWaitingForPlayer && ( App.GetPlayer().ActionState == ActionStates._STANDING ) )
                 {
-                    if ( App.Preferences.IsEnabled( Preferences.IntroPanel ) )
+                    if ( App.Settings.Prefs.IsEnabled( Settings.IntroPanel ) )
                     {
                         App.Hud.IntroPanel = new IntroPanel();
                         App.Hud.IntroPanel.Create();

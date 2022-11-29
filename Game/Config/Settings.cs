@@ -224,4 +224,8 @@ public class Settings
         Trace.Info( message: DisableEnemies + " : " + Prefs.GetBoolean( DisableEnemies ) );
         Trace.Info( message: DisablePlayer + " : " + Prefs.GetBoolean( DisablePlayer ) );
     }
+
+    public void Dispose()
+    {
+    }
 }

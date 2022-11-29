@@ -47,7 +47,7 @@ public class AppConfig
 
         App.WorldModel.CreateWorld();
         App.Assets.Initialise();
-        App.Preferences.FreshInstallCheck();
+        App.Settings.FreshInstallCheck();
 
         App.BaseRenderer.CreateCameras();
         App.WorldModel.CreateB2DRenderer();
@@ -67,11 +67,11 @@ public class AppConfig
         Trace.CheckPoint();
 
         App.Developer.ConfigReport();
-        App.Preferences.DebugReport();
+        App.Settings.DebugReport();
 
         // Development option, to allow skipping of the main menu
         // and moving straight to the game scene.
-        if ( App.Developer.IsDevMode && App.Preferences.IsDisabled( Preferences.MenuScene ) )
+        if ( App.Developer.IsDevMode && App.Settings.Prefs.IsDisabled( Settings.MenuScene ) )
         {
             Trace.Dbg( message: "Triggering Main Scene." );
 
