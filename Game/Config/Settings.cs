@@ -88,6 +88,7 @@ public class Settings
         }
     }
 
+    // Not Needed ??
     private void CreateDictionary()
     {
         var dictionary = new Dictionary< string, object >
@@ -131,12 +132,13 @@ public class Settings
         };
 
         Prefs.Set( dictionary );
+        Prefs.Flush();
     }
 
     /// <summary>
     /// Resets all preferences to their default values.
     /// </summary>
-    public void ResetToDefaults()
+    private void ResetToDefaults()
     {
         Trace.CheckPoint();
 
@@ -178,6 +180,8 @@ public class Settings
         Prefs.PutBoolean( Autoplay,       Preferences.PrefFalseDefault );
         Prefs.PutBoolean( DisableEnemies, Preferences.PrefTrueDefault );
         Prefs.PutBoolean( DisablePlayer,  Preferences.PrefTrueDefault );
+        
+        Prefs.Flush();
     }
 
     /// <summary>

@@ -3,6 +3,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+using Microsoft.CodeAnalysis.CSharp;
+
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 // ##################################################
 
@@ -17,14 +23,29 @@ public class Preferences : IDisposable
 
     public const string DefaultOn  = "default on";
     public const string DefaultOff = "default off";
-    
-   // ----------------------------------------------------
+
+    // ----------------------------------------------------
 
     private readonly string _filePath;
     private readonly string _propertiesFile;
 
     private Dictionary< string, object > _preferences;
 
+    public class Prefs
+    {
+        [JsonProperty("Key")]
+        public string Key { get; set; }
+        
+        [JsonProperty( "Value")]
+        public object Value { get; set; }
+    }
+
+    public class Root
+    {
+        [JsonProperty( "prefs" )]
+        public List< Prefs > PrefsList { get; set; } = new List< Prefs >();
+    }
+    
     // ----------------------------------------------------
 
     /// <summary>
@@ -45,7 +66,9 @@ public class Preferences : IDisposable
             {
                 if ( _preferences.Count <= 0 )
                 {
-                    File.Create( _filePath + _propertiesFile );
+                    var file = File.Create( _filePath + _propertiesFile );
+
+                    file.Close();
 
                     Flush();
                 }
@@ -67,33 +90,35 @@ public class Preferences : IDisposable
     {
         _preferences.Clear();
 
-        var json = File.ReadAllText( _filePath + _propertiesFile );
+        using StreamReader reader = new StreamReader( _filePath + _propertiesFile );
 
-        var parent     = JObject.Parse( json );
-        var resultData = parent.Value< JObject >( "properties" ).Properties();
+        var json = reader.ReadToEnd();
 
-        var enumerable = resultData as JProperty[] ?? resultData.ToArray();
+        var items = JsonConvert.DeserializeObject< Root >( json );
 
-        var resultDict = enumerable.ToDictionary
-            (
-             k => k.Name,
-             v => v.Value
-            );
-
-        foreach ( var obj in resultDict )
-        {
-            _preferences.Add( obj.Key, obj.Value );
-        }
+        Trace.Info( "items : " + items.PrefsList.Count );
     }
 
     /// <summary>
     /// Saves the preferences Dictionary to file.
     /// </summary>
-    private void Flush()
+    public void Flush()
     {
-        var json = JsonConvert.SerializeObject( _preferences );
-        
-        File.WriteAllText( _filePath + _propertiesFile, json );
+        Trace.CheckPoint();
+
+        var values = _preferences.Keys.Select
+        (
+            k => new
+            {
+                    Key   = k,
+                    Value = _preferences[ k ]
+            }
+        );
+
+        var toSerialise = new { prefs = values.ToList() };
+        var serialised  = JsonConvert.SerializeObject( toSerialise, Formatting.Indented );
+
+        File.WriteAllText( _filePath + _propertiesFile, serialised );
     }
 
     /// <summary>
@@ -103,7 +128,7 @@ public class Preferences : IDisposable
     {
         _preferences.Clear();
     }
-    
+
     /// <summary>
     /// Returns TRUE if the specified preference is enabled.
     /// </summary>
@@ -161,13 +186,18 @@ public class Preferences : IDisposable
     {
         _preferences = dictionary;
     }
-    
+
     // TODO:
     // Organise the following PutXXXX and GetXXXX methods better.
     // They all do essentially the same thing except for
     // the TYPE of argument 'val'.
     // These methods have been included as fillers until library is working.
-    
+    //
+    // Maybe something like:-
+    //    public void PutPreference( string key, object val )
+    //    {
+    //    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -322,8 +352,10 @@ public class Preferences : IDisposable
 
         return string.Empty;
     }
-    
+
     public void Dispose()
     {
+        _preferences.Clear();
+        _preferences = null;
     }
 }
