@@ -34,6 +34,7 @@
         <PackageReference Include="ILNumerics.Toolboxes.Interpolation" Version="6.0.148" />
         <PackageReference Include="Json.Net" Version="1.0.33" />
         <PackageReference Include="MonoGame.Extended" Version="3.8.0" />
+        <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="3.8.0" />
         <PackageReference Include="MonoGame.Extended.Graphics" Version="3.8.0" />
         <PackageReference Include="MonoGame.Extended.Tiled" Version="3.8.0" />
         <PackageReference Include="MonoGame.Framework.Content.Pipeline" Version="3.8.1.303" />

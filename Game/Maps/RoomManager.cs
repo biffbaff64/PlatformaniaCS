@@ -5,64 +5,63 @@ namespace PlatformaniaCS.Game.Maps;
 
 public class RoomManager
 {
-    private const string Room001 = "map1.tmx";
-    private const string Room002 = "map4.tmx";
-    private const string Room003 = "map5.tmx";
-    private const string Room004 = "map11.tmx";
-    private const string Room005 = "map8.tmx";
-    private const string Room006 = "map7.tmx";
+    private const string Room001 = "map1";
+    private const string Room002 = "map4";
+    private const string Room003 = "map5";
+    private const string Room004 = "map11";
+    private const string Room005 = "map8";
+    private const string Room006 = "map7";
 
-    private const string Room007 = "map1.tmx";
-    private const string Room008 = "map1.tmx";
-    private const string Room009 = "map1.tmx";
-    private const string Room010 = "map1.tmx";
-    private const string Room011 = "map1.tmx";
-    private const string Room012 = "map1.tmx";
-    private const string Room013 = "map1.tmx";
-    private const string Room014 = "map1.tmx";
-    private const string Room015 = "map1.tmx";
-    private const string Room016 = "map1.tmx";
-    private const string Room017 = "map1.tmx";
-    private const string Room018 = "map1.tmx";
-    private const string Room019 = "map1.tmx";
-    private const string Room020 = "map1.tmx";
+    private const string Room007 = "map1";
+    private const string Room008 = "map1";
+    private const string Room009 = "map1";
+    private const string Room010 = "map1";
+    private const string Room011 = "map1";
+    private const string Room012 = "map1";
+    private const string Room013 = "map1";
+    private const string Room014 = "map1";
+    private const string Room015 = "map1";
+    private const string Room016 = "map1";
+    private const string Room017 = "map1";
+    private const string Room018 = "map1";
+    private const string Room019 = "map1";
+    private const string Room020 = "map1";
 
     private const string MapsPath = "maps/";
 
     private readonly Room[] _roomMap =
     {
-        // -----------------------------------------
-        null,
-        // -----------------------------------------
+            // -----------------------------------------
+            null,
+            // -----------------------------------------
 
-        new Room( Room001 ),
-        new Room( Room002 ),
-        new Room( Room003 ),
-        new Room( Room004 ),
-        new Room( Room005 ),
-        new Room( Room006 ),
-        new Room( Room007 ),
-        new Room( Room008 ),
-        new Room( Room009 ),
-        new Room( Room010 ),
-        new Room( Room011 ),
-        new Room( Room012 ),
-        new Room( Room013 ),
-        new Room( Room014 ),
-        new Room( Room015 ),
-        new Room( Room016 ),
-        new Room( Room017 ),
-        new Room( Room018 ),
-        new Room( Room019 ),
-        new Room( Room020 ),
+            new Room( Room001 ),
+            new Room( Room002 ),
+            new Room( Room003 ),
+            new Room( Room004 ),
+            new Room( Room005 ),
+            new Room( Room006 ),
+            new Room( Room007 ),
+            new Room( Room008 ),
+            new Room( Room009 ),
+            new Room( Room010 ),
+            new Room( Room011 ),
+            new Room( Room012 ),
+            new Room( Room013 ),
+            new Room( Room014 ),
+            new Room( Room015 ),
+            new Room( Room016 ),
+            new Room( Room017 ),
+            new Room( Room018 ),
+            new Room( Room019 ),
+            new Room( Room020 ),
 
-        // -----------------------------------------
-        null
-        // -----------------------------------------
+            // -----------------------------------------
+            null
+            // -----------------------------------------
     };
 
-    private readonly int _worldHeight;
-
+    private int _worldHeight;
     private int _worldWidth;
 
     public RoomManager()

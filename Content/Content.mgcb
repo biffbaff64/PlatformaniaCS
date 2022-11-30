@@ -2593,3 +2593,110 @@
 /processorParam:TextureFormat=Color
 /build:Assets/villager1_idle.png
 
+#begin maps/map1.tmx
+/importer:XmlImporter
+/processor:PassThroughProcessor
+/build:maps/map1.tmx
+
+#begin maps/map1a.tmx
+/importer:
+/processor:
+/build:maps/map1a.tmx
+
+#begin maps/map2.tmx
+/importer:
+/processor:
+/build:maps/map2.tmx
+
+#begin maps/map3.tmx
+/importer:
+/processor:
+/build:maps/map3.tmx
+
+#begin maps/map4.tmx
+/importer:
+/processor:
+/build:maps/map4.tmx
+
+#begin maps/map5.tmx
+/importer:
+/processor:
+/build:maps/map5.tmx
+
+#begin maps/map6.tmx
+/importer:
+/processor:
+/build:maps/map6.tmx
+
+#begin maps/marker_tiles.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:maps/marker_tiles.png
+
+#begin maps/SET4_decorative1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:maps/SET4_decorative1.png
+
+#begin maps/SET4_decorative2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:maps/SET4_decorative2.png
+
+#begin maps/SET4_Main_bckgrdlev_build.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:maps/SET4_Main_bckgrdlev_build.png
+
+#begin maps/SET4_Mainlev_build.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:maps/SET4_Mainlev_build.png
+
+#begin maps/tileset1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:maps/tileset1.png
+

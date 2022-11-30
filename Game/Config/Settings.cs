@@ -6,11 +6,16 @@ namespace PlatformaniaCS.Game.Config;
 
 public class Settings
 {
-    public StringObjectPair[] Gs = new StringObjectPair[]
-    {
+    // ----------------------------------------------------
 
-    };
-    
+    public const bool PrefFalseDefault = false;
+    public const bool PrefTrueDefault  = true;
+
+    public const string DefaultOn  = "default on";
+    public const string DefaultOff = "default off";
+
+    // ----------------------------------------------------
+
     //
     // Development options
     public const string SpriteBoxes    = "sprite boxes";    // Shows sprite AABB Boxes
@@ -94,41 +99,41 @@ public class Settings
         var dictionary = new Dictionary< string, object >
         {
             // ---------- Configuration ----------
-            { ShaderProgram, Preferences.PrefFalseDefault },
-            { UsingAshleyECS, Preferences.PrefFalseDefault },
-            { Box2DPhysics, Preferences.PrefTrueDefault },
-            { Installed, Preferences.PrefFalseDefault },
-            { ShowHints, Preferences.PrefTrueDefault },
-            { Vibrations, Preferences.PrefTrueDefault },
-            { JoystickLeft, Preferences.PrefTrueDefault },
+            { ShaderProgram, PrefFalseDefault },
+            { UsingAshleyECS, PrefFalseDefault },
+            { Box2DPhysics, PrefTrueDefault },
+            { Installed, PrefFalseDefault },
+            { ShowHints, PrefTrueDefault },
+            { Vibrations, PrefTrueDefault },
+            { JoystickLeft, PrefTrueDefault },
 
             // --------------- Audio ---------------
             { FxVolume, AudioData.DefaultFxVolume },
             { MusicVolume, AudioData.DefaultMusicVolume },
-            { MusicEnabled, Preferences.PrefTrueDefault },
-            { SoundsEnabled, Preferences.PrefTrueDefault },
+            { MusicEnabled, PrefTrueDefault },
+            { SoundsEnabled, PrefTrueDefault },
 
             // ---------- Google Services ----------
-            { PlayServices, Preferences.PrefFalseDefault },
-            { Achievements, Preferences.PrefFalseDefault },
-            { Challenges, Preferences.PrefFalseDefault },
-            { Events, Preferences.PrefFalseDefault },
-            { SignInStatus, Preferences.PrefFalseDefault },
+            { PlayServices, PrefFalseDefault },
+            { Achievements, PrefFalseDefault },
+            { Challenges, PrefFalseDefault },
+            { Events, PrefFalseDefault },
+            { SignInStatus, PrefFalseDefault },
 
             // ------------------- Development Flags -------------------
-            { MenuScene, Preferences.PrefTrueDefault },
-            { LevelSelect, Preferences.PrefTrueDefault },
-            { ScrollDemo, Preferences.PrefFalseDefault },
-            { SpriteBoxes, Preferences.PrefFalseDefault },
-            { TileBoxes, Preferences.PrefFalseDefault },
-            { ButtonBoxes, Preferences.PrefFalseDefault },
-            { ShowFPS, Preferences.PrefFalseDefault },
-            { ShowDebug, Preferences.PrefFalseDefault },
-            { Spawnpoints, Preferences.PrefFalseDefault },
-            { CullSprites, Preferences.PrefTrueDefault },
-            { Autoplay, Preferences.PrefFalseDefault },
-            { DisableEnemies, Preferences.PrefTrueDefault },
-            { DisablePlayer, Preferences.PrefTrueDefault },
+            { MenuScene, PrefTrueDefault },
+            { LevelSelect, PrefTrueDefault },
+            { ScrollDemo, PrefFalseDefault },
+            { SpriteBoxes, PrefFalseDefault },
+            { TileBoxes, PrefFalseDefault },
+            { ButtonBoxes, PrefFalseDefault },
+            { ShowFPS, PrefFalseDefault },
+            { ShowDebug, PrefFalseDefault },
+            { Spawnpoints, PrefFalseDefault },
+            { CullSprites, PrefTrueDefault },
+            { Autoplay, PrefFalseDefault },
+            { DisableEnemies, PrefTrueDefault },
+            { DisablePlayer, PrefTrueDefault },
         };
 
         Prefs.Set( dictionary );
@@ -145,41 +150,41 @@ public class Settings
         Prefs.Clear();
 
         // ---------- Configuration ----------
-        Prefs.PutBoolean( ShaderProgram,  Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( UsingAshleyECS, Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( Box2DPhysics,   Preferences.PrefTrueDefault );
-        Prefs.PutBoolean( Installed,      Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( ShowHints,      Preferences.PrefTrueDefault );
-        Prefs.PutBoolean( Vibrations,     Preferences.PrefTrueDefault );
-        Prefs.PutBoolean( JoystickLeft,   Preferences.PrefTrueDefault );
+        Prefs.PutBoolean( ShaderProgram,  PrefFalseDefault );
+        Prefs.PutBoolean( UsingAshleyECS, PrefFalseDefault );
+        Prefs.PutBoolean( Box2DPhysics,   PrefTrueDefault );
+        Prefs.PutBoolean( Installed,      PrefFalseDefault );
+        Prefs.PutBoolean( ShowHints,      PrefTrueDefault );
+        Prefs.PutBoolean( Vibrations,     PrefTrueDefault );
+        Prefs.PutBoolean( JoystickLeft,   PrefTrueDefault );
 
         // --------------- Audio ---------------
         Prefs.PutInteger( FxVolume,    AudioData.DefaultFxVolume );
         Prefs.PutInteger( MusicVolume, AudioData.DefaultMusicVolume );
-        Prefs.PutBoolean( MusicEnabled,  Preferences.PrefTrueDefault );
-        Prefs.PutBoolean( SoundsEnabled, Preferences.PrefTrueDefault );
+        Prefs.PutBoolean( MusicEnabled,  PrefTrueDefault );
+        Prefs.PutBoolean( SoundsEnabled, PrefTrueDefault );
 
         // ---------- Google Services ----------
-        Prefs.PutBoolean( PlayServices, Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( Achievements, Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( Challenges,   Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( Events,       Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( SignInStatus, Preferences.PrefFalseDefault );
+        Prefs.PutBoolean( PlayServices, PrefFalseDefault );
+        Prefs.PutBoolean( Achievements, PrefFalseDefault );
+        Prefs.PutBoolean( Challenges,   PrefFalseDefault );
+        Prefs.PutBoolean( Events,       PrefFalseDefault );
+        Prefs.PutBoolean( SignInStatus, PrefFalseDefault );
 
         // ------------------- Development Flags -------------------
-        Prefs.PutBoolean( MenuScene,      Preferences.PrefTrueDefault );
-        Prefs.PutBoolean( LevelSelect,    Preferences.PrefTrueDefault );
-        Prefs.PutBoolean( ScrollDemo,     Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( SpriteBoxes,    Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( TileBoxes,      Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( ButtonBoxes,    Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( ShowFPS,        Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( ShowDebug,      Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( Spawnpoints,    Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( CullSprites,    Preferences.PrefTrueDefault );
-        Prefs.PutBoolean( Autoplay,       Preferences.PrefFalseDefault );
-        Prefs.PutBoolean( DisableEnemies, Preferences.PrefTrueDefault );
-        Prefs.PutBoolean( DisablePlayer,  Preferences.PrefTrueDefault );
+        Prefs.PutBoolean( MenuScene,      PrefTrueDefault );
+        Prefs.PutBoolean( LevelSelect,    PrefTrueDefault );
+        Prefs.PutBoolean( ScrollDemo,     PrefFalseDefault );
+        Prefs.PutBoolean( SpriteBoxes,    PrefFalseDefault );
+        Prefs.PutBoolean( TileBoxes,      PrefFalseDefault );
+        Prefs.PutBoolean( ButtonBoxes,    PrefFalseDefault );
+        Prefs.PutBoolean( ShowFPS,        PrefFalseDefault );
+        Prefs.PutBoolean( ShowDebug,      PrefFalseDefault );
+        Prefs.PutBoolean( Spawnpoints,    PrefFalseDefault );
+        Prefs.PutBoolean( CullSprites,    PrefTrueDefault );
+        Prefs.PutBoolean( Autoplay,       PrefFalseDefault );
+        Prefs.PutBoolean( DisableEnemies, PrefTrueDefault );
+        Prefs.PutBoolean( DisablePlayer,  PrefTrueDefault );
         
         Prefs.Flush();
     }

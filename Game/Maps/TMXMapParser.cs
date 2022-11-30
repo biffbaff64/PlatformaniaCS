@@ -1,16 +1,10 @@
 ﻿
-#region using
-
 using System.Collections;
-using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using Microsoft.Xna.Framework.Graphics;
+
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 using PlatformaniaCS.Game.Core;
-using PlatformaniaCS.Game.Physics;
 using PlatformaniaCS.Game.Entities.Objects;
-
-#endregion using
 
 namespace PlatformaniaCS.Game.Maps;
 

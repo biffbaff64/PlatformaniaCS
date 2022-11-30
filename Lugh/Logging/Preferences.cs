@@ -1,14 +1,11 @@
 ﻿// ##################################################
 
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
-using Microsoft.CodeAnalysis.CSharp;
-
-using JsonSerializer = System.Text.Json.JsonSerializer;
+using Trace = Lugh.Utils.Trace;
 
 // ##################################################
 
@@ -16,16 +13,6 @@ namespace Lugh.Logging;
 
 public class Preferences : IDisposable
 {
-    // ----------------------------------------------------
-
-    public const bool PrefFalseDefault = false;
-    public const bool PrefTrueDefault  = true;
-
-    public const string DefaultOn  = "default on";
-    public const string DefaultOff = "default off";
-
-    // ----------------------------------------------------
-
     private readonly string _filePath;
     private readonly string _propertiesFile;
 
@@ -33,10 +20,10 @@ public class Preferences : IDisposable
 
     public class Prefs
     {
-        [JsonProperty("Key")]
+        [JsonProperty( "Key" )]
         public string Key { get; set; }
-        
-        [JsonProperty( "Value")]
+
+        [JsonProperty( "Value" )]
         public object Value { get; set; }
     }
 
@@ -45,7 +32,7 @@ public class Preferences : IDisposable
         [JsonProperty( "prefs" )]
         public List< Prefs > PrefsList { get; set; } = new List< Prefs >();
     }
-    
+
     // ----------------------------------------------------
 
     /// <summary>
@@ -96,7 +83,13 @@ public class Preferences : IDisposable
 
         var items = JsonConvert.DeserializeObject< Root >( json );
 
-        Trace.Info( "items : " + items.PrefsList.Count );
+        foreach ( var pref in items.PrefsList )
+        {
+            _preferences.Add( pref.Key, pref.Value );
+        }
+
+        Trace.Info( "items : "        + items.PrefsList.Count );
+        Trace.Info( "_preferences : " + _preferences.Count );
     }
 
     /// <summary>
@@ -305,7 +298,7 @@ public class Preferences : IDisposable
     {
         if ( _preferences.ContainsKey( key ) )
         {
-            return ( int )_preferences[ key ];
+            return ( int )( long )_preferences[ key ];
         }
 
         return 0;

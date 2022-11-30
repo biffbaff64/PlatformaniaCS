@@ -37,6 +37,7 @@
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INT_ALIGN_VARIABLES/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/KEEP_EXISTING_INITIALIZER_ARRANGEMENT/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/KEEP_EXISTING_SWITCH_EXPRESSION_ARRANGEMENT/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/LINE_FEED_AT_FILE_END/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_COMMENTS_AT_FIRST_COLUMN/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_SIMPLE_INITIALIZER_ON_SINGLE_LINE/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_WHILE_ON_NEW_LINE/@EntryValue">True</s:Boolean>
@@ -146,6 +147,7 @@ public class $CLASS$ {$END$}
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Description/@EntryValue">&amp;Class</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=CLASS/Expression/@EntryValue">getFileNameWithoutExtension()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=CLASS/Order/@EntryValue">2</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=CLASS1/@KeyIndexDefined">True</s:Boolean>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=CLASS1/Order/@EntryValue">5</s:Int64>
@@ -155,6 +157,7 @@ public class $CLASS$ {$END$}
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=HEADER1/Expression/@EntryValue"></s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=HEADER1/Order/@EntryValue">3</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE/Order/@EntryValue">1</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE1/@KeyIndexDefined">True</s:Boolean>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE1/Order/@EntryValue">4</s:Int64>
@@ -163,10 +166,14 @@ public class $CLASS$ {$END$}
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Text/@EntryValue">$HEADER$namespace $NAMESPACE$
-{
-  public class $CLASS$ {$END$}
-}</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Text/@EntryValue">// ############################################################
+
+// ############################################################
+
+namespace $NAMESPACE$;
+
+public class $CLASS$ {$END$}
+</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/UITag/@EntryValue">Class/Interface</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Lugh/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Platformania/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
