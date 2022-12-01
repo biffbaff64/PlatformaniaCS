@@ -279,7 +279,7 @@ public class Preferences : IDisposable
     /// <summary>
     /// 
     /// </summary>
-    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )]
+    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )] // Temp
     public bool GetBoolean( string key )
     {
         if ( _preferences.ContainsKey( key ) )
@@ -293,7 +293,7 @@ public class Preferences : IDisposable
     /// <summary>
     /// 
     /// </summary>
-    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )]
+    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )] // Temp
     public int GetInteger( string key )
     {
         if ( _preferences.ContainsKey( key ) )
@@ -307,7 +307,7 @@ public class Preferences : IDisposable
     /// <summary>
     /// 
     /// </summary>
-    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )]
+    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )] // Temp
     public long GetLong( string key )
     {
         if ( _preferences.ContainsKey( key ) )
@@ -321,7 +321,7 @@ public class Preferences : IDisposable
     /// <summary>
     /// 
     /// </summary>
-    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )]
+    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )] // Temp
     public float GetFloat( string key )
     {
         if ( _preferences.ContainsKey( key ) )
@@ -335,7 +335,7 @@ public class Preferences : IDisposable
     /// <summary>
     /// 
     /// </summary>
-    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )]
+    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )] // Temp
     public string GetString( string key )
     {
         if ( _preferences.ContainsKey( key ) )
