@@ -2,9 +2,10 @@
 
 // ############################################################
 
-namespace Lugh.Assets;
+namespace Lugh.Graphics;
 
-public class AsynchronousAssetLoader< T, TP >  : AssetLoader where TP : AssetLoaderParameters
+public class BitmapFontData
 {
     
 }
+

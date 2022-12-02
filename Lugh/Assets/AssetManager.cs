@@ -64,8 +64,4 @@ public class AssetManager
 
 //        _executor = new AsyncExecutor( 1, "AssetManager" );
     }
-
-    public void SetLoader( Type assetType, AssetLoader< T, P > loader )
-    {
-    }
 }

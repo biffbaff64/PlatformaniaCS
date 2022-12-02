@@ -1,10 +1,14 @@
-﻿
+﻿// ########################################################
+
 using System.Collections;
 
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
+
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Entities.Objects;
+
+// ########################################################
 
 namespace PlatformaniaCS.Game.Maps;
 
@@ -26,13 +30,13 @@ public class TMXMapParser : IDisposable
     public void InitialiseLevelMap()
     {
         CurrentMapName = App.RoomManager.GetCurrentMapNameWithPath();
-        CurrentMap     = App.MainGame.Content.Load<TiledMap>( CurrentMapName );
+        CurrentMap     = App.MainGame.Content.Load< TiledMap >( CurrentMapName );
 
         if ( TiledMapRenderer == null )
         {
             TiledMapRenderer = new TiledMapRenderer( App.MainGame.GraphicsDevice, CurrentMap );
         }
-            
+
         SetGameLevelMap();
 
         App.MapData.ScrollDirection.Set( Movement._DIRECTION_STILL, Movement._DIRECTION_STILL );
