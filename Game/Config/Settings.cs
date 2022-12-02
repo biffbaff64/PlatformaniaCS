@@ -4,7 +4,7 @@
 
 namespace PlatformaniaCS.Game.Config;
 
-public class Settings
+public class Settings : IDisposable
 {
     // ----------------------------------------------------
 
@@ -136,7 +136,7 @@ public class Settings
             { DisablePlayer, PrefTrueDefault },
         };
 
-        Prefs.Set( dictionary );
+        Prefs.SetDictionary( dictionary );
         Prefs.Flush();
     }
 
@@ -150,47 +150,47 @@ public class Settings
         Prefs.Clear();
 
         // ---------- Configuration ----------
-        Prefs.PutBoolean( ShaderProgram,  PrefFalseDefault );
-        Prefs.PutBoolean( UsingAshleyECS, PrefFalseDefault );
-        Prefs.PutBoolean( Box2DPhysics,   PrefTrueDefault );
-        Prefs.PutBoolean( Installed,      PrefFalseDefault );
-        Prefs.PutBoolean( ShowHints,      PrefTrueDefault );
-        Prefs.PutBoolean( Vibrations,     PrefTrueDefault );
-        Prefs.PutBoolean( JoystickLeft,   PrefTrueDefault );
+        Prefs.Put( ShaderProgram,  PrefFalseDefault );
+        Prefs.Put( UsingAshleyECS, PrefFalseDefault );
+        Prefs.Put( Box2DPhysics,   PrefTrueDefault );
+        Prefs.Put( Installed,      PrefFalseDefault );
+        Prefs.Put( ShowHints,      PrefTrueDefault );
+        Prefs.Put( Vibrations,     PrefTrueDefault );
+        Prefs.Put( JoystickLeft,   PrefTrueDefault );
 
         // --------------- Audio ---------------
-        Prefs.PutInteger( FxVolume,    AudioData.DefaultFxVolume );
-        Prefs.PutInteger( MusicVolume, AudioData.DefaultMusicVolume );
-        Prefs.PutBoolean( MusicEnabled,  PrefTrueDefault );
-        Prefs.PutBoolean( SoundsEnabled, PrefTrueDefault );
+        Prefs.Put( FxVolume,    AudioData.DefaultFxVolume );
+        Prefs.Put( MusicVolume, AudioData.DefaultMusicVolume );
+        Prefs.Put( MusicEnabled,  PrefTrueDefault );
+        Prefs.Put( SoundsEnabled, PrefTrueDefault );
 
         // ---------- Google Services ----------
-        Prefs.PutBoolean( PlayServices, PrefFalseDefault );
-        Prefs.PutBoolean( Achievements, PrefFalseDefault );
-        Prefs.PutBoolean( Challenges,   PrefFalseDefault );
-        Prefs.PutBoolean( Events,       PrefFalseDefault );
-        Prefs.PutBoolean( SignInStatus, PrefFalseDefault );
+        Prefs.Put( PlayServices, PrefFalseDefault );
+        Prefs.Put( Achievements, PrefFalseDefault );
+        Prefs.Put( Challenges,   PrefFalseDefault );
+        Prefs.Put( Events,       PrefFalseDefault );
+        Prefs.Put( SignInStatus, PrefFalseDefault );
 
         // ------------------- Development Flags -------------------
-        Prefs.PutBoolean( MenuScene,      PrefTrueDefault );
-        Prefs.PutBoolean( LevelSelect,    PrefTrueDefault );
-        Prefs.PutBoolean( ScrollDemo,     PrefFalseDefault );
-        Prefs.PutBoolean( SpriteBoxes,    PrefFalseDefault );
-        Prefs.PutBoolean( TileBoxes,      PrefFalseDefault );
-        Prefs.PutBoolean( ButtonBoxes,    PrefFalseDefault );
-        Prefs.PutBoolean( ShowFPS,        PrefFalseDefault );
-        Prefs.PutBoolean( ShowDebug,      PrefFalseDefault );
-        Prefs.PutBoolean( Spawnpoints,    PrefFalseDefault );
-        Prefs.PutBoolean( CullSprites,    PrefTrueDefault );
-        Prefs.PutBoolean( Autoplay,       PrefFalseDefault );
-        Prefs.PutBoolean( DisableEnemies, PrefTrueDefault );
-        Prefs.PutBoolean( DisablePlayer,  PrefTrueDefault );
-        
+        Prefs.Put( MenuScene,      PrefTrueDefault );
+        Prefs.Put( LevelSelect,    PrefTrueDefault );
+        Prefs.Put( ScrollDemo,     PrefFalseDefault );
+        Prefs.Put( SpriteBoxes,    PrefFalseDefault );
+        Prefs.Put( TileBoxes,      PrefFalseDefault );
+        Prefs.Put( ButtonBoxes,    PrefFalseDefault );
+        Prefs.Put( ShowFPS,        PrefFalseDefault );
+        Prefs.Put( ShowDebug,      PrefFalseDefault );
+        Prefs.Put( Spawnpoints,    PrefFalseDefault );
+        Prefs.Put( CullSprites,    PrefTrueDefault );
+        Prefs.Put( Autoplay,       PrefFalseDefault );
+        Prefs.Put( DisableEnemies, PrefTrueDefault );
+        Prefs.Put( DisablePlayer,  PrefTrueDefault );
+
         Prefs.Flush();
     }
 
     /// <summary>
-    /// 
+    /// Output the current state of all available preferences.
     /// </summary>                                      
     public void DebugReport()
     {
@@ -236,5 +236,15 @@ public class Settings
 
     public void Dispose()
     {
+        Dispose( true );
+        GC.SuppressFinalize( this );
+    }
+
+    private void Dispose( bool disposing )
+    {
+        if ( disposing )
+        {
+            Prefs = null;
+        }
     }
 }

@@ -1,7 +1,5 @@
 ﻿// ##################################################
 
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
@@ -18,7 +16,7 @@ public class Preferences : IDisposable
 
     private Dictionary< string, object > _preferences;
 
-    public class Prefs
+    public record Prefs
     {
         [JsonProperty( "Key" )]
         public string Key { get; set; }
@@ -27,7 +25,7 @@ public class Preferences : IDisposable
         public object Value { get; set; }
     }
 
-    public class Root
+    public record Root
     {
         [JsonProperty( "prefs" )]
         public List< Prefs > PrefsList { get; set; } = new List< Prefs >();
@@ -77,7 +75,7 @@ public class Preferences : IDisposable
     {
         _preferences.Clear();
 
-        using StreamReader reader = new StreamReader( _filePath + _propertiesFile );
+        using var reader = new StreamReader( _filePath + _propertiesFile );
 
         var json = reader.ReadToEnd();
 
@@ -87,13 +85,12 @@ public class Preferences : IDisposable
         {
             _preferences.Add( pref.Key, pref.Value );
         }
-
-        Trace.Info( "items : "        + items.PrefsList.Count );
-        Trace.Info( "_preferences : " + _preferences.Count );
     }
 
     /// <summary>
     /// Saves the preferences Dictionary to file.
+    /// Any updated preferences will not persist between sessions
+    /// unless this is called.
     /// </summary>
     public void Flush()
     {
@@ -169,37 +166,30 @@ public class Preferences : IDisposable
     /// Returns the current preferences Dictionary.
     /// NB: Deliberately chosen Getter over property.
     /// </summary>
-    public Dictionary< string, object > Get() => _preferences;
+    public Dictionary< string, object > GetDictionary() => _preferences;
 
     /// <summary>
     /// Sets the preferences Dictionary to the supplied one.
     /// NB: Deliberately chosen Setter over property.
     /// </summary>
-    public void Set( Dictionary< string, object > dictionary )
+    public void SetDictionary( Dictionary< string, object > dictionary )
     {
         _preferences = dictionary;
     }
 
-    // TODO:
-    // Organise the following PutXXXX and GetXXXX methods better.
-    // They all do essentially the same thing except for
-    // the TYPE of argument 'val'.
-    // These methods have been included as fillers until library is working.
-    //
-    // Maybe something like:-
-    //    public void PutPreference( string key, object val )
-    //    {
-    //    }
-
     /// <summary>
-    /// 
+    /// Update the specified preference with the supplied value.
+    /// If the specified preference does not exist it will be
+    /// added to the preference list.
     /// </summary>
-    public void PutBoolean( string key, bool val )
+    /// <param name="key">The preference name.</param>
+    /// <param name="val">The value.</param>
+    public void Put( string key, object val )
     {
         if ( !_preferences.ContainsKey( key ) )
         {
             _preferences.Add( key, val );
-
+            
             Trace.Dbg( message: "New preference added: ", args: key );
         }
         else
@@ -207,79 +197,7 @@ public class Preferences : IDisposable
             _preferences[ key ] = val;
         }
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void PutInteger( string key, int val )
-    {
-        if ( !_preferences.ContainsKey( key ) )
-        {
-            _preferences.Add( key, val );
-
-            Trace.Dbg( message: "New preference added: ", args: key );
-        }
-        else
-        {
-            _preferences[ key ] = val;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void PutLong( string key, long val )
-    {
-        if ( !_preferences.ContainsKey( key ) )
-        {
-            _preferences.Add( key, val );
-
-            Trace.Dbg( message: "New preference added: ", args: key );
-        }
-        else
-        {
-            _preferences[ key ] = val;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void PutFloat( string key, float val )
-    {
-        if ( !_preferences.ContainsKey( key ) )
-        {
-            _preferences.Add( key, val );
-
-            Trace.Dbg( message: "New preference added: ", args: key );
-        }
-        else
-        {
-            _preferences[ key ] = val;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void PutString( string key, string val )
-    {
-        if ( !_preferences.ContainsKey( key ) )
-        {
-            _preferences.Add( key, val );
-
-            Trace.Dbg( message: "New preference added: ", args: key );
-        }
-        else
-        {
-            _preferences[ key ] = val;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )] // Temp
+    
     public bool GetBoolean( string key )
     {
         if ( _preferences.ContainsKey( key ) )
@@ -290,57 +208,41 @@ public class Preferences : IDisposable
         return false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )] // Temp
     public int GetInteger( string key )
     {
         if ( _preferences.ContainsKey( key ) )
         {
-            return ( int )( long )_preferences[ key ];
+            return Convert.ToInt32( _preferences[ key ] );
         }
 
         return 0;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )] // Temp
     public long GetLong( string key )
     {
         if ( _preferences.ContainsKey( key ) )
         {
-            return ( long )_preferences[ key ];
+            return Convert.ToInt64( _preferences[ key ] );
         }
 
         return 0;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )] // Temp
     public float GetFloat( string key )
     {
         if ( _preferences.ContainsKey( key ) )
         {
-            return ( float )_preferences[ key ];
+            return Convert.ToSingle( _preferences[ key ] );
         }
 
         return 0f;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    [SuppressMessage( "ReSharper", "MemberCanBePrivate.Global" )] // Temp
     public string GetString( string key )
     {
         if ( _preferences.ContainsKey( key ) )
         {
-            return ( string )_preferences[ key ];
+            return Convert.ToString( _preferences[ key ] );
         }
 
         return string.Empty;
@@ -348,7 +250,19 @@ public class Preferences : IDisposable
 
     public void Dispose()
     {
-        _preferences.Clear();
-        _preferences = null;
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose( bool disposing )
+    {
+        if ( disposing )
+        {
+            if ( _preferences != null )
+            {
+                _preferences.Clear();
+                _preferences = null;
+            }
+        }
     }
 }
