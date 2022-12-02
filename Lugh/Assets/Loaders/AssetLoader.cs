@@ -4,6 +4,6 @@
 
 namespace Lugh.Assets;
 
-public class AssetLoader
+public class AssetLoader< TT, TP >
 {
 }
