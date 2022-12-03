@@ -4,9 +4,7 @@
 
 using Lugh.Assets.Resolvers;
 
-using Microsoft.Xna.Framework.Media;
-
-using MonoGame.Extended.BitmapFonts;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Lugh.Assets;
 
@@ -49,7 +47,7 @@ public class AssetManager
 //            SetLoader( typeof( Pixmap ),         new PixmapLoader( resolver ) );
 //            SetLoader( typeof( Sound ),          new SoundLoader( resolver ) );
 //            SetLoader( typeof( TextureAtlas ),   new TextureAtlasLoader( resolver ) );
-//            SetLoader( typeof( Texture ),        new TextureLoader( resolver ) );
+            SetLoader( typeof( Texture ),        new TextureLoader( resolver ) );
 //            SetLoader( typeof( Skin ),           new SkinLoader( resolver ) );
 //            SetLoader( typeof( ParticleEffect ), new ParticleEffectLoader( resolver ) );
 //            SetLoader( typeof( I18NBundle ),     new I18NBundleLoader( resolver ) );
@@ -63,5 +61,14 @@ public class AssetManager
         }
 
 //        _executor = new AsyncExecutor( 1, "AssetManager" );
+    }
+
+    /// <summary>
+    /// Sets a new <see cref="AssetLoader"/> for the given type.
+    /// </summary>
+    /// <param name="type">The type of the asset.</param>
+    /// <param name="loader">The loader to use.</param>
+    public void SetLoader( Type type, AssetLoader loader )
+    {
     }
 }
