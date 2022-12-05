@@ -2,7 +2,7 @@
 
 using PlatformaniaCS.Game.UI;
 
-using Trace = Lugh.Utils.Trace;
+using Trace = Lugh.Logging.Trace;
 
 // ##################################################
 

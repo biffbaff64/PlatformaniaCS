@@ -8,7 +8,7 @@ using System.Text;
 
 // ##################################################
 
-namespace Lugh.Utils;
+namespace Lugh.Logging;
 
 public static class Trace
 {

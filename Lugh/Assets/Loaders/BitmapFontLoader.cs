@@ -2,9 +2,9 @@
 
 using Lugh.Assets.Resolvers;
 
-using Microsoft.Xna.Framework.Graphics;
-
 using MonoGame.Extended.BitmapFonts;
+
+using TextureFilter = Lugh.Graphics.TextureFilter;
 
 // ############################################################
 
