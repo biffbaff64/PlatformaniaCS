@@ -3,11 +3,11 @@
 public enum Meters
 {
     // ---------------------------------------
-    _VALUE = SystemMeters._MAX_SYSTEM_METERS,
+    _START = SystemMeters._MAX_SYSTEM_METERS,
     // ---------------------------------------
         
     _BAD_PLAYER_ACTION,
-        
+
     // ---------------------------------------
     // ---------------------------------------
 }

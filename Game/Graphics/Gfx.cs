@@ -128,7 +128,4 @@ public static class Gfx
     }
 
     public static float GetPixelsToMeters( float pixels ) => pixels * PixelsToMeters;
-
-    public static int GetDisplayWidth()  => GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-    public static int GetDisplayHeight() => GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 }

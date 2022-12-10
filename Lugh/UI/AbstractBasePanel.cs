@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
+﻿
 namespace Lugh.UI;
 
 public abstract class AbstractBasePanel : IUserInterfacePanel

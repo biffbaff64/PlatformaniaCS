@@ -1,7 +1,5 @@
 // ##################################################
 
-using System.Collections.Generic;
-using Trace = Lugh.Utils.Trace;
 
 // ##################################################
 
@@ -55,7 +53,10 @@ public class LughSystem
         SystemBackButton  = new Switch();
         CurrentScreenID   = ScreenID._NO_ID;
     }
-
+    
+    public static int GetDisplayWidth()  => 0;
+    public static int GetDisplayHeight() => 0;
+    
     public void Exit()
     {
     }

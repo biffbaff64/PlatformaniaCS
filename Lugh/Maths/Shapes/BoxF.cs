@@ -1,4 +1,6 @@
-﻿namespace Lugh.Maths;
+﻿using System.Drawing;
+
+namespace Lugh.Maths;
 
 public class BoxF
 {

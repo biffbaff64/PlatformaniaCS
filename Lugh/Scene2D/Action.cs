@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using MonoGame.Extended.Collections;
 
 using IPoolable = Lugh.IPoolable;
 
@@ -7,8 +6,8 @@ namespace Scene2DCS;
 
 public abstract class Action : IPoolable
 {
-    [AllowNull] public Actor        Target { get; set; }
-    [AllowNull] public Pool<object> Pool   { get; set; }
+    [AllowNull] public Actor          Target { get; set; }
+    [AllowNull] public Pool< object > Pool   { get; set; }
 
     private Actor _actor;
 
@@ -80,8 +79,8 @@ public abstract class Action : IPoolable
 
     public override string ToString()
     {
-        string name     = GetType().Name;
-        int    dotIndex = name.LastIndexOf( '.' );
+        var name     = GetType().Name;
+        var dotIndex = name.LastIndexOf( '.' );
 
         if ( dotIndex != -1 )
         {

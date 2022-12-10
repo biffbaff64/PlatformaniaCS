@@ -1,44 +1,39 @@
 ﻿using System.Collections;
-using System.Data.Common;
-
-using Microsoft.Xna.Framework.Graphics;
+using System.Drawing;
 
 namespace Lugh.Graphics;
 
 public class TextureRegion : IEnumerable
 {
-    public string    Name         { get; }
-    public Texture2D Texture      { get; protected set; }
-    public int       RegionX      { get; set; }
-    public int       RegionY      { get; set; }
-    public int       RegionWidth  { get; set; }
-    public int       RegionHeight { get; set; }
+    public string  Name         { get; set; }
+    public Texture Texture      { get; protected set; }
+    public int     RegionX      { get; set; }
+    public int     RegionY      { get; set; }
+    public int     RegionWidth  { get; set; }
+    public int     RegionHeight { get; set; }
 
-    public Rectangle Bounds
-    {
-        get => new Rectangle( RegionX, RegionY, RegionWidth, RegionHeight );
-    }
+    public Rectangle Bounds => new Rectangle( RegionX, RegionY, RegionWidth, RegionHeight );
 
     public TextureRegion()
     {
     }
 
-    public TextureRegion( Texture2D texture )
+    public TextureRegion( Texture texture )
         : this( texture, 0, 0, texture.Width, texture.Height )
     {
     }
 
-    public TextureRegion( Texture2D texture, int width, int height )
+    public TextureRegion( Texture texture, int width, int height )
         : this( texture, 0, 0, width, height )
     {
     }
 
-    public TextureRegion( Texture2D texture, Rectangle region )
+    public TextureRegion( Texture texture, Rectangle region )
         : this( texture, region.X, region.Y, region.Width, region.Height )
     {
     }
 
-    public TextureRegion( Texture2D texture, int x, int y, int width, int height )
+    public TextureRegion( Texture texture, int x, int y, int width, int height )
     {
         Texture      = texture;
         RegionX      = x;
@@ -75,13 +70,13 @@ public class TextureRegion : IEnumerable
     /// <returns>2D array of TextureRegions indexed by [row][column].</returns>
     public TextureRegion[ , ] Split( int tileWidth, int tileHeight )
     {
-        int x      = RegionX;
-        int y      = RegionY;
-        int width  = RegionWidth;
-        int height = RegionHeight;
-        int rows   = height / tileHeight;
-        int cols   = width  / tileWidth;
-        int startX = x;
+        var x      = RegionX;
+        var y      = RegionY;
+        var width  = RegionWidth;
+        var height = RegionHeight;
+        var rows   = height / tileHeight;
+        var cols   = width / tileWidth;
+        var startX = x;
 
         TextureRegion[ , ] tiles = new TextureRegion[ rows, cols ];
 

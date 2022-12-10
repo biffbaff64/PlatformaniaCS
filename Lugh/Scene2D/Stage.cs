@@ -3,6 +3,11 @@
 
 // ##################################################
 
+using System.Drawing;
+using System.Numerics;
+
+using Color = Lugh.Graphics.Color;
+
 namespace Scene2DCS;
 
 public class Stage

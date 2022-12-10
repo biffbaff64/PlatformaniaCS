@@ -2,9 +2,6 @@
 
 using System.Collections;
 
-using MonoGame.Extended.Tiled;
-using MonoGame.Extended.Tiled.Renderers;
-
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Entities.Objects;
 
@@ -22,20 +19,14 @@ public class TMXMapParser : IDisposable
     public const int ObjectMarkers  = 5;
     public const int CollisionLayer = 6;
 
-    public ArrayList        PlacementTiles   { get; set; }
-    public TiledMap         CurrentMap       { get; set; }
-    public TiledMapRenderer TiledMapRenderer { get; set; }
-    public string           CurrentMapName   { get; set; }
+    public ArrayList PlacementTiles { get; set; }
+    public TiledMap  CurrentMap     { get; set; }
+    public string    CurrentMapName { get; set; }
 
     public void InitialiseLevelMap()
     {
         CurrentMapName = App.RoomManager.GetCurrentMapNameWithPath();
-        CurrentMap     = App.MainGame.Content.Load< TiledMap >( CurrentMapName );
-
-        if ( TiledMapRenderer == null )
-        {
-            TiledMapRenderer = new TiledMapRenderer( App.MainGame.GraphicsDevice, CurrentMap );
-        }
+        CurrentMap     = new TiledMap();
 
         SetGameLevelMap();
 
@@ -59,7 +50,8 @@ public class TMXMapParser : IDisposable
     {
     }
 
-    public SpriteDescriptor CreatePlacementTile( TiledMapObject mapObject, SpriteDescriptor descriptor ) => new SpriteDescriptor();
+    public SpriteDescriptor CreatePlacementTile
+        ( TiledMapObject mapObject, SpriteDescriptor descriptor ) => new SpriteDescriptor();
 
     public void SetGameLevelMap()
     {

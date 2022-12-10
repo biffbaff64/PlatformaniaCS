@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using PlatformaniaCS.Game.Physics;
+﻿using PlatformaniaCS.Game.Physics;
 
 namespace Lugh.Entities;
 

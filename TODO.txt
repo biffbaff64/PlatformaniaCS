@@ -36,6 +36,7 @@ Assets Library
 Core Library
 ============
 
+    TODO
 
 Entities Library
 ================
@@ -48,10 +49,27 @@ Entities Library
 Graphics Library
 ================
 
-
+    BitmapFontData
+    NinePatch
+    Pixmap
+    RegionSplitDescriptor
+    ShapeRenderer
+    TextureData
+    TextureFilter
+    TextureRegion
+    TextureWrap
+    Camera      - Camera
+                - OrthographicCamera
+                - Viewport
+    
 Input Library
 =============
 
+    ControllerPos
+    ControllerType
+    GameButtonRegion
+    IGdxButton
+    Switch
 
 Logging Library
 ===============
@@ -63,10 +81,29 @@ Logging Library
 Maps Library
 ============
 
+    TODO
 
 Maths Library
 =============
 
+    Affine2
+    Frustrum
+    IItem
+    Item
+    ItemF
+    MathUtils
+    Matrix3
+    Matrix4
+    NumberUtils
+    SimpleVec2
+    SimpleVec2F
+    SimpleVec3
+    SimpleVec3F
+    Vec2
+    Vec2F
+    Vec3
+    Vec3F
+    VectorUtils
 
 Physics Library
 ===============

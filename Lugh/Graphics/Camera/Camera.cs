@@ -1,4 +1,8 @@
-﻿namespace Lugh.Graphics.Camera;
+﻿using System.Numerics;
+
+using Lugh.Maths.Collision;
+
+namespace Lugh.Graphics.Camera;
 
 public abstract class Camera
 {
@@ -65,7 +69,7 @@ public abstract class Camera
 
         Vector3.Subtract( _tmpVec, Position );
 
-        _tmpVec.Normalize();
+        _tmpVec = Vector3.Normalize( _tmpVec );
 
         if ( !_tmpVec.Equals( Vector3.Zero ) )
         {
@@ -109,7 +113,7 @@ public abstract class Camera
 
         Up = VectorUtils.Set( _tmpVec );
         Up = Vector3.Cross( Up, Direction );
-        Up.Normalize();
+        Up = Vector3.Normalize( Up );
     }
 
     /// <summary>
@@ -210,7 +214,8 @@ public abstract class Camera
     /// <param name="viewportWidth"></param>
     /// <param name="viewportHeight"></param>
     /// <returns></returns>
-    public Vector3 unproject( Vector3 screenCoords, float viewportX, float viewportY, float viewportWidth, float viewportHeight )
+    public Vector3 Unproject
+        ( Vector3 screenCoords, float viewportX, float viewportY, float viewportWidth, float viewportHeight )
     {
         return default;
     }

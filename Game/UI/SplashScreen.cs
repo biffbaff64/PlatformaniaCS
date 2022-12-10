@@ -1,10 +1,13 @@
-﻿using System.Diagnostics;
+﻿// ########################################################
+
+using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.ViewportAdapters;
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Graphics;
 using OrthographicCamera = MonoGame.Extended.OrthographicCamera;
-using Trace = Lugh.Utils.Trace;
+
+// ########################################################
 
 namespace PlatformaniaCS.Game.UI;
 

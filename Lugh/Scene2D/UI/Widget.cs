@@ -1,7 +1,5 @@
 ﻿using Scene2DCS.Utils;
 
-using Microsoft.Xna.Framework.Graphics;
-
 namespace Scene2DCS;
 
 public class Widget : Actor, ILayout

@@ -21,8 +21,7 @@ public class Developer
             Trace.Dbg( message: "Temporary Development Settings" );
 
             IsGodMode = false;
-//            IsGodMode = true;
-            
+
             string[] disableList =
             {
                 Settings.ShowFPS,
@@ -64,12 +63,12 @@ public class Developer
     {
         try
         {
-            IsDevMode = "TRUE".Equals(System.Environment.GetEnvironmentVariable( "_DEV_MODE" ));
+            IsDevMode = "TRUE".Equals( System.Environment.GetEnvironmentVariable( "DEV_MODE" ) );
         }
         catch ( NullReferenceException e )
         {
             Trace.Err( message: e.ToString() );
-            
+
             IsDevMode = false;
             IsGodMode = false;
         }
@@ -84,23 +83,15 @@ public class Developer
     /// StateID.STATE_ENABLED
     /// All other states will default to STATE_DISABLED.
     /// </summary>
-    /// <param name="state">The Panel State.</param>
+    /// <param name="state">The Requested Panel State.</param>
     public void SetDeveloperPanelState( StateID state )
     {
-        switch ( state )
+        DeveloperPanelState = state switch
         {
-            case StateID._STATE_DISABLED:
-            {
-                DeveloperPanelState = state;
-                break;
-            }
-
-            default:
-            {
-                DeveloperPanelState = StateID._STATE_DISABLED;
-                break;
-            }
-        }
+            StateID._STATE_DISABLED => state,
+            StateID._STATE_ENABLED  => state,
+            _                       => StateID._STATE_DISABLED
+        };
     }
 
     public void ConfigReport()

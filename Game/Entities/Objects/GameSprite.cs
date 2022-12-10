@@ -1,6 +1,7 @@
 ﻿// ##################################################
 
-using Microsoft.Xna.Framework.Graphics;
+using System.Drawing;
+using System.Numerics;
 
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Graphics;

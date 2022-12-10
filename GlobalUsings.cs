@@ -6,12 +6,10 @@ global using System.Collections.Generic;
 // --------------------------------------
 //
 global using Newtonsoft.Json;
-global using Newtonsoft.Json.Linq;
 
 // --------------------------------------
 // XNA / Monogame
-global using Microsoft.Xna.Framework;
-global using MonoGame.Extended;
+//global using Microsoft.Xna.Framework;
 
 // --------------------------------------
 //
@@ -29,6 +27,8 @@ global using Lugh.Maths;
 global using Lugh.Physics;
 global using Scene2DCS;
 global using Lugh.Utils;
+
+global using Trace = Lugh.Logging.Trace;
 
 // --------------------------------------
 // Shared Enums library

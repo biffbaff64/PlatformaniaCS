@@ -79,7 +79,8 @@ public class Settings : IDisposable
     }
 
     /// <summary>
-    /// 
+    /// Checks the "Installed" preference for True. If it isn't then
+    /// this app has not been run before ( or needs a full reset ).
     /// </summary>
     public void FreshInstallCheck()
     {
@@ -159,8 +160,8 @@ public class Settings : IDisposable
         Prefs.Put( JoystickLeft,   PrefTrueDefault );
 
         // --------------- Audio ---------------
-        Prefs.Put( FxVolume,    AudioData.DefaultFxVolume );
-        Prefs.Put( MusicVolume, AudioData.DefaultMusicVolume );
+        Prefs.Put( FxVolume,      AudioData.DefaultFxVolume );
+        Prefs.Put( MusicVolume,   AudioData.DefaultMusicVolume );
         Prefs.Put( MusicEnabled,  PrefTrueDefault );
         Prefs.Put( SoundsEnabled, PrefTrueDefault );
 

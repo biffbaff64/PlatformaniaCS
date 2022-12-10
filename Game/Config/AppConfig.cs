@@ -28,6 +28,7 @@ public class AppConfig
         // -------------------------------------
         App.Developer.SetDeveloperModeState();
         App.Developer.SetTempDeveloperSettings();
+
         // -------------------------------------
 
         Gfx.Initialise();
@@ -95,10 +96,10 @@ public class AppConfig
     /// </summary>
     public void Pause()
     {
-        App.AppState                = StateID._STATE_PAUSED;
+        App.AppState                 = StateID._STATE_PAUSED;
         LughSystem.Inst().GamePaused = true;
 
-        if ( ( App.Hud.HudStateID    != StateID._STATE_SETTINGS_PANEL )
+        if ( ( App.Hud.HudStateID != StateID._STATE_SETTINGS_PANEL )
              && ( App.Hud.HudStateID != StateID._STATE_DEVELOPER_PANEL ) )
         {
             App.Hud.HudStateID = StateID._STATE_PAUSED;
@@ -110,18 +111,12 @@ public class AppConfig
     /// </summary>
     public void UnPause()
     {
-        App.AppState                = StateID._STATE_GAME;
+        App.AppState                 = StateID._STATE_GAME;
         LughSystem.Inst().GamePaused = false;
-        App.Hud.HudStateID          = StateID._STATE_PANEL_UPDATE;
+        App.Hud.HudStateID           = StateID._STATE_PANEL_UPDATE;
     }
 
-    public bool IsStartupDone
-    {
-        get => ( _startupState == StateID._STATE_END_STARTUP );
-    }
+    public bool IsStartupDone => ( _startupState == StateID._STATE_END_STARTUP );
 
-    public static bool GameScreenActive
-    {
-        get => ( LughSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN );
-    }
+    public static bool GameScreenActive => ( LughSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN );
 }

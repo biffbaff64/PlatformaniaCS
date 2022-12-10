@@ -1,6 +1,4 @@
 ﻿
-using Microsoft.Xna.Framework.Graphics;
-
 namespace Lugh.UI;
 
 public interface IDefaultUIPanel

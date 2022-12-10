@@ -1,6 +1,6 @@
 ﻿
 namespace PlatformaniaCS.Game.Config;
-// This class may be removed.
+// This class may be removed, these values may become unneccesary.
 
 public class Version
 {

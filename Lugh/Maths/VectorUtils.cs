@@ -1,4 +1,6 @@
-﻿namespace Lugh.Maths;
+﻿using System.Numerics;
+
+namespace Lugh.Maths;
 
 public abstract class VectorUtils
 {

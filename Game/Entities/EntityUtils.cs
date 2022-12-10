@@ -1,6 +1,10 @@
 ﻿// ##################################################
 
+using System.Drawing;
+using System.Numerics;
+
 using Box2DSharp.Dynamics;
+
 using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Entities.Objects;
 using PlatformaniaCS.Game.Graphics;
@@ -15,59 +19,40 @@ public class EntityUtils
     public EntityUtils()
     {
     }
-        
-    public TextureRegion GetKeyFrame( Animation animation, float elapsedTime, bool looping ) => animation.GetKeyFrame( elapsedTime, looping );
 
-    public Body AddDynamicPhysicsBody( Rectangle rectangle, CollisionFilter filter ) =>
-        App.WorldModel.BodyBuilder.CreateDynamicBox(
-                                                    rectangle,
-                                                    filter,
-                                                    1.0f,
-                                                    B2DConstants.FullFriction,
-                                                    B2DConstants.LowRestitution
-                                                   );
-
-    public Body AddDynamicCirclePhysicsBody( Rectangle rectangle, CollisionFilter filter )
+    /**
+     * Resets all members of entityMap to their initXY positions
+     */
+    public void ResetAllPositions()
     {
-        CircleF circle = new CircleF();
-        circle.Position = new Point2( rectangle.X, rectangle.Y );
-        circle.Radius   = ( ( rectangle.Width / 2f ) / Gfx.PPM );
+        if ( App.EntityData.EntityMap != null )
+        {
+            for ( var i = 0; i < App.EntityData.EntityMap.Count; i++ )
+            {
+                if ( App.EntityData.GetEntity( i ).GetType() == GraphicID._MAIN )
+                {
+                    var entity = ( GameSprite )App.EntityData.GetEntity( i );
 
-        return App.WorldModel.BodyBuilder.CreateDynamicCircle(
-                                                              circle,
-                                                              filter,
-                                                              0.8f,
-                                                              B2DConstants.LowFriction,
-                                                              0.5f //B2DConstants.LOW_RESTITUTION
-                                                             );
+                    entity.GetPhysicsBody().Body.SetTransform
+                        (
+                         new Vector2
+                             (
+                              entity.InitXYZ.X,
+                              entity.InitXYZ.Y
+                             ),
+                         entity.GetPhysicsBody().Body.GetAngle()
+                        );
+                }
+            }
+        }
     }
 
-    public Body AddBouncyDynamicPhysicsBody( Rectangle rectangle, CollisionFilter filter ) =>
-        App.WorldModel.BodyBuilder.CreateDynamicBox(
-                                                    rectangle,
-                                                    filter,
-                                                    0.8f,
-                                                    B2DConstants.LowFriction,
-                                                    B2DConstants.HighRestitution
-                                                   );
-
-    public Body AddKinematicPhysicsBody( Rectangle rectangle, CollisionFilter filter ) =>
-        App.WorldModel.BodyBuilder.CreateKinematicBody(
-                                                       rectangle,
-                                                       filter,
-                                                       1.0f,
-                                                       B2DConstants.DefaultFriction,
-                                                       B2DConstants.LowRestitution
-                                                      );
-
-    public Body AddStaticPhysicsBody( Rectangle rectangle, CollisionFilter filter ) =>
-        App.WorldModel.BodyBuilder.CreateStaticBody(
-                                                    rectangle,
-                                                    filter
-                                                   );
-
-    public bool isOnScreen( GameSprite sprite ) => App.MapData.ViewportBox.Intersects( sprite.BoundsBox );
-
+    /**
+     * Fetch an initial Z position for the specified ID.
+     *
+     * @param graphicID The GraphicID.
+     * @return Z position range is between 0 and Gfx._MAXIMUM_Z_DEPTH.
+     */
     public int GetInitialZPosition( GraphicID graphicID )
     {
         int zed;
@@ -80,22 +65,37 @@ public class EntityUtils
                 break;
             }
 
-            case GraphicID.G_MOVING_PLATFORM:
-            case GraphicID.G_SMALL_BOULDER:
-            case GraphicID.G_CRATE:
+            case GraphicID.G_EYES:
+            case GraphicID.G_FLAMES:
+            case GraphicID.G_BEES:
+            case GraphicID.G_FISH:
+            case GraphicID.G_LOCKED_DOOR:
+            {
+                zed = 9;
+                break;
+            }
+
+            case GraphicID.G_SPIKES:
+            case GraphicID.G_SMALL_SPIKES:
+            case GraphicID.G_JAIL:
             {
                 zed = 8;
                 break;
             }
 
-            case GraphicID.G_EYES:
-            case GraphicID.G_SPIKES:
-            case GraphicID.G_JAIL:
+
+            case GraphicID.G_MOVING_PLATFORM:
+            case GraphicID.G_BIG_BLOCK:
+            case GraphicID.G_PUSHABLE_BOULDER:
+            case GraphicID.G_PUSHABLE_CRATE:
+            case GraphicID.G_FLOOR_LEVER:
+            case GraphicID.G_FLAG:
             case GraphicID.G_TREASURE_CHEST:
             {
                 zed = 7;
                 break;
             }
+
 
             case GraphicID.G_GEM:
             case GraphicID.G_COIN:
@@ -117,10 +117,10 @@ public class EntityUtils
             case GraphicID._IC_LANTERN:
             case GraphicID._IC_GOLD_COIN:
             case GraphicID._IC_AXE:
-            case GraphicID._IC_HAT:
-            case GraphicID._IC_POTION:
+            case GraphicID._IC_WIZARDS_HAT:
+            case GraphicID._IC_GREEN_POTION:
             case GraphicID._IC_EGG:
-            case GraphicID._IC_HELMET:
+            case GraphicID._IC_METAL_HELMET:
             case GraphicID._IC_HAMMER:
             case GraphicID._IC_BOTTLE:
             case GraphicID._IC_GEAR:
@@ -132,24 +132,44 @@ public class EntityUtils
             case GraphicID._IC_PARCHMENT:
             case GraphicID._IC_FEATHER:
             case GraphicID._IC_BOOT:
-            case GraphicID._IC_EMERALD:
+            case GraphicID._IC_RUCKSACK:
             case GraphicID._IC_BELT:
+            case GraphicID._IC_BREAD:
+            case GraphicID._IC_EYE:
+            case GraphicID._IC_ARROW:
+            case GraphicID._IC_RED_WAND:
+            case GraphicID._IC_GOLD_BAR:
+            case GraphicID._IC_LONGBOW:
+            case GraphicID._IC_BLUE_WAND:
+            case GraphicID._IC_LEATHER_CHESTPLATE:
+            case GraphicID._IC_GREEN_WAND:
+            case GraphicID._IC_MUSHROOM:
+            case GraphicID._IC_BLUE_POTION:
+            case GraphicID._IC_ROPE:
+            case GraphicID._IC_LEATHER_HELMET:
+            case GraphicID._IC_PEARL:
+            case GraphicID._IC_SWORD:
+            case GraphicID._IC_RED_POTION:
             {
                 zed = 6;
                 break;
             }
 
+
             case GraphicID.G_QUESTION_MARK:
+            case GraphicID.G_EXCLAMATION_MARK:
             {
                 zed = 5;
                 break;
             }
+
 
             case GraphicID.G_ENEMY_BULLET:
             {
                 zed = 4;
                 break;
             }
+
 
             case GraphicID.G_BAT:
             case GraphicID.G_BEAST:
@@ -159,17 +179,26 @@ public class EntityUtils
             case GraphicID.G_WORM_MAN:
             case GraphicID.G_DROP_BLOCK:
             case GraphicID.G_SPIKEY_TURTLE:
+            case GraphicID.G_FROG:
+            case GraphicID.G_RABBIT:
+            case GraphicID.G_GOBLIN:
+            case GraphicID.G_MUSHROOM_MONSTER:
+            case GraphicID.G_SPAWNER:
             {
                 zed = 3;
                 break;
             }
 
+
             case GraphicID.G_PLAYER:
             case GraphicID.G_PRISONER:
+            case GraphicID.G_PLAYER_KNIFE:
+            case GraphicID.G_PLAYER_ROCK:
             {
                 zed = 2;
                 break;
             }
+
 
             case GraphicID.G_LASER_BEAM:
             case GraphicID.G_LASER_BEAM_VERTICAL:
@@ -178,6 +207,7 @@ public class EntityUtils
                 zed = 1;
                 break;
             }
+
 
             case GraphicID.G_PRIZE_BALLOON:
             case GraphicID.G_MESSAGE_BUBBLE:
@@ -192,21 +222,230 @@ public class EntityUtils
                 break;
             }
 
+
             default:
             {
                 zed = Gfx.MaximumZDepth + 1;
                 break;
             }
+
         }
 
         return zed;
     }
 
-    public void ResetAllPositions()
+    public bool isOnScreen( GameSprite spriteObject )
     {
+        return App.MapData.ViewportBox.Overlaps( spriteObject.Sprite.getBoundingRectangle() );
     }
 
-    public void KillAllExcept( GraphicID gidToAvoid )
+    public void Tidy()
     {
+        for ( int i = 0; i < App.getEntityData().getEntityMap().size; i++ )
+        {
+            if ( App.getEntityData().getEntity( i ).getActionState() == ActionStates._DEAD )
+            {
+                App.getEntityData().removeEntityAt( i );
+            }
+        }
+    }
+
+    public void KillAllExcept( GraphicID gidToLeave )
+    {
+        for ( int i = 0; i < App.getEntityData().getEntityMap().size; i++ )
+        {
+            if ( App.getEntityData().getEntity( i ).getGID() != gidToLeave )
+            {
+                App.getEntityData().getEntity( i ).setActionState( ActionStates._DEAD );
+                App.getEntityData().getEntity( i ).getPhysicsBody().isAlive = false;
+                App.getWorldModel().bodiesList.add( App.getEntityData().getEntity( i ).getPhysicsBody() );
+            }
+        }
+
+        Tidy();
+    }
+
+    /**
+     * Gets a random sprite from the entity map, making
+     * sure to not return the specified sprite.
+     */
+    public GdxSprite GetRandomSprite( @NotNull gdxSprite oneToAvoid )
+    {
+        GdxSprite randomSprite;
+
+        do
+        {
+            randomSprite = ( GdxSprite )App.getEntityData().getEntity
+                ( MathUtils.random( App.getEntityData().getEntityMap().size - 1 ) );
+        }
+        while ( ( randomSprite.gid == oneToAvoid.gid )
+                || ( randomSprite.sprite == null )
+                || ( randomSprite.getSpriteNumber() == oneToAvoid.getSpriteNumber() ) );
+
+        return randomSprite;
+    }
+
+    /**
+     * Finds the nearest sprite of type gid to the player.
+     */
+    public GdxSprite FindNearest( GraphicID gid )
+    {
+        GdxSprite distantSprite = FindFirstOf( gid );
+
+        if ( distantSprite != null )
+        {
+            Vector2 playerPos  = new Vector2( App.getPlayer().sprite.getX(), App.getPlayer().sprite.getY() );
+            Vector2 distantPos = new Vector2( distantSprite.sprite.getX(),   distantSprite.sprite.getY() );
+            Vector2 spritePos  = new Vector2();
+
+            float distance = playerPos.dst( distantPos );
+
+            for ( IEntityComponent entity :
+            App.getEntityData().getEntityMap() )
+
+            {
+                if ( entity.getGID() == gid )
+                {
+                    GdxSprite gdxSprite = ( GdxSprite )entity;
+
+                    spritePos.set( gdxSprite.sprite.getX(), gdxSprite.sprite.getY() );
+
+                    float tempDistance = playerPos.dst( spritePos );
+
+                    if ( Math.abs( tempDistance ) < Math.abs( distance ) )
+                    {
+                        distance      = tempDistance;
+                        distantSprite = gdxSprite;
+                    }
+                }
+            }
+        }
+
+        return distantSprite;
+    }
+
+    /**
+     * Finds the furthest sprite of type gid to the player.
+     */
+    public GdxSprite GetDistantSprite( GraphicID targetGID )
+    {
+        GdxSprite distantSprite = App.getPlayer();
+
+        Vector2 playerPos  = new Vector2( App.getPlayer().sprite.getX(), App.getPlayer().sprite.getY() );
+        Vector2 distantPos = new Vector2();
+        Vector2 spritePos  = new Vector2();
+
+        float distance = 0;
+
+        for ( IEntityComponent entity :
+        App.getEntityData().getEntityMap() )
+
+        {
+            GdxSprite gdxSprite = ( GdxSprite )entity;
+
+            spritePos.set( gdxSprite.sprite.getX(), gdxSprite.sprite.getY() );
+
+            float tempDistance = playerPos.dst( spritePos );
+
+            if ( Math.abs( tempDistance ) > Math.abs( distance ) )
+            {
+                distance      = tempDistance;
+                distantSprite = gdxSprite;
+            }
+        }
+
+        return distantSprite;
+    }
+
+    public GdxSprite FindFirstOf( final graphicID gid )
+    {
+        GdxSprite gdxSprite = null;
+
+        for ( IEntityComponent entity :
+        App.getEntityData().getEntityMap() )
+
+        {
+            if ( entity.getGID() == gid )
+            {
+                gdxSprite = ( GdxSprite )entity;
+                break;
+            }
+        }
+
+        return gdxSprite;
+    }
+
+    public GdxSprite FindLastOf( final graphicID gid )
+    {
+        GdxSprite gdxSprite = null;
+
+        for ( IEntityComponent entity :
+        App.getEntityData().getEntityMap() )
+
+        {
+            if ( entity.getGID() == gid )
+            {
+                gdxSprite = ( GdxSprite )entity;
+            }
+        }
+
+        return gdxSprite;
+    }
+
+    public int FindNumberOfGid( final graphicID gid )
+    {
+        int count = 0;
+
+        for ( IEntityComponent entity :
+        App.getEntityData().getEntityMap() )
+
+        {
+            if ( entity.getGID() == gid )
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public int FindNumberOfType( final graphicID type )
+    {
+        int count = 0;
+
+        for ( IEntityComponent entity :
+        App.getEntityData().getEntityMap() )
+
+        {
+            if ( entity.getType() == type )
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public boolean CanRandomlyTurn( IEntityComponent entity )
+    {
+        return ( ( MathUtils.random( 100 ) == 5 )
+                 && ( entity.getPhysicsBody().contactCount > 1 ) );
+    }
+
+    public int GetHittingSameCount( GraphicID gid )
+    {
+        int count = 0;
+
+        for ( IEntityComponent entity :
+        App.getEntityData().getEntityMap() )
+
+        {
+            if ( ( entity.getGID() == gid ) && entity.isHittingSame() )
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 }

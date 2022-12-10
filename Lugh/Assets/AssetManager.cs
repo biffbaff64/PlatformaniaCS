@@ -4,8 +4,6 @@
 
 using Lugh.Assets.Resolvers;
 
-using Microsoft.Xna.Framework.Graphics;
-
 namespace Lugh.Assets;
 
 public class AssetManager
@@ -70,5 +68,10 @@ public class AssetManager
     /// <param name="loader">The loader to use.</param>
     public void SetLoader( Type type, AssetLoader loader )
     {
+    }
+
+    public Texture Get( string name, Type type )
+    {
+        return default;
     }
 }

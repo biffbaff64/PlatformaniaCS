@@ -2,8 +2,6 @@
 
 using Lugh.Assets.Resolvers;
 
-using Microsoft.Xna.Framework.Graphics;
-
 using TextureFilter = Lugh.Graphics.TextureFilter;
 
 // ############################################################

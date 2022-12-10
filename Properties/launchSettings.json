@@ -3,7 +3,7 @@
     "PlatformaniaCS": {
       "commandName": "Project",
       "environmentVariables": {
-        "_DEV_MODE": "TRUE"
+        "DEV_MODE": "TRUE"
       }
     }
   }

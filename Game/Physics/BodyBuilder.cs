@@ -1,4 +1,6 @@
-﻿using Box2DSharp.Collision.Shapes;
+﻿using System.Drawing;
+
+using Box2DSharp.Collision.Shapes;
 using Box2DSharp.Common;
 using Box2DSharp.Dynamics;
 

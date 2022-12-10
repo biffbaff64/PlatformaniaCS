@@ -3,8 +3,6 @@
 using System.IO;
 using System.Linq;
 
-using Trace = Lugh.Utils.Trace;
-
 // ##################################################
 
 namespace Lugh.Logging;

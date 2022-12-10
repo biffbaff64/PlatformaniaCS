@@ -1,9 +1,8 @@
 ﻿// ##################################################
 
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
-
 // ##################################################
+
+using Lugh.Audio;
 
 namespace PlatformaniaCS.Game.Audio;
 
@@ -40,7 +39,7 @@ public abstract class AudioData
     public const int MusGame    = 2;
     public const int MaxTunes   = 3;
 
-    public static Song[]        Sounds { get; set; }
+    public static Music[]       Sounds { get; set; }
     public static SoundEffect[] Music  { get; set; }
 
     // ----------------------------------------------

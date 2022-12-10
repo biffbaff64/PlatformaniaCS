@@ -10,13 +10,13 @@ public interface IScene
     /// <summary>
     /// Called when the scene should update itself.
     /// </summary>
-    void Update( GameTime gameTime );
+    void Update( float gameTime );
 
     /// <summary>
     /// Called when the scene should render itself.
     /// </summary>
     /// <param name="gameTime">The time in seconds since the last render.</param>
-    void Render( GameTime gameTime );
+    void Render( float gameTime );
 
     /// <summary>
     /// Called when the application is resized. This can happen at any

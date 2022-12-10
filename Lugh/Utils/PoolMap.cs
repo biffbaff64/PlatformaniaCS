@@ -1,6 +1,8 @@
-﻿namespace Lugh.Utils;
+﻿using System.Drawing;
 
-public class Pools
+namespace Lugh.Utils;
+
+public class PoolMap
 {
     public static Rectangle Obtain( Type type )
     {

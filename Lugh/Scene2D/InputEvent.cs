@@ -1,4 +1,6 @@
-﻿namespace Scene2DCS;
+﻿using System.Numerics;
+
+namespace Scene2DCS;
 
 public class InputEvent : Event
 {
@@ -43,8 +45,8 @@ public class InputEvent : Event
     /// <param name="actorCoords">Output for resulting coordinates.</param>
     public Vector2 ToCoordinates( Actor actor, Vector2 actorCoords )
     {
-        actorCoords.SetX( StageX );
-        actorCoords.SetY( StageY );
+        actorCoords.X = StageX;
+        actorCoords.Y = StageY;
 
         actor.StageToLocalCoordinates( actorCoords );
 

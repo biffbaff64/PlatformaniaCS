@@ -1,10 +1,12 @@
 ﻿// ##################################################
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Xna.Framework.Graphics;
+using System.Drawing;
+using System.Numerics;
+
 using Scene2DCS.Utils;
-using Color = Microsoft.Xna.Framework.Color;
+
+using Color = Lugh.Graphics.Color;
 
 // ##################################################
 
@@ -632,6 +634,14 @@ public class Actor
         _color.A = a;
     }
 
+    public void SetColor( float r, float g, float b, float a )
+    {
+        _color.R = r;
+        _color.G = g;
+        _color.B = b;
+        _color.A = a;
+    }
+
     /// <summary>
     /// Changes the z-order for this actor so it is in front of all siblings.
     /// </summary>
@@ -715,13 +725,13 @@ public class Actor
                 Height = ( int )Size.Y
         };
 
-        Rectangle scissorBounds = Pools.Obtain( typeof( Rectangle ) );
+        Rectangle scissorBounds = PoolMap.Obtain( typeof( Rectangle ) );
 
         stage.CalculateScissors( tableBounds, scissorBounds );
 
         if ( ScissorStack.PushScissors( scissorBounds ) ) return true;
 
-        Pools.Free( scissorBounds );
+        PoolMap.Free( scissorBounds );
 
         return false;
     }
@@ -731,7 +741,7 @@ public class Actor
     /// </summary>
     public void ClipEnd()
     {
-        Pools.Free( ScissorStack.PopScissors() );
+        PoolMap.Free( ScissorStack.PopScissors() );
     }
 
     /// <summary>

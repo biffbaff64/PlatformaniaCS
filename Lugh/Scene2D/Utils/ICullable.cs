@@ -1,4 +1,6 @@
-﻿namespace Scene2DCS.Utils;
+﻿using System.Drawing;
+
+namespace Scene2DCS.Utils;
 
 public interface ICullable
 {

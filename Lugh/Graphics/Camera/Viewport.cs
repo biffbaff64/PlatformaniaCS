@@ -1,7 +1,14 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using PlatformaniaCS.Game.Core;
-using PlatformaniaCS.Game.Graphics;
+﻿// ########################################################
+
+using System.Numerics;
+
+using Lugh.Maths.Collision;
+
 using Scene2DCS.Utils;
+
+using Rectangle = System.Drawing.Rectangle;
+
+// ########################################################
 
 namespace Lugh.Graphics.Camera;
 
@@ -158,7 +165,7 @@ public abstract class Viewport
 
         Camera.Project( _tmp, ScreenX, ScreenY, ScreenWidth, ScreenHeight );
 
-        _tmp.Y = ( Gfx.GetDisplayHeight() - _tmp.Y );
+        _tmp.Y = ( LughSystem.GetDisplayHeight() - _tmp.Y );
 
         worldCoords.X = _tmp.X;
         worldCoords.Y = _tmp.Y;
@@ -206,7 +213,7 @@ public abstract class Viewport
     /** Returns the right gutter (black bar) width in screen coordinates. */
     public int GetRightGutterWidth()
     {
-        return Gfx.GetDisplayWidth() - ( ScreenX + ScreenWidth );
+        return LughSystem.GetDisplayWidth() - ( ScreenX + ScreenWidth );
     }
 
     /** Returns the bottom gutter (black bar) height in screen coordinates. */
@@ -224,6 +231,6 @@ public abstract class Viewport
     /** Returns the top gutter (black bar) height in screen coordinates. */
     public int GetTopGutterHeight()
     {
-        return Gfx.GetDisplayHeight() - ( ScreenY + ScreenHeight );
+        return LughSystem.GetDisplayHeight() - ( ScreenY + ScreenHeight );
     }
 }

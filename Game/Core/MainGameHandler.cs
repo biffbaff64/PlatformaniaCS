@@ -178,6 +178,7 @@ public class MainGameHandler
     {
         App.Hud.Update();
 
+        // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
         switch ( App.AppState )
         {
             case StateID._STATE_DEVELOPER_PANEL:
@@ -217,7 +218,6 @@ public class MainGameHandler
 
                     _isWaitingForPlayer = false;
                 }
-
                 // ---------------------------------------------
                 else
                 {
@@ -247,7 +247,7 @@ public class MainGameHandler
     /// Handles game actions, if any, during pause mode.
     /// _STATE_PAUSED
     /// </summary>
-    private void StatePaused()
+    private static void StatePaused()
     {
         App.Hud.Update();
     }
@@ -257,7 +257,7 @@ public class MainGameHandler
     /// speaks to a villager/guide
     /// _STATE_MESSAGE_PANEL
     /// </summary>
-    private void StateMessagePanel()
+    private static void StateMessagePanel()
     {
         App.Hud.Update();
         App.MapData.Update();
@@ -278,7 +278,7 @@ public class MainGameHandler
     /// _STATE_PREPARE_LEVEL_RETRY
     /// _STATE_LEVEL_RETRY
     /// </summary>
-    private void StateSetForRetry()
+    private static void StateSetForRetry()
     {
         App.Hud.Update();
 
@@ -312,7 +312,7 @@ public class MainGameHandler
     /// _STATE_PREPARE_LEVEL_FINISHED:
     /// _STATE_LEVEL_FINISHED:
     /// </summary>
-    private void StateSetForLevelFinished()
+    private static void StateSetForLevelFinished()
     {
         App.LevelManager.CloseCurrentLevel();
         App.Hud.Update();
@@ -327,7 +327,7 @@ public class MainGameHandler
     /// Initialise the 'Game Over' message.
     /// _STATE_PREPARE_GAME_OVER_MESSAGE
     /// </summary>
-    private void StateSetForGameOverMessage()
+    private static void StateSetForGameOverMessage()
     {
         App.Hud.PanelManager.AddZoomPanel( GameAssets.GameoverMsgAsset, 3000 );
 
@@ -343,7 +343,7 @@ public class MainGameHandler
     /// _STATE_GAME_OVER
     /// _STATE_GAME_FINISHED
     /// </summary>
-    private void StateWaitForGameOverMessage()
+    private static void StateWaitForGameOverMessage()
     {
         App.Hud.Update();
 
@@ -358,7 +358,7 @@ public class MainGameHandler
     /// Control is also passed to here if forceQuitToMenu or quitToMainMenu are set.
     /// _STATE_END_GAME
     /// </summary>
-    private void StateSetForEndGame()
+    private static void StateSetForEndGame()
     {
         Trace.BoxedDbg( message: "***** GAME OVER *****" );
 

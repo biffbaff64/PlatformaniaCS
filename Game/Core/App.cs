@@ -1,8 +1,5 @@
 ﻿// ##################################################
 
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-
 using PlatformaniaCS.Game.Audio;
 using PlatformaniaCS.Game.Config;
 using PlatformaniaCS.Game.Entities;
@@ -27,7 +24,6 @@ public abstract class App
     public static AppConfig             AppConfig             { get; set; }
     public static StateID               AppState              { get; set; }
     public static GameAudio             GameAudio             { get; set; }
-    public static GraphicsDeviceManager GraphicsDeviceManager { get; set; }
     public static SpriteBatch           SpriteBatch           { get; set; }
     public static Settings              Settings              { get; set; }
     public static BaseRenderer          BaseRenderer          { get; set; }
@@ -70,8 +66,12 @@ public abstract class App
 
     public static MainPlayer     GetPlayer()  => EntityData.MainPlayer;
     public static int            GetLevel()   => GameProgress.GameLevel;
-    public static ContentManager GetContent() => MainGame.Content;
 
+    /// <summary>
+    /// Get/Set the current scene.
+    /// If setting a scene, the current scene (if any) is hidden
+    /// to be replaced by the new one.
+    /// </summary>
     public static IScene Scene
     {
         get => LughSystem.Inst().CurrentScene;
@@ -91,6 +91,10 @@ public abstract class App
         }
     }
 
+    /// <summary>
+    /// Creates all essential global objects that are needed
+    /// before any scenes are opened.
+    /// </summary>
     public static void CreateEssentialObjects()
     {
         Trace.CheckPoint();
@@ -103,8 +107,7 @@ public abstract class App
 
         // -------------------------------------------------
         AppState    = StateID._INACTIVE;
-        SpriteBatch = new SpriteBatch( MainGame.GraphicsDevice );
-        MapData     = new MapData();
+        SpriteBatch = new SpriteBatch();
         EntityData  = new EntityData();
 
         // -------------------------------------------------
@@ -120,12 +123,16 @@ public abstract class App
         HighScoreUtils = new HighScoreUtils();
     }
 
+    /// <summary>
+    /// Creates all global objects necessary for the MainScene.
+    /// </summary>
     public static void CreateMainsceneObjects()
     {
         Trace.CheckPoint();
 
         // -------------------------------------------------
         LevelManager   = new LevelManager();
+        MapData        = new MapData();
         Hud            = new HeadsUpDisplay();
         EntityManager  = new EntityManager();
         EntityUtils    = new EntityUtils();
