@@ -29,7 +29,7 @@ public class EntityUtils
         {
             for ( var i = 0; i < App.EntityData.EntityMap.Count; i++ )
             {
-                if ( App.EntityData.GetEntity( i ).GetType() == GraphicID._MAIN )
+                if ( App.EntityData.GetEntity( i ).GetEntityType() == GraphicID._MAIN )
                 {
                     var entity = ( GameSprite )App.EntityData.GetEntity( i );
 
@@ -228,7 +228,6 @@ public class EntityUtils
                 zed = Gfx.MaximumZDepth + 1;
                 break;
             }
-
         }
 
         return zed;
@@ -241,24 +240,24 @@ public class EntityUtils
 
     public void Tidy()
     {
-        for ( int i = 0; i < App.getEntityData().getEntityMap().size; i++ )
+        for ( var i = 0; i < App.EntityData.EntityMap.Count; i++ )
         {
-            if ( App.getEntityData().getEntity( i ).getActionState() == ActionStates._DEAD )
+            if ( App.EntityData.GetEntity( i ).GetActionState() == ActionStates._DEAD )
             {
-                App.getEntityData().removeEntityAt( i );
+                App.EntityData.RemoveEntityAt( i );
             }
         }
     }
 
     public void KillAllExcept( GraphicID gidToLeave )
     {
-        for ( int i = 0; i < App.getEntityData().getEntityMap().size; i++ )
+        for ( var i = 0; i < App.EntityData.EntityMap.Count; i++ )
         {
-            if ( App.getEntityData().getEntity( i ).getGID() != gidToLeave )
+            if ( App.EntityData.GetEntity( i ).GetGID() != gidToLeave )
             {
-                App.getEntityData().getEntity( i ).setActionState( ActionStates._DEAD );
-                App.getEntityData().getEntity( i ).getPhysicsBody().isAlive = false;
-                App.getWorldModel().bodiesList.add( App.getEntityData().getEntity( i ).getPhysicsBody() );
+                App.EntityData.GetEntity( i ).SetActionState( ActionStates._DEAD );
+                App.EntityData.GetEntity( i ).GetPhysicsBody().IsAlive = false;
+                App.WorldModel.BodiesList.Add( App.EntityData.GetEntity( i ).GetPhysicsBody() );
             }
         }
 
@@ -269,18 +268,19 @@ public class EntityUtils
      * Gets a random sprite from the entity map, making
      * sure to not return the specified sprite.
      */
-    public GdxSprite GetRandomSprite( @NotNull gdxSprite oneToAvoid )
+    public GameSprite GetRandomSprite( GameSprite oneToAvoid )
     {
-        GdxSprite randomSprite;
+        GameSprite randomSprite;
+        var        rand = new Random();
 
         do
         {
-            randomSprite = ( GdxSprite )App.getEntityData().getEntity
-                ( MathUtils.random( App.getEntityData().getEntityMap().size - 1 ) );
+            randomSprite = ( GameSprite )App.EntityData.GetEntity
+                ( rand.Next( App.EntityData.EntityMap.Count - 1 ) );
         }
-        while ( ( randomSprite.gid == oneToAvoid.gid )
-                || ( randomSprite.sprite == null )
-                || ( randomSprite.getSpriteNumber() == oneToAvoid.getSpriteNumber() ) );
+        while ( ( randomSprite.GID == oneToAvoid.GID )
+                || ( randomSprite.Sprite == null )
+                || ( randomSprite.SpriteNumber == oneToAvoid.SpriteNumber ) );
 
         return randomSprite;
     }
@@ -288,9 +288,9 @@ public class EntityUtils
     /**
      * Finds the nearest sprite of type gid to the player.
      */
-    public GdxSprite FindNearest( GraphicID gid )
+    public GameSprite FindNearest( GraphicID gid )
     {
-        GdxSprite distantSprite = FindFirstOf( gid );
+        GameSprite distantSprite = FindFirstOf( gid );
 
         if ( distantSprite != null )
         {
@@ -306,7 +306,7 @@ public class EntityUtils
             {
                 if ( entity.getGID() == gid )
                 {
-                    GdxSprite gdxSprite = ( GdxSprite )entity;
+                    GameSprite gdxSprite = ( GameSprite )entity;
 
                     spritePos.set( gdxSprite.sprite.getX(), gdxSprite.sprite.getY() );
 
@@ -327,9 +327,9 @@ public class EntityUtils
     /**
      * Finds the furthest sprite of type gid to the player.
      */
-    public GdxSprite GetDistantSprite( GraphicID targetGID )
+    public GameSprite GetDistantSprite( GraphicID targetGID )
     {
-        GdxSprite distantSprite = App.getPlayer();
+        GameSprite distantSprite = App.getPlayer();
 
         Vector2 playerPos  = new Vector2( App.getPlayer().sprite.getX(), App.getPlayer().sprite.getY() );
         Vector2 distantPos = new Vector2();
@@ -341,7 +341,7 @@ public class EntityUtils
         App.getEntityData().getEntityMap() )
 
         {
-            GdxSprite gdxSprite = ( GdxSprite )entity;
+            GameSprite gdxSprite = ( GameSprite )entity;
 
             spritePos.set( gdxSprite.sprite.getX(), gdxSprite.sprite.getY() );
 
@@ -357,9 +357,9 @@ public class EntityUtils
         return distantSprite;
     }
 
-    public GdxSprite FindFirstOf( final graphicID gid )
+    public GameSprite FindFirstOf( final graphicID gid )
     {
-        GdxSprite gdxSprite = null;
+        GameSprite gdxSprite = null;
 
         for ( IEntityComponent entity :
         App.getEntityData().getEntityMap() )
@@ -367,7 +367,7 @@ public class EntityUtils
         {
             if ( entity.getGID() == gid )
             {
-                gdxSprite = ( GdxSprite )entity;
+                gdxSprite = ( GameSprite )entity;
                 break;
             }
         }
@@ -375,9 +375,9 @@ public class EntityUtils
         return gdxSprite;
     }
 
-    public GdxSprite FindLastOf( final graphicID gid )
+    public GameSprite FindLastOf( final graphicID gid )
     {
-        GdxSprite gdxSprite = null;
+        GameSprite gdxSprite = null;
 
         for ( IEntityComponent entity :
         App.getEntityData().getEntityMap() )
@@ -385,7 +385,7 @@ public class EntityUtils
         {
             if ( entity.getGID() == gid )
             {
-                gdxSprite = ( GdxSprite )entity;
+                gdxSprite = ( GameSprite )entity;
             }
         }
 
@@ -426,7 +426,7 @@ public class EntityUtils
         return count;
     }
 
-    public boolean CanRandomlyTurn( IEntityComponent entity )
+    public bool CanRandomlyTurn( IEntityComponent entity )
     {
         return ( ( MathUtils.random( 100 ) == 5 )
                  && ( entity.getPhysicsBody().contactCount > 1 ) );
@@ -434,13 +434,11 @@ public class EntityUtils
 
     public int GetHittingSameCount( GraphicID gid )
     {
-        int count = 0;
+        var count = 0;
 
-        for ( IEntityComponent entity :
-        App.getEntityData().getEntityMap() )
-
+        foreach( var entity in App.EntityData.EntityMap )
         {
-            if ( ( entity.getGID() == gid ) && entity.isHittingSame() )
+            if ( ( entity.GetGID() == gid ) && entity.IsHittingSame() )
             {
                 count++;
             }

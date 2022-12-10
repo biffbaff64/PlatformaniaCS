@@ -1,38 +1,37 @@
-﻿using System.Collections.Generic;
-
+﻿
 namespace Lugh.Entities;
+
+public enum PlayMode
+{
+    _NORMAL,
+    _REVERSED,
+    _LOOP,
+    _LOOP_REVERSED,
+    _LOOP_PINGPONG,
+    _LOOP_RANDOM,
+}
 
 public class Animation
 {
-    public enum PlayMode
-    {
-        _NORMAL,
-        _REVERSED,
-        _LOOP,
-        _LOOP_REVERSED,
-        _LOOP_PINGPONG,
-        _LOOP_RANDOM,
-    }
+    public PlayMode PlayMode { get; set; }
 
-    public PlayMode Mode { get; set; }
+    private List< TextureRegion > _keyFrames;
+    private float                 _frameDuration;
+    private float                 _animationDuration;
+    private int                   _lastFrameNumber;
+    private float                 _lastStateTime;
 
-    private List<TextureRegion> _keyFrames;
-    private float               _frameDuration;
-    private float               _animationDuration;
-    private int                 _lastFrameNumber;
-    private float               _lastStateTime;
-
-    public Animation( float frameDuration, List<TextureRegion> keyFrames )
+    public Animation( float frameDuration, List< TextureRegion > keyFrames )
     {
         this._frameDuration = frameDuration;
 
         SetKeyFrames( keyFrames.ToArray() );
     }
 
-    public Animation( float frameDuration, List<TextureRegion> keyFrames, PlayMode mode )
+    public Animation( float frameDuration, List< TextureRegion > keyFrames, PlayMode mode )
         : this( frameDuration, keyFrames )
     {
-        Mode = mode;
+        PlayMode = mode;
     }
 
     public Animation( float frameDuration, params TextureRegion[] args )
@@ -53,23 +52,23 @@ public class Animation
     /// <returns>the frame of animation for the given state time.</returns>
     public TextureRegion GetKeyFrame( float stateTime, bool looping )
     {
-        var oldPlayMode = Mode;
+        var oldPlayMode = PlayMode;
 
-        if ( looping & ( Mode is PlayMode._NORMAL or PlayMode._REVERSED ) )
+        if ( looping & ( PlayMode is PlayMode._NORMAL or PlayMode._REVERSED ) )
         {
-            Mode = Mode == PlayMode._NORMAL ? PlayMode._LOOP : PlayMode._LOOP_REVERSED;
+            PlayMode = PlayMode == PlayMode._NORMAL ? PlayMode._LOOP : PlayMode._LOOP_REVERSED;
         }
         else
         {
-            if ( !looping && Mode is not (PlayMode._NORMAL or PlayMode._REVERSED) )
+            if ( !looping && PlayMode is not (PlayMode._NORMAL or PlayMode._REVERSED) )
             {
-                Mode = Mode == PlayMode._LOOP_REVERSED ? PlayMode._REVERSED : PlayMode._LOOP;
+                PlayMode = PlayMode == PlayMode._LOOP_REVERSED ? PlayMode._REVERSED : PlayMode._LOOP;
             }
         }
 
         var frame = GetKeyFrame( stateTime );
 
-        Mode = oldPlayMode;
+        PlayMode = oldPlayMode;
 
         return frame;
     }
@@ -102,9 +101,9 @@ public class Animation
         }
         else
         {
-            frameNumber = (int) ( stateTime / _frameDuration );
+            frameNumber = ( int )( stateTime / _frameDuration );
 
-            switch ( Mode )
+            switch ( PlayMode )
             {
                 case PlayMode._NORMAL:
                     frameNumber = Math.Min( _keyFrames.Count - 1, frameNumber );
@@ -119,7 +118,7 @@ public class Animation
                     break;
 
                 case PlayMode._LOOP_RANDOM:
-                    var lastFrameNumber = (int) ( ( _lastStateTime ) / _frameDuration );
+                    var lastFrameNumber = ( int )( ( _lastStateTime ) / _frameDuration );
 
                     if ( lastFrameNumber != frameNumber )
                     {
@@ -156,7 +155,7 @@ public class Animation
 
     public void SetKeyFrames( params TextureRegion[] args )
     {
-        this._keyFrames = new List<TextureRegion>();
+        this._keyFrames = new List< TextureRegion >();
 
         foreach ( var t in args )
         {
@@ -174,7 +173,7 @@ public class Animation
     /// <returns>Whether or not the animation is finished.</returns>
     public bool IsAnimationFinished( float stateTime )
     {
-        var frameNumber = (int) ( stateTime / _frameDuration );
+        var frameNumber = ( int )( stateTime / _frameDuration );
 
         return ( ( _keyFrames.Count - 1 ) < frameNumber );
     }

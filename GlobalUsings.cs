@@ -14,6 +14,7 @@ global using Newtonsoft.Json;
 // --------------------------------------
 //
 global using PlatformaniaCS.Game.Audio;
+global using PlatformaniaCS.Game.Core;
 
 // --------------------------------------
 // Lugh Utils Library

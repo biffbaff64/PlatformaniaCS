@@ -30,9 +30,9 @@ public interface IEntityComponent
 
     void Tidy( int index );
 
-    short GetBodyCategory();
+    ushort GetBodyCategory();
 
-    short GetCollidesWith();
+    ushort GetCollidesWith();
 
     int GetSpriteNumber();
 
@@ -46,7 +46,7 @@ public interface IEntityComponent
 
     GraphicID GetGID();
 
-    GraphicID GetType();
+    GraphicID GetEntityType();
 
     void SetDying();
 }

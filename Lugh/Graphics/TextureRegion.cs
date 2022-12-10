@@ -67,8 +67,8 @@ public class TextureRegion : IEnumerable
     /// </summary>
     /// <param name="tileWidth">a tile's width in pixels.</param>
     /// <param name="tileHeight">a tile's height in pixels.</param>
-    /// <returns>2D array of TextureRegions indexed by [row][column].</returns>
-    public TextureRegion[ , ] Split( int tileWidth, int tileHeight )
+    /// <returns>Single dimensional array of TextureRegions.</returns>
+    public TextureRegion[] Split( int tileWidth, int tileHeight )
     {
         var x      = RegionX;
         var y      = RegionY;
@@ -78,7 +78,8 @@ public class TextureRegion : IEnumerable
         var cols   = width / tileWidth;
         var startX = x;
 
-        TextureRegion[ , ] tiles = new TextureRegion[ rows, cols ];
+        var tiles = new TextureRegion[ rows * cols ];
+        var index = 0;
 
         for ( var row = 0; row < rows; row++, y += tileHeight )
         {
@@ -86,7 +87,7 @@ public class TextureRegion : IEnumerable
 
             for ( var col = 0; col < cols; col++, x += tileWidth )
             {
-                tiles[ row, col ] = new TextureRegion( Texture, x, y, tileWidth, tileHeight );
+                tiles[ index++ ] = new TextureRegion( Texture, x, y, tileWidth, tileHeight );
             }
         }
 

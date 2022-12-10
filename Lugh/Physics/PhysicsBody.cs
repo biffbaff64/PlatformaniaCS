@@ -4,7 +4,7 @@ using Box2DSharp.Dynamics;
 
 namespace Lugh.Physics;
 
-public struct PhysicsBody
+public class PhysicsBody
 {
     public Body      Body         { get; set; }
     public int       Index        { get; set; }

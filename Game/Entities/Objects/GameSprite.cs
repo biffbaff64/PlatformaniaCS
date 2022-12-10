@@ -3,11 +3,8 @@
 using System.Drawing;
 using System.Numerics;
 
-using PlatformaniaCS.Game.Core;
 using PlatformaniaCS.Game.Graphics;
 using PlatformaniaCS.Game.Physics;
-
-using Animation = Lugh.Entities.Animation;
 
 // ##################################################
 
@@ -25,6 +22,7 @@ public class GameSprite : IEntityComponent, IDisposable
     public int          SpriteNumber    { get; set; }
     public bool         IsMainCharacter { get; set; }
     public int          Strength        { get; set; }
+    public Sprite       Sprite          { get; set; }
 
     // -----------------------------------------------
     // Movement / Transform / Positioning
@@ -50,32 +48,35 @@ public class GameSprite : IEntityComponent, IDisposable
     // -----------------------------------------------
     // Collision Related
     //
-    public int    B2dBodyIndex     { get; set; } // Index into the Body array
-    public ushort BodyCategory     { get; set; } // Bit-mask entity collision type (See Gfx()).
-    public ushort CollidesWith     { get; set; } // Bit-mask of entity types that can be collided with
-    public bool   IsHittable       { get; set; } // ( Might be losing this flag... )
-    public bool   IsTouchingPlayer { get; set; }
-    public bool   IsTouchingEnemy  { get; set; }
-    public bool   IsHittingWeapon  { get; set; }
-    public bool   IsOnPlatform     { get; set; }
-    public bool   IsHittingSame    { get; set; }
+    public int    B2dBodyIndex      { get; set; } // Index into the Body array
+    public ushort BodyCategory      { get; set; } // Bit-mask entity collision type (See Gfx()).
+    public ushort CollidesWith      { get; set; } // Bit-mask of entity types that can be collided with
+    public bool   IsHittable        { get; set; } // ( Might be losing this flag... )
+    public bool   IsTouchingPlayer  { get; set; }
+    public bool   IsTouchingEnemy   { get; set; }
+    public bool   IsHittingWeapon   { get; set; }
+    public bool   IsOnPlatform      { get; set; }
+    public bool   IsHittingSameType { get; set; }
 
     // -----------------------------------------------
     // Animation related
     //
-    public Animation       Animation        { get; set; }
-    public TextureRegion[] AnimFrames       { get; set; }
-    public TextureRegion   Region           { get; set; }
-    public float           ElapsedAnimTime  { get; set; }
-    public bool            IsAnimating      { get; set; }
-    public bool            IsLoopingAnim    { get; set; }
-    public int             FrameWidth       { get; set; } // Width in pixels, or width of frame for animations
-    public int             FrameHeight      { get; set; } // Width in pixels, or width of frame for animations
-    public bool            IsDrawable       { get; set; }
-    public bool            IsActive         { get; set; }
-    public bool            IsSetupCompleted { get; set; }
-    public bool            IsLinked         { get; set; }
-    public int             Link             { get; set; }
+    public Animation       Animation       { get; set; }
+    public TextureRegion[] AnimFrames      { get; set; }
+    public TextureRegion   Region          { get; set; }
+    public float           ElapsedAnimTime { get; set; }
+    public bool            IsAnimating     { get; set; }
+    public bool            IsLoopingAnim   { get; set; }
+    public int             FrameWidth      { get; set; } // Width in pixels, or width of frame for animations
+    public int             FrameHeight     { get; set; } // Width in pixels, or width of frame for animations
+    public bool            IsDrawable      { get; set; }
+
+    // -----------------------------------------------
+    // Miscellaneous
+    //
+    public bool IsActive         { get; set; }
+    public bool IsSetupCompleted { get; set; }
+    public int  Link             { get; set; }
 
     // --------------------------------------------------------------
     // Code
@@ -157,8 +158,8 @@ public class GameSprite : IEntityComponent, IDisposable
 
         var vec3 = new SimpleVec3
             (
-             descriptor.Position.X                      + vec3M.X,
-             descriptor.Position.Y                      + vec3M.Y,
+             descriptor.Position.X + vec3M.X,
+             descriptor.Position.Y + vec3M.Y,
              App.EntityUtils.GetInitialZPosition( GID ) + vec3M.Z
             );
 
@@ -166,8 +167,7 @@ public class GameSprite : IEntityComponent, IDisposable
 
         DefinePhysicsBodyBox( false );
 
-        IsLinked = ( descriptor.Link > 0 );
-        Link     = descriptor.Link;
+        Link = descriptor.Link;
 
         IsSetupCompleted = true;
     }
@@ -216,7 +216,7 @@ public class GameSprite : IEntityComponent, IDisposable
         // The CENTRE of this sprite
         Origin = new Vector2
             (
-             InitXYZ.X + ( FrameWidth  / 2f ),
+             InitXYZ.X + ( FrameWidth / 2f ),
              InitXYZ.Y + ( FrameHeight / 2f )
             );
 
@@ -312,7 +312,7 @@ public class GameSprite : IEntityComponent, IDisposable
     {
         if ( IsAnimating )
         {
-            Region.SetRegion( App.EntityUtils.GetKeyFrame( Animation, ElapsedAnimTime, IsLoopingAnim ) );
+            Region.SetRegion( App.AnimationUtils.GetKeyFrame( Animation, ElapsedAnimTime, IsLoopingAnim ) );
 
             ElapsedAnimTime += Gfx.GameTime.GetElapsedSeconds();
         }
@@ -341,7 +341,7 @@ public class GameSprite : IEntityComponent, IDisposable
                 FrameHeight = asset.RegionHeight;
             }
 
-            TextureRegion[ , ] tmpFrames = asset.Split( FrameWidth, FrameHeight );
+            var tmpFrames = asset.Split( FrameWidth, FrameHeight );
 
             var i = 0;
 
@@ -358,13 +358,13 @@ public class GameSprite : IEntityComponent, IDisposable
 
             Animation = new Animation( descriptor.AnimRate / 6f, AnimFrames )
             {
-                Mode = descriptor.PlayMode
+                PlayMode = descriptor.PlayMode
             };
 
             ElapsedAnimTime = 0;
 
-            IsLoopingAnim = ( ( descriptor.PlayMode    != Animation.PlayMode._NORMAL )
-                              && ( descriptor.PlayMode != Animation.PlayMode._REVERSED ) );
+            IsLoopingAnim = ( ( descriptor.PlayMode != PlayMode._NORMAL )
+                              && ( descriptor.PlayMode != PlayMode._REVERSED ) );
 
             Region = AnimFrames[ 0 ];
 
@@ -378,6 +378,11 @@ public class GameSprite : IEntityComponent, IDisposable
             Trace.Divider( '#', 100 );
         }
     }
+
+    /// <summary>
+    /// Return the current <see cref="ActionStates"/> for this sprite.
+    /// </summary>
+    public ActionStates GetActionState() => ActionState;
 
     /// <summary>
     /// Sets the current <see cref="ActionStates"/> for this sprite.
@@ -399,7 +404,7 @@ public class GameSprite : IEntityComponent, IDisposable
         {
             Position.Set
                 (
-                 ( GetPhysicsBody().Body.GetPosition().X * Gfx.PPM ) - ( GetPhysicsBody().BodyBox.Width  / 2f ),
+                 ( GetPhysicsBody().Body.GetPosition().X * Gfx.PPM ) - ( GetPhysicsBody().BodyBox.Width / 2f ),
                  ( GetPhysicsBody().Body.GetPosition().Y * Gfx.PPM ) - ( GetPhysicsBody().BodyBox.Height / 2f ),
                  ZPosition
                 );
@@ -422,12 +427,6 @@ public class GameSprite : IEntityComponent, IDisposable
              FrameWidth,
              FrameHeight
             );
-    }
-
-    public void SetLink( int link )
-    {
-        Link     = link;
-        IsLinked = ( link > 0 );
     }
 
     public void SetDying()
@@ -457,11 +456,22 @@ public class GameSprite : IEntityComponent, IDisposable
     /// </summary>
     public float GetBodyY() => GetPhysicsBody().Body == null ? 0 : ( GetPhysicsBody().Body.GetPosition().Y * Gfx.PPM );
 
+    // TODO:
+    public ushort    GetBodyCategory()   => BodyCategory;
+    public ushort    GetCollidesWith()   => CollidesWith;
+    public int       GetSpriteNumber()   => SpriteNumber;
+    public bool      IsLinked()          => ( Link > 0 );
+    public bool      IsHittingSame()     => IsHittingSameType;
+    public GraphicID GetGID()            => GID;
+    public GraphicID GetEntityType()     => Type;
+    public int       GetLink()           => Link;
+    public void      SetLink( int link ) => Link = link;
+
     public void Dispose()
     {
         Array.Fill( AnimFrames, null );
 
-//            Sprite      = null;
+        Sprite     = null;
         Direction  = null;
         LookingAt  = null;
         Distance   = null;
@@ -474,6 +484,7 @@ public class GameSprite : IEntityComponent, IDisposable
     // ---------------------------------------------------------------
 
     public CollisionObject GetCollisionObject() =>
+
         // TO BE REMOVED
         null;
 
