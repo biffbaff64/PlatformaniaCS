@@ -1,6 +1,7 @@
-﻿namespace PlatformaniaCS.Game.Scenes;
-
-public interface ISceneType
+﻿namespace PlatformaniaCS.Game.Scenes
 {
+    public interface ISceneType
+    {
         
+    }
 }

@@ -1,36 +1,37 @@
-﻿namespace PlatformaniaCS.Game.Scenes;
-
-public abstract class BaseScene : IScene, IDisposable
+﻿namespace PlatformaniaCS.Game.Scenes
 {
-    protected BaseScene()
+    public abstract class BaseScene : IScene, IDisposable
     {
-    }
+        protected BaseScene()
+        {
+        }
 
-    public abstract void Initialise();
+        public abstract void Initialise();
 
-    public abstract void Update( GameTime gameTime );
+        public abstract void Update( GameTime gameTime );
 
-    public abstract void Render( GameTime gameTime );
+        public abstract void Render( GameTime gameTime );
 
-    public abstract void Show();
+        public abstract void Show();
 
-    public abstract void Hide();
+        public abstract void Hide();
 
-    public abstract string Name();
+        public abstract string Name();
 
-    public void Resize( int width, int height )
-    {
-    }
+        public void Resize( int width, int height )
+        {
+        }
 
-    public void Pause()
-    {
-    }
+        public void Pause()
+        {
+        }
 
-    public void Resume()
-    {
-    }
+        public void Resume()
+        {
+        }
 
-    void IDisposable.Dispose()
-    {
+        void IDisposable.Dispose()
+        {
+        }
     }
 }

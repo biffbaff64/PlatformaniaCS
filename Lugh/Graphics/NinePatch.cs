@@ -1,17 +1,18 @@
 ﻿
-namespace Lugh.Graphics;
-
-public class NinePatch
+namespace Lugh.Graphics
 {
-    public NinePatch( Texture loadAsset, int i, int i1, int i2, int i3 )
+    public class NinePatch
     {
-    }
+        public NinePatch( Texture loadAsset, int i, int i1, int i2, int i3 )
+        {
+        }
 
-    public void SetColor( Color color )
-    {
-    }
+        public void SetColor( Color color )
+        {
+        }
 
-    public void Draw( SpriteBatch spriteBatch, int positionX, int positionY, float maximum, float height )
-    {
+        public void Draw( SpriteBatch spriteBatch, int positionX, int positionY, float maximum, float height )
+        {
+        }
     }
 }

@@ -1,8 +1,9 @@
-﻿namespace Lugh.Graphics;
-
-public enum TextureWrap
+﻿namespace Lugh.Graphics
 {
-    MirroredRepeat,
-    ClampToEdge,
-    Repeat
+    public enum TextureWrap
+    {
+        MirroredRepeat,
+        ClampToEdge,
+        Repeat
+    }
 }

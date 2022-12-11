@@ -1,6 +1,7 @@
-﻿namespace PlatformaniaCS.Game.Physics;
-
-public class Proximity
+﻿namespace PlatformaniaCS.Game.Physics
 {
+    public class Proximity
+    {
         
+    }
 }

@@ -2,10 +2,11 @@
 
 // ##################################################
 
-namespace Lugh.Maps;
-
-public class MapProperties
+namespace Lugh.Maps
 {
+    public class MapProperties
+    {
     
+    }
 }
 

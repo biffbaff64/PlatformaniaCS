@@ -1,10 +1,11 @@
 ﻿using Action = Scene2DCS.Action;
 
-namespace Lugh.Utils;
-
-public class Pool< T >
+namespace Lugh.Utils
 {
-    public void Free( Action action )
+    public class Pool< T >
     {
+        public void Free( Action action )
+        {
+        }
     }
 }

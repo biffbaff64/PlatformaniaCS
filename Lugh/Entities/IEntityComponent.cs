@@ -1,52 +1,53 @@
 ﻿
 using System.Drawing;
 
-namespace Lugh.Entities;
-
-public interface IEntityComponent
+namespace Lugh.Entities
 {
-    ActionStates GetActionState();
+    public interface IEntityComponent
+    {
+        ActionStates GetActionState();
 
-    void SetActionState( ActionStates action );
+        void SetActionState( ActionStates action );
 
-    /**
+        /**
      * Gets the {@link PhysicsBody} attached to this sprite.
      */
-    PhysicsBody GetPhysicsBody();
+        PhysicsBody GetPhysicsBody();
 
-    Rectangle GetBodyBox();
+        Rectangle GetBodyBox();
 
-    /**
+        /**
      * Gets the current X position of the {@link PhysicsBody}
      * attached to this sprite.
      */
-    float GetBodyX();
+        float GetBodyX();
 
-    /**
+        /**
      * Gets the current Y position of the {@link PhysicsBody}
      * attached to this sprite.
      */
-    float GetBodyY();
+        float GetBodyY();
 
-    void Tidy( int index );
+        void Tidy( int index );
 
-    ushort GetBodyCategory();
+        ushort GetBodyCategory();
 
-    ushort GetCollidesWith();
+        ushort GetCollidesWith();
 
-    int GetSpriteNumber();
+        int GetSpriteNumber();
 
-    int GetLink();
+        int GetLink();
 
-    void SetLink( int lnk );
+        void SetLink( int lnk );
 
-    bool IsLinked();
+        bool IsLinked();
 
-    bool IsHittingSame();
+        bool IsHittingSame();
 
-    GraphicID GetGID();
+        GraphicID GetGID();
 
-    GraphicID GetEntityType();
+        GraphicID GetEntityType();
 
-    void SetDying();
+        void SetDying();
+    }
 }

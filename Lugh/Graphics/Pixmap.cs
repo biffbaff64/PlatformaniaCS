@@ -2,24 +2,25 @@
 
 // ############################################################
 
-namespace Lugh.Graphics;
-
-public class Pixmap : IDisposable
+namespace Lugh.Graphics
 {
-    public enum Format
+    public class Pixmap : IDisposable
     {
-        None,
-        Alpha,
-        Intensity,
-        LuminanceAlpha,
-        RGB565,
-        RGBA4444,
-        RGB888,
-        RBGA8888
-    }
+        public enum Format
+        {
+            None,
+            Alpha,
+            Intensity,
+            LuminanceAlpha,
+            RGB565,
+            RGBA4444,
+            RGB888,
+            RBGA8888
+        }
     
-    public void Dispose()
-    {
+        public void Dispose()
+        {
+        }
     }
 }
 

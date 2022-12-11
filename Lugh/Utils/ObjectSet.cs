@@ -2,10 +2,11 @@
 
 // ##################################################
 
-namespace Lugh.Utils;
-
-public class ObjectSet< T >
+namespace Lugh.Utils
 {
+    public class ObjectSet< T >
+    {
     
+    }
 }
 

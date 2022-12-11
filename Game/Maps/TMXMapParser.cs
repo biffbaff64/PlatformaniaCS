@@ -7,57 +7,58 @@ using PlatformaniaCS.Game.Entities.Objects;
 
 // ########################################################
 
-namespace PlatformaniaCS.Game.Maps;
-
-public class TMXMapParser : IDisposable
+namespace PlatformaniaCS.Game.Maps
 {
-    public const int Layer1         = 0;
-    public const int Layer2         = 1;
-    public const int Layer3         = 2;
-    public const int Layer4         = 3;
-    public const int Overlays       = 4;
-    public const int ObjectMarkers  = 5;
-    public const int CollisionLayer = 6;
-
-    public ArrayList PlacementTiles { get; set; }
-    public TiledMap  CurrentMap     { get; set; }
-    public string    CurrentMapName { get; set; }
-
-    public void InitialiseLevelMap()
+    public class TMXMapParser : IDisposable
     {
-        CurrentMapName = App.RoomManager.GetCurrentMapNameWithPath();
-        CurrentMap     = new TiledMap();
+        public const int Layer1         = 0;
+        public const int Layer2         = 1;
+        public const int Layer3         = 2;
+        public const int Layer4         = 3;
+        public const int Overlays       = 4;
+        public const int ObjectMarkers  = 5;
+        public const int CollisionLayer = 6;
 
-        SetGameLevelMap();
+        public ArrayList PlacementTiles { get; set; }
+        public TiledMap  CurrentMap     { get; set; }
+        public string    CurrentMapName { get; set; }
 
-        App.MapData.ScrollDirection.Set( Movement._DIRECTION_STILL, Movement._DIRECTION_STILL );
-    }
+        public void InitialiseLevelMap()
+        {
+            CurrentMapName = App.RoomManager.GetCurrentMapNameWithPath();
+            CurrentMap     = new TiledMap();
 
-    public void CreatePositioningData()
-    {
-    }
+            SetGameLevelMap();
 
-    public void ParseObjectBasedMarkerTiles()
-    {
-    }
+            App.MapData.ScrollDirection.Set( Movement._DIRECTION_STILL, Movement._DIRECTION_STILL );
+        }
 
-    // TODO: For future use, parse collision areas from tiles.
-    public void ParseTiledCollision()
-    {
-    }
+        public void CreatePositioningData()
+        {
+        }
 
-    public void ParseAABBObjects()
-    {
-    }
+        public void ParseObjectBasedMarkerTiles()
+        {
+        }
 
-    public SpriteDescriptor CreatePlacementTile
-        ( TiledMapObject mapObject, SpriteDescriptor descriptor ) => new SpriteDescriptor();
+        // TODO: For future use, parse collision areas from tiles.
+        public void ParseTiledCollision()
+        {
+        }
 
-    public void SetGameLevelMap()
-    {
-    }
+        public void ParseAABBObjects()
+        {
+        }
 
-    public void Dispose()
-    {
+        public SpriteDescriptor CreatePlacementTile
+            ( TiledMapObject mapObject, SpriteDescriptor descriptor ) => new SpriteDescriptor();
+
+        public void SetGameLevelMap()
+        {
+        }
+
+        public void Dispose()
+        {
+        }
     }
 }

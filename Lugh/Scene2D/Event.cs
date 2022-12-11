@@ -1,8 +1,9 @@
-﻿namespace Scene2DCS;
-
-public class Event
+﻿namespace Scene2DCS
 {
-    public void Reset()
+    public class Event
     {
+        public void Reset()
+        {
+        }
     }
 }

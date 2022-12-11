@@ -2,13 +2,14 @@
 
 // ##################################################
 
-namespace Lugh.Graphics;
-
-public class TextureAtlas
+namespace Lugh.Graphics
 {
-    public TextureRegion FindRegion( string name )
+    public class TextureAtlas
     {
-        return null;
+        public TextureRegion FindRegion( string name )
+        {
+            return null;
+        }
     }
 }
 

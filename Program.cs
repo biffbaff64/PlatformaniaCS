@@ -5,14 +5,15 @@ using PlatformaniaCS.Game.Graphics;
 
 // ##################################################
 
-namespace PlatformaniaCS;
-
-public static class Program
+namespace PlatformaniaCS
 {
-    [STAThread]
-    static void Main()
+    public static class Program
     {
-        using var game = new MainGame();
-        game.Run();
+        [STAThread]
+        static void Main()
+        {
+            using var game = new MainGame();
+            game.Run();
+        }
     }
 }

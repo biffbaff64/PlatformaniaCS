@@ -4,9 +4,10 @@
 
 using Lugh.Assets.Resolvers;
 
-namespace Lugh.Assets;
-
-public class AssetLoader : AssetLoaderParameters
+namespace Lugh.Assets
 {
-    private IFileHandleResolver _resolver;
+    public class AssetLoader : AssetLoaderParameters
+    {
+        private IFileHandleResolver _resolver;
+    }
 }

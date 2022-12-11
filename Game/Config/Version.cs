@@ -1,10 +1,12 @@
 ﻿
-namespace PlatformaniaCS.Game.Config;
-// This class may be removed, these values may become unneccesary.
-
-public class Version
+namespace PlatformaniaCS.Game.Config
 {
-    public const int MajorVersion = 0;
-    public const int MinorVersion = 0;
-    public const int IssueNumber  = 1;
+    // This class may be removed, these values may become unneccesary.
+
+    public class Version
+    {
+        public const int MajorVersion = 0;
+        public const int MinorVersion = 0;
+        public const int IssueNumber  = 1;
+    }
 }

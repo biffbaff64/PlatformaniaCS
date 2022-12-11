@@ -2,9 +2,10 @@
 
 // ############################################################
 
-namespace Lugh.Assets.Resolvers;
-
-public class PrefixFileHandleResolver
+namespace Lugh.Assets.Resolvers
 {
+    public class PrefixFileHandleResolver
+    {
     
+    }
 }

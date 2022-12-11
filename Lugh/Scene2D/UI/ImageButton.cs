@@ -1,5 +1,6 @@
-﻿namespace Scene2DCS;
-
-public class ImageButton : Button
+﻿namespace Scene2DCS
 {
+    public class ImageButton : Button
+    {
+    }
 }

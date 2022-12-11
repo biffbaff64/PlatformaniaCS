@@ -1,5 +1,6 @@
 ﻿
 Preferences class needs finishing ASAP.
+Go through Interfaces and check to see if they're actually necessary.
 
 Assets Library
 ==============

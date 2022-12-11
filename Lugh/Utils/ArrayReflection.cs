@@ -1,6 +1,7 @@
-﻿namespace Lugh.Utils;
-
-public class ArrayReflection
+﻿namespace Lugh.Utils
 {
-    public static object NewInstance< T >( int size ) => new Array< T >( size );
+    public class ArrayReflection
+    {
+        public static object NewInstance< T >( int size ) => new Array< T >( size );
+    }
 }

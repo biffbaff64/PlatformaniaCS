@@ -4,11 +4,12 @@
 
 using Lugh.Assets.Resolvers;
 
-namespace Lugh.Assets;
-
-public class SkinLoader
+namespace Lugh.Assets
 {
-    public SkinLoader( IFileHandleResolver resolver )
+    public class SkinLoader
     {
+        public SkinLoader( IFileHandleResolver resolver )
+        {
+        }
     }
 }

@@ -2,10 +2,11 @@
 
 // ##################################################
 
-namespace Lugh.Graphics;
-
-public class Texture
+namespace Lugh.Graphics
 {
-    public int Width  { get; set; }
-    public int Height { get; set; }
+    public class Texture
+    {
+        public int Width  { get; set; }
+        public int Height { get; set; }
+    }
 }

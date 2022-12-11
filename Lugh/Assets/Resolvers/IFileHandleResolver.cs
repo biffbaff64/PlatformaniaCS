@@ -2,8 +2,9 @@
 
 // ########################################################
 
-namespace Lugh.Assets.Resolvers;
-
-public interface IFileHandleResolver
+namespace Lugh.Assets.Resolvers
 {
+    public interface IFileHandleResolver
+    {
+    }
 }

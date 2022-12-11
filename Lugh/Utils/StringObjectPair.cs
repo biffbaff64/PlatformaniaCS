@@ -2,20 +2,21 @@
 
 // ##################################################
 
-namespace Lugh.Utils;
-
-public class StringObjectPair
+namespace Lugh.Utils
 {
-    public string StringPart { get; set; }
-    public object ObjectPart { get; set; }
+    public class StringObjectPair
+    {
+        public string StringPart { get; set; }
+        public object ObjectPart { get; set; }
 
-    public StringObjectPair()
-    {
-    }
+        public StringObjectPair()
+        {
+        }
     
-    public StringObjectPair( string s, object o )
-    {
-        this.StringPart = s;
-        this.ObjectPart = o;
+        public StringObjectPair( string s, object o )
+        {
+            this.StringPart = s;
+            this.ObjectPart = o;
+        }
     }
 }

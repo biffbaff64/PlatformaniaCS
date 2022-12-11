@@ -4,11 +4,12 @@
 
 using Lugh.Assets.Resolvers;
 
-namespace Lugh.Assets;
-
-public class MusicLoader
+namespace Lugh.Assets
 {
-    public MusicLoader( IFileHandleResolver resolver )
+    public class MusicLoader
     {
+        public MusicLoader( IFileHandleResolver resolver )
+        {
+        }
     }
 }

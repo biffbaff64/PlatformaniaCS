@@ -2,9 +2,10 @@
 
 // ############################################################
 
-namespace Lugh.Assets.Resolvers;
-
-public class ExternalFileHandleResolver
+namespace Lugh.Assets.Resolvers
 {
+    public class ExternalFileHandleResolver
+    {
     
+    }
 }

@@ -1,81 +1,82 @@
 ﻿using Scene2DCS.Utils;
 
-namespace Scene2DCS;
-
-public class Widget : Actor, ILayout
+namespace Scene2DCS
 {
-    public bool NeedsLayout { get; set; }
-
-    public void Layout()
+    public class Widget : Actor, ILayout
     {
-    }
+        public bool NeedsLayout { get; set; }
 
-    public void Pack()
-    {
-        SetSize( GetPrefWidth(), GetPrefHeight() );
-        Validate();
-    }
+        public void Layout()
+        {
+        }
 
-    public void SetFillParent( bool fillParent )
-    {
-    }
+        public void Pack()
+        {
+            SetSize( GetPrefWidth(), GetPrefHeight() );
+            Validate();
+        }
 
-    public void SetLayoutEnabled( bool enabled )
-    {
-    }
+        public void SetFillParent( bool fillParent )
+        {
+        }
 
-    public new void SizeChanged()
-    {
-    }
+        public void SetLayoutEnabled( bool enabled )
+        {
+        }
 
-    /// <summary>
-    /// If this method is overridden, the super method or validate() should
-    /// be called to ensure the widget is laid out.
-    /// </summary>
-    public new void Draw( SpriteBatch batch, float parentAlpha )
-    {
-        Validate();
-    }
+        public new void SizeChanged()
+        {
+        }
 
-    public float GetMinWidth()
-    {
-        return 0;
-    }
+        /// <summary>
+        /// If this method is overridden, the super method or validate() should
+        /// be called to ensure the widget is laid out.
+        /// </summary>
+        public new void Draw( SpriteBatch batch, float parentAlpha )
+        {
+            Validate();
+        }
 
-    public float GetMinHeight()
-    {
-        return 0;
-    }
+        public float GetMinWidth()
+        {
+            return 0;
+        }
 
-    public float GetPrefWidth()
-    {
-        return 0;
-    }
+        public float GetMinHeight()
+        {
+            return 0;
+        }
 
-    public float GetPrefHeight()
-    {
-        return 0;
-    }
+        public float GetPrefWidth()
+        {
+            return 0;
+        }
 
-    public float GetMaxWidth()
-    {
-        return 0;
-    }
+        public float GetPrefHeight()
+        {
+            return 0;
+        }
 
-    public float GetMaxHeight()
-    {
-        return 0;
-    }
+        public float GetMaxWidth()
+        {
+            return 0;
+        }
 
-    public void Validate()
-    {
-    }
+        public float GetMaxHeight()
+        {
+            return 0;
+        }
 
-    public void Invalidate()
-    {
-    }
+        public void Validate()
+        {
+        }
 
-    public void InvalidateHierarchy()
-    {
+        public void Invalidate()
+        {
+        }
+
+        public void InvalidateHierarchy()
+        {
+        }
     }
 }

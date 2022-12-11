@@ -2,9 +2,10 @@
 
 // ##################################################
 
-namespace Lugh.Audio;
-
-public class SoundEffect
+namespace Lugh.Audio
 {
+    public class SoundEffect
+    {
+    }
 }
 

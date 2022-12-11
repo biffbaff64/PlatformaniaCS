@@ -3,167 +3,168 @@ using Microsoft.Xna.Framework.Graphics;
 
 using PlatformaniaCS.Game.Graphics;
 
-namespace PlatformaniaCS.Game.UI;
-
-public class ProgressBar : ItemF, IDisposable
+namespace PlatformaniaCS.Game.UI
 {
-    private const int DefaultBarHeight = 26;
-    private const int DefaultInterval  = 100;
-
-    public bool JustEmptied     { get; set; }
-    public bool IsAutoRefilling { get; set; }
-    public Vec2 Position        { get; set; }
-
-    private int       _subInterval;
-    private int       _addInterval;
-    private float     _speed;
-    private float     _height;
-    private float     _scale;
-    private Stopwatch _stopwatch;
-    private NinePatch _ninePatch;
-    private NinePatch _ninePatchBase;
-
-    public ProgressBar( float speed, int size, int maxSize, String texture, bool hasBase )
+    public class ProgressBar : ItemF, IDisposable
     {
-        _ninePatch = new NinePatch( AssetUtils.LoadAsset<Texture2D>( texture ), 1, 1, 1, 1 );
+        private const int DefaultBarHeight = 26;
+        private const int DefaultInterval  = 100;
 
-        if ( hasBase )
+        public bool JustEmptied     { get; set; }
+        public bool IsAutoRefilling { get; set; }
+        public Vec2 Position        { get; set; }
+
+        private int       _subInterval;
+        private int       _addInterval;
+        private float     _speed;
+        private float     _height;
+        private float     _scale;
+        private Stopwatch _stopwatch;
+        private NinePatch _ninePatch;
+        private NinePatch _ninePatchBase;
+
+        public ProgressBar( float speed, int size, int maxSize, String texture, bool hasBase )
         {
-            _ninePatchBase = new NinePatch( AssetUtils.LoadAsset<Texture2D>( texture ), 1, 1, 1, 1 );
-            _ninePatchBase.SetColor( Color.Black );
-        }
+            _ninePatch = new NinePatch( AssetUtils.LoadAsset<Texture2D>( texture ), 1, 1, 1, 1 );
 
-        this.Minimum         = 0;
-        this.Maximum         = maxSize;
-        this.RefillAmount    = 0;
-        this._stopwatch      = new Stopwatch();
-        this.Total           = size;
-        this._height         = DefaultBarHeight;
-        this.Position        = new Vec2();
-        this.RefillAmount    = maxSize;
-        this.JustEmptied     = false;
-        this.IsAutoRefilling = false;
-        this._scale          = 1;
-        this._speed          = speed;
-        this._addInterval    = DefaultInterval;
-        this._subInterval    = DefaultInterval;
-    }
-
-    public void Draw( SpriteBatch spriteBatch )
-    {
-        if ( Total > 0 )
-        {
-            if ( _ninePatchBase != null )
+            if ( hasBase )
             {
-                _ninePatchBase.Draw( spriteBatch, Position.X, Position.Y, Maximum * _scale, _height );
+                _ninePatchBase = new NinePatch( AssetUtils.LoadAsset<Texture2D>( texture ), 1, 1, 1, 1 );
+                _ninePatchBase.SetColor( Color.Black );
             }
 
-            _ninePatch.Draw( spriteBatch, Position.X, Position.Y, Total * _scale, _height );
+            this.Minimum         = 0;
+            this.Maximum         = maxSize;
+            this.RefillAmount    = 0;
+            this._stopwatch      = new Stopwatch();
+            this.Total           = size;
+            this._height         = DefaultBarHeight;
+            this.Position        = new Vec2();
+            this.RefillAmount    = maxSize;
+            this.JustEmptied     = false;
+            this.IsAutoRefilling = false;
+            this._scale          = 1;
+            this._speed          = speed;
+            this._addInterval    = DefaultInterval;
+            this._subInterval    = DefaultInterval;
         }
-    }
 
-    public void UpdateSlowDecrement()
-    {
-        JustEmptied = false;
-
-        if ( Total > 0 )
+        public void Draw( SpriteBatch spriteBatch )
         {
-            if ( _stopwatch.ElapsedMilliseconds >= _subInterval )
+            if ( Total > 0 )
             {
-                Total -= _speed;
-
-                if ( IsEmpty() )
+                if ( _ninePatchBase != null )
                 {
-                    JustEmptied = true;
+                    _ninePatchBase.Draw( spriteBatch, Position.X, Position.Y, Maximum * _scale, _height );
                 }
 
-                _stopwatch.Reset();
+                _ninePatch.Draw( spriteBatch, Position.X, Position.Y, Total * _scale, _height );
             }
         }
-    }
 
-    public void UpdateSlowDecrementWithWrap( int wrap )
-    {
-        JustEmptied = false;
-
-        if ( Total > 0 )
+        public void UpdateSlowDecrement()
         {
-            if ( _stopwatch.ElapsedMilliseconds >= _subInterval )
-            {
-                Total -= _speed;
-                Total =  Math.Max( 0, Total );
+            JustEmptied = false;
 
-                if ( IsEmpty() )
+            if ( Total > 0 )
+            {
+                if ( _stopwatch.ElapsedMilliseconds >= _subInterval )
                 {
-                    Total = wrap;
+                    Total -= _speed;
+
+                    if ( IsEmpty() )
+                    {
+                        JustEmptied = true;
+                    }
+
+                    _stopwatch.Reset();
                 }
-
-                _stopwatch.Reset();
             }
         }
-    }
 
-    public bool UpdateSlowIncrement()
-    {
-        if ( Total < Maximum )
+        public void UpdateSlowDecrementWithWrap( int wrap )
         {
-            if ( _stopwatch.ElapsedMilliseconds >= _addInterval )
-            {
-                Total += _speed;
+            JustEmptied = false;
 
-                _stopwatch.Reset();
+            if ( Total > 0 )
+            {
+                if ( _stopwatch.ElapsedMilliseconds >= _subInterval )
+                {
+                    Total -= _speed;
+                    Total =  Math.Max( 0, Total );
+
+                    if ( IsEmpty() )
+                    {
+                        Total = wrap;
+                    }
+
+                    _stopwatch.Reset();
+                }
             }
         }
 
-        return IsFull();
-    }
+        public bool UpdateSlowIncrement()
+        {
+            if ( Total < Maximum )
+            {
+                if ( _stopwatch.ElapsedMilliseconds >= _addInterval )
+                {
+                    Total += _speed;
 
-    public void SetHeightColorScale( float height, Color color, float scale )
-    {
-        this._height = height;
-        this._ninePatch.SetColor( color );
-        this._scale = scale;
-    }
+                    _stopwatch.Reset();
+                }
+            }
 
-    public void SetHeight( float height )
-    {
-        this._height = height;
-    }
+            return IsFull();
+        }
 
-    public void SetPosition( int x, int y )
-    {
-        Position.X = x;
-        Position.Y = y;
-    }
+        public void SetHeightColorScale( float height, Color color, float scale )
+        {
+            this._height = height;
+            this._ninePatch.SetColor( color );
+            this._scale = scale;
+        }
 
-    public bool HasRefillRoom() => HasRoom() && ( Total < ( Maximum - 10 ) );
+        public void SetHeight( float height )
+        {
+            this._height = height;
+        }
 
-    public void SetColor( Color color )
-    {
-        this._ninePatch.SetColor( color );
-    }
+        public void SetPosition( int x, int y )
+        {
+            Position.X = x;
+            Position.Y = y;
+        }
 
-    public float GetSpeed() => _speed;
+        public bool HasRefillRoom() => HasRoom() && ( Total < ( Maximum - 10 ) );
 
-    public void SetSpeed( float speed )
-    {
-        this._speed = speed;
-    }
+        public void SetColor( Color color )
+        {
+            this._ninePatch.SetColor( color );
+        }
 
-    public void SetSubInterval( int subInterval )
-    {
-        this._subInterval = subInterval;
-    }
+        public float GetSpeed() => _speed;
 
-    public void SetAddInterval( int addInterval )
-    {
-        this._addInterval = addInterval;
-    }
+        public void SetSpeed( float speed )
+        {
+            this._speed = speed;
+        }
 
-    public void Dispose()
-    {
-        _ninePatchBase = null;
-        _ninePatch     = null;
-        _stopwatch     = null;
+        public void SetSubInterval( int subInterval )
+        {
+            this._subInterval = subInterval;
+        }
+
+        public void SetAddInterval( int addInterval )
+        {
+            this._addInterval = addInterval;
+        }
+
+        public void Dispose()
+        {
+            _ninePatchBase = null;
+            _ninePatch     = null;
+            _stopwatch     = null;
+        }
     }
 }

@@ -1,5 +1,6 @@
-﻿namespace Scene2DCS;
-
-public class Table : WidgetGroup
+﻿namespace Scene2DCS
 {
+    public class Table : WidgetGroup
+    {
+    }
 }

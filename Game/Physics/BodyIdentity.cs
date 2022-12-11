@@ -1,25 +1,26 @@
 ﻿
 using PlatformaniaCS.Game.Entities.Objects;
 
-namespace PlatformaniaCS.Game.Physics;
-
-public class BodyIdentity
+namespace PlatformaniaCS.Game.Physics
 {
-    public GraphicID  Gid    { get; private set; }
-    public GraphicID  Type   { get; private set; }
-    public GameSprite Entity { get; private set; }
-
-    public BodyIdentity( GameSprite entity, GraphicID gid, GraphicID type )
+    public class BodyIdentity
     {
-        this.Entity = entity;
-        this.Gid    = gid;
-        this.Type   = type;
-    }
+        public GraphicID  Gid    { get; private set; }
+        public GraphicID  Type   { get; private set; }
+        public GameSprite Entity { get; private set; }
+
+        public BodyIdentity( GameSprite entity, GraphicID gid, GraphicID type )
+        {
+            this.Entity = entity;
+            this.Gid    = gid;
+            this.Type   = type;
+        }
         
-    public override string ToString() =>
-        "BodyIdentity{" +
-        "gid="          + Gid    +
-        ", type="       + Type   +
-        ", entity="     + Entity +
-        '}';
+        public override string ToString() =>
+            "BodyIdentity{" +
+            "gid="          + Gid    +
+            ", type="       + Type   +
+            ", entity="     + Entity +
+            '}';
+    }
 }

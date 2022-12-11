@@ -2,9 +2,10 @@
 
 // ##################################################
 
-namespace Lugh.Audio;
-
-public class Music
+namespace Lugh.Audio
 {
+    public class Music
+    {
+    }
 }
 

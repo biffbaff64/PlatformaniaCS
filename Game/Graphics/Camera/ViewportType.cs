@@ -1,9 +1,10 @@
-namespace PlatformaniaCS.Game.Graphics.Camera;
-
-public enum ViewportType
+namespace PlatformaniaCS.Game.Graphics.Camera
 {
-    _DEFAULT,
-    _BOXING,
-    _SCALING,
-    _WINDOW,
+    public enum ViewportType
+    {
+        _DEFAULT,
+        _BOXING,
+        _SCALING,
+        _WINDOW,
+    }
 }

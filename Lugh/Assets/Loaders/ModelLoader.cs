@@ -2,9 +2,10 @@
 
 // ############################################################
 
-namespace Lugh.Assets;
-
-public class ModelLoader
+namespace Lugh.Assets
 {
+    public class ModelLoader
+    {
     
+    }
 }

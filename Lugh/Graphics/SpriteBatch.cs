@@ -2,12 +2,13 @@
 
 // ##################################################
 
-namespace Lugh.Graphics;
-
-public class SpriteBatch
+namespace Lugh.Graphics
 {
-    public void Dispose()
+    public class SpriteBatch
     {
+        public void Dispose()
+        {
+        }
     }
 }
 

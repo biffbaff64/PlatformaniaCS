@@ -1,5 +1,6 @@
-﻿namespace Lugh.Entities;
-
-public interface ISpriteDescriptor
+﻿namespace Lugh.Entities
 {
+    public interface ISpriteDescriptor
+    {
+    }
 }

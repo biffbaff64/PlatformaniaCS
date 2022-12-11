@@ -2,9 +2,10 @@
 
 // ##################################################
 
-namespace Lugh.Maths.Collision;
-
-public class BoundingBox
+namespace Lugh.Maths.Collision
 {
+    public class BoundingBox
+    {
+    }
 }
 

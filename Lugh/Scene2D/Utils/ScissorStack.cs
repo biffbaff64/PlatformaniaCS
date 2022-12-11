@@ -1,20 +1,21 @@
 ﻿using System.Drawing;
 
-namespace Scene2DCS.Utils;
-
-public class ScissorStack
+namespace Scene2DCS.Utils
 {
-    public static bool PushScissors( Rectangle scissorBounds )
+    public class ScissorStack
     {
-        return false;
-    }
+        public static bool PushScissors( Rectangle scissorBounds )
+        {
+            return false;
+        }
 
-    public static Rectangle PopScissors()
-    {
-        return default;
-    }
+        public static Rectangle PopScissors()
+        {
+            return default;
+        }
 
-    public static void CalculateScissors( Camera camera, int screenX, int screenY, int screenWidth, int screenHeight, Matrix4 batchTransform, Rectangle area, Rectangle scissor )
-    {
+        public static void CalculateScissors( Camera camera, int screenX, int screenY, int screenWidth, int screenHeight, Matrix4 batchTransform, Rectangle area, Rectangle scissor )
+        {
+        }
     }
 }

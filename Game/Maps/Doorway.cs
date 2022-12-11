@@ -1,14 +1,15 @@
 
-namespace PlatformaniaCS.Game.Maps;
-
-public class Doorway
+namespace PlatformaniaCS.Game.Maps
 {
-    public Rectangle Box     { get; set; }
-    public Dir       NextDir { get; set; }
-
-    public Doorway( Rectangle box, Dir nextDir )
+    public class Doorway
     {
-        Box     = box;
-        NextDir = nextDir;
+        public Rectangle Box     { get; set; }
+        public Dir       NextDir { get; set; }
+
+        public Doorway( Rectangle box, Dir nextDir )
+        {
+            Box     = box;
+            NextDir = nextDir;
+        }
     }
 }

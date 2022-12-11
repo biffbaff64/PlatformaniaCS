@@ -4,11 +4,12 @@
 
 using Lugh.Assets.Resolvers;
 
-namespace Lugh.Assets;
-
-public class CubemapLoader
+namespace Lugh.Assets
 {
-    public CubemapLoader( IFileHandleResolver resolver )
+    public class CubemapLoader
     {
+        public CubemapLoader( IFileHandleResolver resolver )
+        {
+        }
     }
 }

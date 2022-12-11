@@ -2,10 +2,11 @@
 
 // ##################################################
 
-namespace Lugh.Utils;
-
-public class ObjectMap< TK, TV >
+namespace Lugh.Utils
 {
+    public class ObjectMap< TK, TV >
+    {
     
+    }
 }
 

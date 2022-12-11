@@ -2,10 +2,11 @@
 
 // ############################################################
 
-namespace Lugh.Graphics;
-
-public class TextureData
+namespace Lugh.Graphics
 {
+    public class TextureData
+    {
     
+    }
 }
 

@@ -4,11 +4,12 @@
 
 using Lugh.Assets.Resolvers;
 
-namespace Lugh.Assets;
-
-public class I18NBundleLoader
+namespace Lugh.Assets
 {
-    public I18NBundleLoader( IFileHandleResolver resolver )
+    public class I18NBundleLoader
     {
+        public I18NBundleLoader( IFileHandleResolver resolver )
+        {
+        }
     }
 }

@@ -4,11 +4,12 @@
 
 using Lugh.Assets.Resolvers;
 
-namespace Lugh.Assets;
-
-public class ParticleEffectLoader
+namespace Lugh.Assets
 {
-    public ParticleEffectLoader( IFileHandleResolver resolver )
+    public class ParticleEffectLoader
     {
+        public ParticleEffectLoader( IFileHandleResolver resolver )
+        {
+        }
     }
 }

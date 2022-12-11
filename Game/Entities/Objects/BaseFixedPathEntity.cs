@@ -1,6 +1,7 @@
-﻿namespace PlatformaniaCS.Game.Entities.Objects;
-
-public class BaseFixedPathEntity
+﻿namespace PlatformaniaCS.Game.Entities.Objects
 {
+    public class BaseFixedPathEntity
+    {
         
+    }
 }

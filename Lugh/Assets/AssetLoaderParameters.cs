@@ -2,18 +2,19 @@
 
 // ############################################################
 
-namespace Lugh.Assets;
-
-public class AssetLoaderParameters
+namespace Lugh.Assets
 {
-    /// <summary>
-    /// Callback interface that will be invoked when
-    /// the <see cref="AssetManager"/> loaded an asset.
-    /// </summary>
-    public interface ILoadedCallback
+    public class AssetLoaderParameters
     {
-        void FinishedLoading( AssetManager assetManager, string filename, Type type );
-    }
+        /// <summary>
+        /// Callback interface that will be invoked when
+        /// the <see cref="AssetManager"/> loaded an asset.
+        /// </summary>
+        public interface ILoadedCallback
+        {
+            void FinishedLoading( AssetManager assetManager, string filename, Type type );
+        }
     
-    public ILoadedCallback LoadedCallback;
+        public ILoadedCallback LoadedCallback;
+    }
 }

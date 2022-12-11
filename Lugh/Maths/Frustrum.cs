@@ -1,8 +1,9 @@
-﻿namespace Lugh.Maths;
-
-public class Frustrum
+﻿namespace Lugh.Maths
 {
-    public Frustrum()
+    public class Frustrum
     {
+        public Frustrum()
+        {
+        }
     }
 }

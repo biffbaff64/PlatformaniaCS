@@ -8,24 +8,25 @@ using System.Numerics;
 
 using Color = Lugh.Graphics.Color;
 
-namespace Scene2DCS;
-
-public class Stage
+namespace Scene2DCS
 {
-    public static bool  DebugMode  { get; set; }
-    public static Color DebugColor { get; set; }
-
-    public Vector2 ScreenToStageCoordinates( Vector2 screenCoords )
+    public class Stage
     {
-        return default;
-    }
+        public static bool  DebugMode  { get; set; }
+        public static Color DebugColor { get; set; }
 
-    public Vector2 StageToScreenCoordinates( Vector2 localToAscendantCoordinates )
-    {
-        return default;
-    }
+        public Vector2 ScreenToStageCoordinates( Vector2 screenCoords )
+        {
+            return default;
+        }
 
-    public void CalculateScissors( Rectangle tableBounds, Rectangle scissorBounds )
-    {
+        public Vector2 StageToScreenCoordinates( Vector2 localToAscendantCoordinates )
+        {
+            return default;
+        }
+
+        public void CalculateScissors( Rectangle tableBounds, Rectangle scissorBounds )
+        {
+        }
     }
 }

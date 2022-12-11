@@ -1,15 +1,16 @@
 ﻿using System.Drawing;
 
-namespace Lugh.Utils;
-
-public class PoolMap
+namespace Lugh.Utils
 {
-    public static Rectangle Obtain( Type type )
+    public class PoolMap
     {
-        return default;
-    }
+        public static Rectangle Obtain( Type type )
+        {
+            return default;
+        }
 
-    public static void Free( Rectangle scissorBounds )
-    {
+        public static void Free( Rectangle scissorBounds )
+        {
+        }
     }
 }

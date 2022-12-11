@@ -4,11 +4,12 @@
 
 using Lugh.Assets.Resolvers;
 
-namespace Lugh.Assets;
-
-public class TextureAtlasLoader
+namespace Lugh.Assets
 {
-    public TextureAtlasLoader( IFileHandleResolver resolver )
+    public class TextureAtlasLoader
     {
+        public TextureAtlasLoader( IFileHandleResolver resolver )
+        {
+        }
     }
 }

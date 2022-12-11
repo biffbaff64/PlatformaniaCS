@@ -2,9 +2,10 @@
 
 // ############################################################
 
-namespace Lugh.Assets;
-
-public interface IAssetErrorListener
+namespace Lugh.Assets
 {
-    void Error( AssetDescriptor asset, Exception exception );
+    public interface IAssetErrorListener
+    {
+        void Error( AssetDescriptor asset, Exception exception );
+    }
 }

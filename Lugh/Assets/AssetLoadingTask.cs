@@ -2,35 +2,35 @@
 
 // ############################################################
 
-namespace Lugh.Assets;
-
-/// <summary>
-/// Responsible for loading an asset through an <see cref="AssetLoader"/>
-/// based on an <see cref="AssetDescriptor"/>.
-/// </summary>
-public class AssetLoadingTask
+namespace Lugh.Assets
 {
-    private AssetManager    _assetManager;
-    private AssetDescriptor _assetDescriptor;
+    /// <summary>
+    /// Responsible for loading an asset through an <see cref="AssetLoader"/>
+    /// based on an <see cref="AssetDescriptor"/>.
+    /// </summary>
+    public class AssetLoadingTask
+    {
+        private AssetManager    _assetManager;
+        private AssetDescriptor _assetDescriptor;
 
-    private AssetLoader _assetLoader;
+        private AssetLoader _assetLoader;
 
 //    final                   AsyncExecutor executor;
-    private long _startTime;
+        private long _startTime;
 
-    private volatile bool _asyncDone;
-    private volatile bool _dependenciesLoaded;
+        private volatile bool _asyncDone;
+        private volatile bool _dependenciesLoaded;
 
-    private volatile List< AssetDescriptor > _dependencies;
+        private volatile List< AssetDescriptor > _dependencies;
 
 //    volatile         AsyncResult<Void>       depsFuture;
 //    volatile         AsyncResult<Void>       loadFuture;
-    private volatile object _asset;
-    private volatile bool   _cancel;
+        private volatile object _asset;
+        private volatile bool   _cancel;
 
-    public AssetLoadingTask()
-    {
-    }
+        public AssetLoadingTask()
+        {
+        }
 
     #if false
     public AssetLoadingTask( AssetManager manager, AssetDescriptor assetDesc, AssetLoader loader, AsyncExecutor threadPool )
@@ -187,4 +187,5 @@ public class AssetLoadingTask
         array.ordered = ordered;
     }
     #endif
+    }
 }

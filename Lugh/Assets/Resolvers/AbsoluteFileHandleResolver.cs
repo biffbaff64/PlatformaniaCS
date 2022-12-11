@@ -2,9 +2,10 @@
 
 // ############################################################
 
-namespace Lugh.Assets.Resolvers;
-
-public class AbsoluteFileHandleResolver
+namespace Lugh.Assets.Resolvers
 {
+    public class AbsoluteFileHandleResolver
+    {
     
+    }
 }

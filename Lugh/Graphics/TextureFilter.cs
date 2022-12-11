@@ -1,12 +1,13 @@
-﻿namespace Lugh.Graphics;
-
-public enum TextureFilter
+﻿namespace Lugh.Graphics
 {
-    Nearest,
-    Linear,
-    MipMap,
-    MipMapNearestNearest,
-    MipMapLinearNearest,
-    MipMapNearestLinear,
-    MipMapLinearLinear,
+    public enum TextureFilter
+    {
+        Nearest,
+        Linear,
+        MipMap,
+        MipMapNearestNearest,
+        MipMapLinearNearest,
+        MipMapNearestLinear,
+        MipMapLinearLinear,
+    }
 }

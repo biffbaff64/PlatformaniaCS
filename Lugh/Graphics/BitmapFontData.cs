@@ -2,10 +2,11 @@
 
 // ############################################################
 
-namespace Lugh.Graphics;
-
-public class BitmapFontData
+namespace Lugh.Graphics
 {
+    public class BitmapFontData
+    {
     
+    }
 }
 

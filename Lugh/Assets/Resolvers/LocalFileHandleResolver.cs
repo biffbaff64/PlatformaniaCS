@@ -2,9 +2,10 @@
 
 // ############################################################
 
-namespace Lugh.Assets.Resolvers;
-
-public class LocalFileHandleResolver
+namespace Lugh.Assets.Resolvers
 {
+    public class LocalFileHandleResolver
+    {
     
+    }
 }

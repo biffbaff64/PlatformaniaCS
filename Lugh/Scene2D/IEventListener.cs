@@ -1,6 +1,7 @@
-﻿namespace Scene2DCS;
-
-public interface IEventListener
+﻿namespace Scene2DCS
 {
-    public bool Handle (Event ev);
+    public interface IEventListener
+    {
+        public bool Handle (Event ev);
+    }
 }

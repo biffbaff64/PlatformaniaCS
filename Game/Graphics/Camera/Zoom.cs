@@ -1,10 +1,11 @@
-namespace PlatformaniaCS.Game.Graphics.Camera;
-
-public class Zoom
+namespace PlatformaniaCS.Game.Graphics.Camera
 {
-    public const float DefaultZoom = 1.0f;
-        
-    public void Stop()
+    public class Zoom
     {
+        public const float DefaultZoom = 1.0f;
+        
+        public void Stop()
+        {
+        }
     }
 }

@@ -1,5 +1,6 @@
-﻿namespace Lugh.Graphics.Camera;
-
-public class OrthographicCamera
+﻿namespace Lugh.Graphics.Camera
 {
+    public class OrthographicCamera
+    {
+    }
 }

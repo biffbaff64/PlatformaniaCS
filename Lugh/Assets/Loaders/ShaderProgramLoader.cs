@@ -4,11 +4,12 @@
 
 using Lugh.Assets.Resolvers;
 
-namespace Lugh.Assets;
-
-public class ShaderProgramLoader
+namespace Lugh.Assets
 {
-    public ShaderProgramLoader( IFileHandleResolver resolver )
+    public class ShaderProgramLoader
     {
+        public ShaderProgramLoader( IFileHandleResolver resolver )
+        {
+        }
     }
 }

@@ -1,8 +1,9 @@
-namespace PlatformaniaCS.Game.UI;
-
-public class IntroPanel
+namespace PlatformaniaCS.Game.UI
 {
-    public void Create()
+    public class IntroPanel
     {
+        public void Create()
+        {
+        }
     }
 }

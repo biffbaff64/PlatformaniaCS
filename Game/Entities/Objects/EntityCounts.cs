@@ -1,6 +1,7 @@
-﻿namespace PlatformaniaCS.Game.Entities.Objects;
-
-public struct EntityCounts
+﻿namespace PlatformaniaCS.Game.Entities.Objects
 {
+    public struct EntityCounts
+    {
         
+    }
 }

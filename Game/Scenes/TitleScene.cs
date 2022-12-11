@@ -14,211 +14,212 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 // ##################################################
 
-namespace PlatformaniaCS.Game.Scenes;
-
-public class TitleScene : BaseScene
+namespace PlatformaniaCS.Game.Scenes
 {
-    private const int MenuPage    = 0;
-    private const int OptionsPage = 1;
-    private const int CreditsPage = 2;
-    private const int ExitPage    = 3;
-
-    private Texture2D                  _background;
-    private Texture2D                  _foreground;
-    private MenuPage                   _menuPage;
-    private OptionsPage                _optionsPage;
-    private CreditsPage                _creditsPage;
-    private Dictionary< int, IUIPage > _pages;
-    private YesNoDialog                _exitDialog;
-    private int                        _currentPage;
-
-    public TitleScene()
+    public class TitleScene : BaseScene
     {
-        Trace.CheckPoint();
-    }
+        private const int MenuPage    = 0;
+        private const int OptionsPage = 1;
+        private const int CreditsPage = 2;
+        private const int ExitPage    = 3;
 
-    /// <summary>
-    /// Initialise the Title scene, create the array of pages,
-    /// and set the initial page to the options menu.
-    /// </summary>
-    public override void Initialise()
-    {
-        Trace.CheckPoint();
+        private Texture2D                  _background;
+        private Texture2D                  _foreground;
+        private MenuPage                   _menuPage;
+        private OptionsPage                _optionsPage;
+        private CreditsPage                _creditsPage;
+        private Dictionary< int, IUIPage > _pages;
+        private YesNoDialog                _exitDialog;
+        private int                        _currentPage;
 
-        _menuPage    = new MenuPage();
-        _optionsPage = new OptionsPage();
-        _creditsPage = new CreditsPage();
-        _pages       = new Dictionary< int, IUIPage >();
-
-        _currentPage = MenuPage;
-
-        _pages.Add( MenuPage,    _menuPage );
-        _pages.Add( OptionsPage, _optionsPage );
-        _pages.Add( CreditsPage, _creditsPage );
-
-        _menuPage.Initialise();
-        _menuPage.Show();
-    }
-
-    public override void Update( GameTime gameTime )
-    {
-    }
-
-    private void ChangePageTo( int nextPage )
-    {
-        Trace.CheckPoint();
-        Trace.Info( "currentPage: ", _currentPage );
-        Trace.Info( "nextPage: ",    nextPage );
-
-        if ( _currentPage == ExitPage )
+        public TitleScene()
         {
-            _exitDialog?.Dispose();
-            _exitDialog = null;
+            Trace.CheckPoint();
         }
-        else
+
+        /// <summary>
+        /// Initialise the Title scene, create the array of pages,
+        /// and set the initial page to the options menu.
+        /// </summary>
+        public override void Initialise()
         {
-            if ( _pages[ _currentPage ] != null )
+            Trace.CheckPoint();
+
+            _menuPage    = new MenuPage();
+            _optionsPage = new OptionsPage();
+            _creditsPage = new CreditsPage();
+            _pages       = new Dictionary< int, IUIPage >();
+
+            _currentPage = MenuPage;
+
+            _pages.Add( MenuPage,    _menuPage );
+            _pages.Add( OptionsPage, _optionsPage );
+            _pages.Add( CreditsPage, _creditsPage );
+
+            _menuPage.Initialise();
+            _menuPage.Show();
+        }
+
+        public override void Update( GameTime gameTime )
+        {
+        }
+
+        private void ChangePageTo( int nextPage )
+        {
+            Trace.CheckPoint();
+            Trace.Info( "currentPage: ", _currentPage );
+            Trace.Info( "nextPage: ",    nextPage );
+
+            if ( _currentPage == ExitPage )
             {
-                _pages[ _currentPage ].Hide();
-                _pages[ _currentPage ].Dispose();
+                _exitDialog?.Dispose();
+                _exitDialog = null;
             }
-        }
-
-        _currentPage = nextPage;
-
-        if ( _currentPage != ExitPage )
-        {
-            if ( _pages[ _currentPage ] != null )
+            else
             {
-                _pages[ _currentPage ].Initialise();
-                _pages[ _currentPage ].Show();
-            }
-        }
-    }
-
-    public override void Render( GameTime gameTime )
-    {
-        if ( App.AppState == StateID._STATE_MAIN_MENU )
-        {
-            Update( gameTime );
-
-            App.BaseRenderer.Render( gameTime.GetElapsedSeconds() );
-        }
-    }
-
-    public void Draw()
-    {
-        if ( App.AppState == StateID._STATE_MAIN_MENU )
-        {
-            DrawImage( _background );
-
-            switch ( _currentPage )
-            {
-                case MenuPage:
-                case OptionsPage:
-                case CreditsPage:
+                if ( _pages[ _currentPage ] != null )
                 {
-                    DrawImage( _foreground );
+                    _pages[ _currentPage ].Hide();
+                    _pages[ _currentPage ].Dispose();
+                }
+            }
 
-                    _pages[ _currentPage ].Draw();
+            _currentPage = nextPage;
 
-                    if ( _currentPage != MenuPage )
+            if ( _currentPage != ExitPage )
+            {
+                if ( _pages[ _currentPage ] != null )
+                {
+                    _pages[ _currentPage ].Initialise();
+                    _pages[ _currentPage ].Show();
+                }
+            }
+        }
+
+        public override void Render( GameTime gameTime )
+        {
+            if ( App.AppState == StateID._STATE_MAIN_MENU )
+            {
+                Update( gameTime );
+
+                App.BaseRenderer.Render( gameTime.GetElapsedSeconds() );
+            }
+        }
+
+        public void Draw()
+        {
+            if ( App.AppState == StateID._STATE_MAIN_MENU )
+            {
+                DrawImage( _background );
+
+                switch ( _currentPage )
+                {
+                    case MenuPage:
+                    case OptionsPage:
+                    case CreditsPage:
                     {
-                        if ( LughSystem.Inst().BackButton is { IsVisible: true } )
+                        DrawImage( _foreground );
+
+                        _pages[ _currentPage ].Draw();
+
+                        if ( _currentPage != MenuPage )
                         {
-                            LughSystem.Inst().BackButton.Position.Set( 20, 20 );
+                            if ( LughSystem.Inst().BackButton is { IsVisible: true } )
+                            {
+                                LughSystem.Inst().BackButton.Position.Set( 20, 20 );
+                            }
                         }
+
+                        break;
                     }
 
-                    break;
-                }
+                    case ExitPage:
+                    {
+                        DrawImage( _foreground );
+                        break;
+                    }
 
-                case ExitPage:
-                {
-                    DrawImage( _foreground );
-                    break;
-                }
-
-                default:
-                {
-                    Trace.Err( message: "Unknown Panel", args: _currentPage );
-                    break;
+                    default:
+                    {
+                        Trace.Err( message: "Unknown Panel", args: _currentPage );
+                        break;
+                    }
                 }
             }
         }
-    }
 
-    public override void Show()
-    {
-        Trace.CheckPoint();
-
-        if ( LughSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN )
+        public override void Show()
         {
-            // If moving to the TitleScene from MainScene, then all objects
-            // that are unnecessary at this point must be destroyed.
-            App.DeleteMainsceneObjects();
+            Trace.CheckPoint();
+
+            if ( LughSystem.Inst().CurrentScreenID == ScreenID._GAME_SCREEN )
+            {
+                // If moving to the TitleScene from MainScene, then all objects
+                // that are unnecessary at this point must be destroyed.
+                App.DeleteMainsceneObjects();
+            }
+
+            LughSystem.Inst().CurrentScreenID = ScreenID._MAIN_MENU;
+            App.AppState                      = StateID._STATE_MAIN_MENU;
+
+            LoadImages();
+
+            App.BaseRenderer.ResetCameraZoom();
+            App.BaseRenderer.EnableCamera( CamID._HUD, CamID._STAGE );
+
+            Initialise();
         }
 
-        LughSystem.Inst().CurrentScreenID = ScreenID._MAIN_MENU;
-        App.AppState                      = StateID._STATE_MAIN_MENU;
-
-        LoadImages();
-
-        App.BaseRenderer.ResetCameraZoom();
-        App.BaseRenderer.EnableCamera( CamID._HUD, CamID._STAGE );
-
-        Initialise();
-    }
-
-    public override void Hide()
-    {
-        Trace.CheckPoint();
-
-        Dispose();
-    }
-
-    private void LoadImages()
-    {
-        Trace.CheckPoint();
-
-        _background = AssetUtils.LoadAsset< Texture2D >( "title_background" );
-        _foreground = AssetUtils.LoadAsset< Texture2D >( "title_foreground" );
-    }
-
-    public void Dispose()
-    {
-        Trace.CheckPoint();
-
-        _menuPage.Hide();
-        _menuPage.Dispose();
-
-        if ( _pages != null )
+        public override void Hide()
         {
-            _pages.Clear();
-            _pages = null;
+            Trace.CheckPoint();
+
+            Dispose();
         }
 
-        _optionsPage = null;
-        _menuPage    = null;
-        _exitDialog  = null;
+        private void LoadImages()
+        {
+            Trace.CheckPoint();
 
-        AssetUtils.UnloadAsset( "title_background" );
-        AssetUtils.UnloadAsset( "title_foreground" );
+            _background = AssetUtils.LoadAsset< Texture2D >( "title_background" );
+            _foreground = AssetUtils.LoadAsset< Texture2D >( "title_foreground" );
+        }
 
-        _foreground = null;
-        _background = null;
-    }
+        public void Dispose()
+        {
+            Trace.CheckPoint();
 
-    public override string Name() => "Title Scene";
+            _menuPage.Hide();
+            _menuPage.Dispose();
 
-    private void DrawImage( Texture2D texture2D )
-    {
-        App.SpriteBatch.Draw
-            (
-             texture2D,
-             new Rectangle( 0, 0, Gfx.HudWidth, Gfx.HudHeight ),
-             new Rectangle( 0, 0, texture2D.Width, texture2D.Height ),
-             Color.White
-            );
+            if ( _pages != null )
+            {
+                _pages.Clear();
+                _pages = null;
+            }
+
+            _optionsPage = null;
+            _menuPage    = null;
+            _exitDialog  = null;
+
+            AssetUtils.UnloadAsset( "title_background" );
+            AssetUtils.UnloadAsset( "title_foreground" );
+
+            _foreground = null;
+            _background = null;
+        }
+
+        public override string Name() => "Title Scene";
+
+        private void DrawImage( Texture2D texture2D )
+        {
+            App.SpriteBatch.Draw
+                (
+                 texture2D,
+                 new Rectangle( 0, 0, Gfx.HudWidth,    Gfx.HudHeight ),
+                 new Rectangle( 0, 0, texture2D.Width, texture2D.Height ),
+                 Color.White
+                );
+        }
     }
 }
