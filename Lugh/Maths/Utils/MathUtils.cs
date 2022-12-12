@@ -31,5 +31,10 @@
         {
             return random.NextDouble() * upper;
         }
+
+        public static int NextPowerOfTwo( int max )
+        {
+            return 0;
+        }
     }
 }

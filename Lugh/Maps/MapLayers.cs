@@ -68,7 +68,7 @@ namespace Lugh.Maps
             {
                 var layer = Layers[ i ];
 
-                if ( Layers.GetType() == type )
+                if ( layer.GetType() == type )
                 {
                     fill.Add( ( T )layer );
                 }

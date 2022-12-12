@@ -6,27 +6,27 @@ namespace Lugh.Maps
 {
     public class MapObjects
     {
-        private Array< MapObject > _objects;
+        private List< MapObject > _objects;
 
         public MapObjects()
         {
-            _objects = new Array< MapObject >();
+            _objects = new List< MapObject >();
         }
 
         public MapObject Get( int index )
         {
-            return _objects.get( index );
+            return _objects[ index ];
         }
 
         public MapObject Get( string name )
         {
-            for ( int i = 0, n = _objects.size; i < n; i++ )
+            for ( int i = 0, n = _objects.Count; i < n; i++ )
             {
-                MapObject object = _objects.get( i );
+                var obj = _objects[ i ];
 
-                if ( name.equals( object.getName() ) )
+                if ( name.Equals( obj.Name ) )
                 {
-                    return object;
+                    return obj;
                 }
             }
 
@@ -38,47 +38,47 @@ namespace Lugh.Maps
             return GetIndex( Get( name ) );
         }
 
-        public int GetIndex( MapObject object)
+        public int GetIndex( MapObject mapObject )
         {
-            return _objects.indexOf( object, true );
+            return _objects.IndexOf( mapObject );
         }
 
         public int GetCount()
         {
-            return _objects.size;
+            return _objects.Count;
         }
 
-        public void Add( MapObject object)
+        public void Add( MapObject mapObject)
         {
-            this._objects.add( object );
+            this._objects.Add( mapObject );
         }
 
         public void Remove( int index )
         {
-            _objects.removeIndex( index );
+            _objects.RemoveAt( index );
         }
 
-        public void Remove( MapObject object)
+        public void Remove( MapObject mapObject)
         {
-            _objects.removeValue( object, true );
+            _objects.Remove( mapObject );
         }
 
-        public <T Extends MapObject> Array< T > GetByType( Class< T > type )
+        public List< T > GetByType< T >( Type type ) where T : MapObject
         {
-            return GetByType( type, new Array< T >() );
+            return GetByType( type, new List< T >() );
         }
-
-        public <T Extends MapObject> Array< T > GetByType( Class< T > type, Array< T > fill )
+        
+        public List<T> GetByType< T >( Type type, List< T > fill ) where T : MapObject
         {
-            fill.clear();
+            fill.Clear();
 
-            for ( int i = 0, n = _objects.size; i < n; i++ )
+            for ( int i = 0, n = _objects.Count; i < n; i++ )
             {
-                MapObject object = _objects.get( i );
+                var mapObject = _objects[ i ];
 
-                if ( ClassReflection.isInstance( type, object ) )
+                if ( mapObject.GetType() == type )
                 {
-                    fill.add( ( T )object );
+                    fill.Add( (T) mapObject );
                 }
             }
 

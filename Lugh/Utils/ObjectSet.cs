@@ -6,7 +6,5 @@ namespace Lugh.Utils
 {
     public class ObjectSet< T >
     {
-    
     }
 }
-
