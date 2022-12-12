@@ -21,70 +21,50 @@ namespace Lugh.Maps
             return _properties.ContainsKey( key );
         }
 
-        /** @param key property name
-	 * @return the value for that property if it exists, otherwise, null */
         public object Get( string key )
         {
             return _properties.Get( key );
         }
 
-        /** Returns the object for the given key, casting it to clazz.
-	 * @param key the key of the object
-	 * @param clazz the class of the object
-	 * @return the object or null if the object is not in the map
-	 * @throws ClassCastException if the object with the given key is not of type clazz */
-        public <T> T Get( string key, Class< T > clazz )
+        public T Get< T >( string key, Type type )
         {
             return ( T )Get( key );
         }
 
-        /** Returns the object for the given key, casting it to clazz.
-	 * @param key the key of the object
-	 * @param defaultValue the default value
-	 * @param clazz the class of the object
-	 * @return the object or the defaultValue if the object is not in the map
-	 * @throws ClassCastException if the object with the given key is not of type clazz */
-        public <T> T Get( string key, T defaultValue, Class< T > clazz )
+        public T Get< T >( string key, T defaultValue, Type type )
         {
-            Object object = Get( key );
-            return object == null ? defaultValue : ( T )object;
+            object obj = Get( key );
+            return ( obj == null ) ? default : ( T )obj;
         }
 
-        /** @param key property name
-	 * @param value value to be inserted or modified (if it already existed) */
         public void Put( string key, Object value )
         {
-            _properties.put( key, value );
+            _properties.Put( key, value );
         }
 
-        /** @param properties set of properties to be added */
         public void PutAll( MapProperties properties )
         {
-            this._properties.putAll( properties._properties );
+            this._properties.PutAll( properties._properties );
         }
 
-        /** @param key property name to be removed */
         public void Remove( string key )
         {
-            _properties.remove( key );
+            _properties.Remove( key );
         }
 
-        /** Removes all properties */
         public void Clear()
         {
-            _properties.clear();
+            _properties.Clear();
         }
 
-        /** @return iterator for the property names */
-        public Iterator< string > GetKeys()
+        public IEnumerator< string > GetKeys()
         {
-            return _properties.keys();
+            return _properties.Keys();
         }
 
-        /** @return iterator to properties' values */
-        public Iterator< Object > GetValues()
+        public IEnumerator< object > GetValues()
         {
-            return _properties.values();
+            return _properties.Values();
         }
     }
 }
