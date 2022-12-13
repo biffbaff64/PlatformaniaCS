@@ -4,7 +4,7 @@
 
 namespace Lugh.Assets
 {
-    public class AssetLoaderParameters
+    public class AssetLoaderParameters< TP >
     {
         /// <summary>
         /// Callback interface that will be invoked when

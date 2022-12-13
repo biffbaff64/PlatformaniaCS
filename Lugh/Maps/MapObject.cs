@@ -6,6 +6,10 @@ namespace Lugh.Maps
 {
     public class MapObject
     {
+        protected MapObject()
+        {
+        }
+        
         public string        Name       { get; set; } = string.Empty;
         public Color         Color      { get; set; } = Color.white;
         public float         Opacity    { get; set; } = 1.0f;

@@ -2,9 +2,11 @@
 
 // ##################################################
 
+using System.Collections;
+
 namespace Lugh.Utils
 {
-    public class ObjectMap< TK, TV >
+    public class AAObjectMap< TK, TV > : IEnumerable< AAObjectMap< TK, TV >.Entry< TK, TV > >
     {
         public int Size { get; set; }
 
@@ -18,7 +20,7 @@ namespace Lugh.Utils
         private float _loadFactor;
         private int   _threshold;
 
-        public ObjectMap( int initialCapacity = 51, float loadFactor = 0.8f )
+        public AAObjectMap( int initialCapacity = 51, float loadFactor = 0.8f )
         {
             if ( loadFactor <= 0f || loadFactor >= 1f )
             {
@@ -111,7 +113,7 @@ namespace Lugh.Utils
         }
 
         // TODO: Finish and double check this against LibGDX version
-        public void PutAll( ObjectMap< TK, TV > map )
+        public void PutAll( AAObjectMap< TK, TV > map )
         {
             EnsureCapacity( map.Size );
 
@@ -256,6 +258,27 @@ namespace Lugh.Utils
         {
             // TODO:
             yield break;
+        }
+
+        public class Entry< TKey, TValue >
+        {
+            public TKey   key;
+            public TValue value;
+
+            public new string ToString()
+            {
+                return key + "=" + value;
+            }
+        }
+
+        public IEnumerator< Entry< TK, TV > > GetEnumerator()
+        {
+            yield break;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿// ##################################################
 
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
 // ##################################################
@@ -13,7 +14,7 @@ namespace Lugh.Utils
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [SuppressMessage( "ReSharper", "MemberCanBeProtected.Global" )]
-    public class Array< T >
+    public class Array< T > : IEnumerable
     {
         public T[] Items { get; set; }
 
@@ -380,6 +381,11 @@ namespace Lugh.Utils
 
         protected void Truncate( int newSize )
         {
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            yield break;
         }
     }
 }
