@@ -63,7 +63,7 @@ public class Element
     {
         if ( Attributes == null )
         {
-            Attributes = new ObjectMap( 8 );
+            Attributes = new ObjectMap< string, string >( 8 );
         }
 
         Attributes.Put( name, value );

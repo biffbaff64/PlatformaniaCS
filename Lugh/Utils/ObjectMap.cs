@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Lugh.Utils
 {
-    public class AAObjectMap< TK, TV > : IEnumerable< AAObjectMap< TK, TV >.Entry< TK, TV > >
+    public class ObjectMap< TK, TV > : IEnumerable< ObjectMap< TK, TV >.Entry< TK, TV > >
     {
         public int Size { get; set; }
 
@@ -20,7 +20,7 @@ namespace Lugh.Utils
         private float _loadFactor;
         private int   _threshold;
 
-        public AAObjectMap( int initialCapacity = 51, float loadFactor = 0.8f )
+        public ObjectMap( int initialCapacity = 51, float loadFactor = 0.8f )
         {
             if ( loadFactor <= 0f || loadFactor >= 1f )
             {
@@ -113,7 +113,7 @@ namespace Lugh.Utils
         }
 
         // TODO: Finish and double check this against LibGDX version
-        public void PutAll( AAObjectMap< TK, TV > map )
+        public void PutAll( ObjectMap< TK, TV > map )
         {
             EnsureCapacity( map.Size );
 
