@@ -2,24 +2,25 @@
 
 // ##################################################
 
+using System.Text;
+
 namespace Lugh.Utils;
 
 public class Element
 {
     public string                      Name       { get; set; }
     public ObjectMap< string, string > Attributes { get; set; }
+    public string                      Text       { get; set; }
 
-    private Array< Element > children;
-    private string           text;
-    private Element          parent;
+    private List< Element > _children;
+    private Element         _parent;
 
     public Element( string name, Element parent )
     {
-        this.Name   = name;
-        this.parent = parent;
+        this.Name    = name;
+        this._parent = parent;
     }
 
-    /** @throws GdxRuntimeException if the attribute was not found. */
     public string GetAttribute( string name )
     {
         if ( Attributes == null )
@@ -69,324 +70,402 @@ public class Element
         Attributes.Put( name, value );
     }
 
-    public int getChildCount()
+    public int GetChildCount()
     {
-        if ( children == null ) return 0;
-        return children.size;
+        return ( _children == null ) ? 0 : _children.Count;
     }
 
-    /** @throws GdxRuntimeException if the element has no children. */
-    public Element getChild( int index )
+    public Element GetChild( int index )
     {
-        if ( children == null ) throw new GdxRuntimeException( "Element has no children: " + Name );
-        return children.get( index );
+        if ( _children == null )
+        {
+            throw new RuntimeException( "Element has no children: " + Name );
+        }
+
+        return _children[ index ];
     }
 
-    public void addChild( Element element )
+    public void AddChild( Element element )
     {
-        if ( children == null ) children = new Array( 8 );
-        children.add( element );
+        if ( _children == null )
+        {
+            _children = new List< Element >( 8 );
+        }
+
+        _children.Add( element );
     }
 
-    public string getText()
+    public void RemoveChild( int index )
     {
-        return text;
+        if ( _children != null )
+        {
+            _children.RemoveAt( index );
+        }
     }
 
-    public void setText( string text )
+    public void RemoveChild( Element child )
     {
-        this.text = text;
+        if ( _children != null )
+        {
+            _children.Remove( child );
+        }
     }
 
-    public void removeChild( int index )
+    public void Remove()
     {
-        if ( children != null ) children.removeIndex( index );
+        _parent.RemoveChild( this );
     }
 
-    public void removeChild( Element child )
+    public Element GetParent()
     {
-        if ( children != null ) children.removeValue( child, true );
+        return _parent;
     }
 
-    public void remove()
+    public new string ToString( string indent )
     {
-        parent.removeChild( this );
-    }
-
-    public Element getParent()
-    {
-        return parent;
-    }
-
-    public string toString()
-    {
-        return toString( "" );
-    }
-
-    public string toString( string indent )
-    {
-        StringBuilder buffer = new StringBuilder( 128 );
-        buffer.append( indent );
-        buffer.append( '<' );
-        buffer.append( Name );
+        var buffer = new StringBuilder( 128 );
+        
+        buffer.Append( indent );
+        buffer.Append( '<' );
+        buffer.Append( Name );
 
         if ( Attributes != null )
         {
-            for ( Entry< string, string > entry :
-            Attributes.entries())
-
+            foreach ( ObjectMap< string, string >.Entry< string, string > entry in Attributes.Entries() )
             {
-                buffer.append( ' ' );
-                buffer.append( entry.key );
-                buffer.append( "=\"" );
-                buffer.append( entry.value );
-                buffer.append( '\"' );
+                buffer.Append( ' ' );
+                buffer.Append( entry.key );
+                buffer.Append( "=\"" );
+                buffer.Append( entry.value );
+                buffer.Append( '\"' );
             }
         }
 
-        if ( children == null && ( text == null || text.length() == 0 ) )
-            buffer.append( "/>" );
+        if ( _children == null && string.IsNullOrEmpty( Text ) )
+        {
+            buffer.Append( "/>" );
+        }
         else
         {
-            buffer.append( ">\n" );
-            string childIndent = indent + '\t';
+            buffer.Append( ">\n" );
+            
+            var childIndent = indent + '\t';
 
-            if ( text != null && text.length() > 0 )
+            if ( Text != null && Text.Length > 0 )
             {
-                buffer.append( childIndent );
-                buffer.append( text );
-                buffer.append( '\n' );
+                buffer.Append( childIndent );
+                buffer.Append( Text );
+                buffer.Append( '\n' );
             }
 
-            if ( children != null )
+            if ( _children != null )
             {
-                for ( Element child :
-                children) {
-                    buffer.append( child.toString( childIndent ) );
-                    buffer.append( '\n' );
+                foreach ( var child in _children )
+                {
+                    buffer.Append( child.ToString( childIndent ) );
+                    buffer.Append( '\n' );
                 }
             }
 
-            buffer.append( indent );
-            buffer.append( "</" );
-            buffer.append( Name );
-            buffer.append( '>' );
+            buffer.Append( indent );
+            buffer.Append( "</" );
+            buffer.Append( Name );
+            buffer.Append( '>' );
         }
 
-        return buffer.toString();
+        return buffer.ToString();
     }
 
-    /** @param name the name of the child {@link Element}
-		 * @return the first child having the given name or null, does not recurse */
-    public @Null Element getChildByName( string name )
+    public Element GetChildByName( string name )
     {
-        if ( children == null ) return null;
-
-        for ( int i = 0; i < children.size; i++ )
+        if ( _children == null )
         {
-            Element element = children.get( i );
-            if ( element.Name.equals( name ) ) return element;
+            return null;
+        }
+
+        foreach ( var element in _children )
+        {
+            if ( element.Name.Equals( name ) )
+            {
+                return element;
+            }
         }
 
         return null;
     }
 
-    public bool hasChild( string name )
+    public bool HasChild( string name )
     {
-        if ( children == null ) return false;
-        return getChildByName( name ) != null;
+        if ( _children == null )
+        {
+            return false;
+        }
+
+        return GetChildByName( name ) != null;
     }
 
-    /** @param name the name of the child {@link Element}
-		 * @return the first child having the given name or null, recurses */
-    public @Null Element getChildByNameRecursive( string name )
+    public Element GetChildByNameRecursive( string name )
     {
-        if ( children == null ) return null;
-
-        for ( int i = 0; i < children.size; i++ )
+        if ( _children == null )
         {
-            Element element = children.get( i );
-            if ( element.Name.equals( name ) ) return element;
-            Element found = element.getChildByNameRecursive( name );
-            if ( found != null ) return found;
+            return null;
+        }
+
+        for ( var i = 0; i < _children.Count; i++ )
+        {
+            var element = _children[ i ];
+
+            if ( element.Name.Equals( name ) )
+            {
+                return element;
+            }
+
+            var found = element.GetChildByNameRecursive( name );
+
+            if ( found != null )
+            {
+                return found;
+            }
         }
 
         return null;
     }
 
-    public bool hasChildRecursive( string name )
+    public bool HasChildRecursive( string name )
     {
-        if ( children == null ) return false;
-        return getChildByNameRecursive( name ) != null;
+        if ( _children == null )
+        {
+            return false;
+        }
+
+        return GetChildByNameRecursive( name ) != null;
     }
 
-    /** @param name the name of the children
-		 * @return the children with the given name or an empty {@link Array} */
-    public Array< Element > getChildrenByName( string name )
+    public List< Element > GetChildrenByName( string name )
     {
-        Array< Element > result = new Array< Element >();
-        if ( children == null ) return result;
+        var result = new List< Element >();
 
-        for ( int i = 0; i < children.size; i++ )
+        if ( _children == null )
         {
-            Element child = children.get( i );
-            if ( child.Name.equals( name ) ) result.add( child );
+            return result;
+        }
+
+        foreach ( var child in _children )
+        {
+            if ( child.Name.Equals( name ) )
+            {
+                result.Add( child );
+            }
         }
 
         return result;
     }
 
-    /** @param name the name of the children
-		 * @return the children with the given name or an empty {@link Array} */
-    public Array< Element > getChildrenByNameRecursively( string name )
+    public List< Element > GetChildrenByNameRecursively( string name )
     {
-        Array< Element > result = new Array< Element >();
-        getChildrenByNameRecursively( name, result );
+        var result = new List< Element >();
+
+        GetChildrenByNameRecursively( name, result );
+
         return result;
     }
 
-    private void getChildrenByNameRecursively( string name, Array< Element > result )
+    private void GetChildrenByNameRecursively( string name, List< Element > result )
     {
-        if ( children == null ) return;
-
-        for ( int i = 0; i < children.size; i++ )
+        if ( _children == null )
         {
-            Element child = children.get( i );
-            if ( child.Name.equals( name ) ) result.add( child );
-            child.getChildrenByNameRecursively( name, result );
+            return;
+        }
+
+        foreach ( var child in _children )
+        {
+            if ( child.Name.Equals( name ) )
+            {
+                result.Add( child );
+            }
+
+            child.GetChildrenByNameRecursively( name, result );
         }
     }
 
-    /** @throws GdxRuntimeException if the attribute was not found. */
-    public float getFloatAttribute( string name )
+    public float GetFloatAttribute( string name )
     {
-        return Float.parseFloat( getAttribute( name ) );
+        return float.Parse( GetAttribute( name ) );
     }
 
-    public float getFloatAttribute( string name, float defaultValue )
+    public float GetFloatAttribute( string name, float defaultValue )
     {
-        string value = getAttribute( name, null );
-        if ( value == null ) return defaultValue;
-        return Float.parseFloat( value );
-    }
-
-    /** @throws GdxRuntimeException if the attribute was not found. */
-    public int getIntAttribute( string name )
-    {
-        return Integer.parseInt( getAttribute( name ) );
-    }
-
-    public int getIntAttribute( string name, int defaultValue )
-    {
-        string value = getAttribute( name, null );
-        if ( value == null ) return defaultValue;
-        return Integer.parseInt( value );
-    }
-
-    /** @throws GdxRuntimeException if the attribute was not found. */
-    public bool getBooleanAttribute( string name )
-    {
-        return Boolean.parseBoolean( getAttribute( name ) );
-    }
-
-    public bool getBooleanAttribute( string name, bool defaultValue )
-    {
-        string value = getAttribute( name, null );
-        if ( value == null ) return defaultValue;
-        return Boolean.parseBoolean( value );
-    }
-
-    /** Returns the attribute value with the specified name, or if no attribute is found, the text of a child with the name.
-		 * @throws GdxRuntimeException if no attribute or child was not found. */
-    public string get( string name )
-    {
-        string value = get( name, null );
+        var value = GetAttribute( name, null );
 
         if ( value == null )
-            throw new GdxRuntimeException( "Element " + this.Name + " doesn't have attribute or child: " + name );
+        {
+            return defaultValue;
+        }
+
+        return float.Parse( value );
+    }
+
+    public int GetIntAttribute( string name )
+    {
+        return int.Parse( GetAttribute( name ) );
+    }
+
+    public int GetIntAttribute( string name, int defaultValue )
+    {
+        var value = GetAttribute( name, null );
+
+        if ( value == null )
+        {
+            return defaultValue;
+        }
+
+        return int.Parse( value );
+    }
+
+    public bool GetBooleanAttribute( string name )
+    {
+        return bool.Parse( GetAttribute( name ) );
+    }
+
+    public bool GetBooleanAttribute( string name, bool defaultValue )
+    {
+        var value = GetAttribute( name, null );
+
+        if ( value == null )
+        {
+            return defaultValue;
+        }
+
+        return bool.Parse( value );
+    }
+
+    public string Get( string name )
+    {
+        var value = Get( name, null );
+
+        if ( value == null )
+        {
+            throw new RuntimeException( "Element " + this.Name + " doesn't have attribute or child: " + name );
+        }
 
         return value;
     }
 
-    /** Returns the attribute value with the specified name, or if no attribute is found, the text of a child with the name.
-		 * @throws GdxRuntimeException if no attribute or child was not found. */
-    public string get( string name, string defaultValue )
+    public string Get( string name, string defaultValue )
     {
+        string value;
+
         if ( Attributes != null )
         {
-            string value = Attributes.get( name );
-            if ( value != null ) return value;
+            value = Attributes.Get( name );
+
+            if ( value != null )
+            {
+                return value;
+            }
         }
 
-        Element child = getChildByName( name );
-        if ( child == null ) return defaultValue;
-        string value = child.getText();
-        if ( value == null ) return defaultValue;
+        var child = GetChildByName( name );
+
+        if ( child?.Text == null )
+        {
+            return defaultValue;
+        }
+
+        value = child.Text;
+
         return value;
     }
 
-    /** Returns the attribute value with the specified name, or if no attribute is found, the text of a child with the name.
-		 * @throws GdxRuntimeException if no attribute or child was not found. */
-    public int getInt( string name )
+    public int GetInt( string name )
     {
-        string value = get( name, null );
+        var value = Get( name, null );
 
         if ( value == null )
-            throw new GdxRuntimeException( "Element " + this.Name + " doesn't have attribute or child: " + name );
+        {
+            throw new RuntimeException( "Element " + this.Name + " doesn't have attribute or child: " + name );
+        }
 
-        return Integer.parseInt( value );
+        return int.Parse( value );
     }
 
-    /** Returns the attribute value with the specified name, or if no attribute is found, the text of a child with the name.
-		 * @throws GdxRuntimeException if no attribute or child was not found. */
-    public int getInt( string name, int defaultValue )
+    public int GetInt( string name, int defaultValue )
     {
-        string value = get( name, null );
-        if ( value == null ) return defaultValue;
-        return Integer.parseInt( value );
-    }
-
-    /** Returns the attribute value with the specified name, or if no attribute is found, the text of a child with the name.
-		 * @throws GdxRuntimeException if no attribute or child was not found. */
-    public float getFloat( string name )
-    {
-        string value = get( name, null );
+        var value = Get( name, null );
 
         if ( value == null )
-            throw new GdxRuntimeException( "Element " + this.Name + " doesn't have attribute or child: " + name );
+        {
+            return defaultValue;
+        }
 
-        return Float.parseFloat( value );
+        return int.Parse( value );
     }
 
-    /** Returns the attribute value with the specified name, or if no attribute is found, the text of a child with the name.
-		 * @throws GdxRuntimeException if no attribute or child was not found. */
-    public float getFloat( string name, float defaultValue )
+    /// <summary>
+    /// Returns the attribute value with the specified name, or if no
+    /// attribute is found, the text of a child with the name.
+    /// </summary>
+    /// <exception cref="RuntimeException">If attribute or child was not found.</exception>
+    public float GetFloat( string name )
     {
-        string value = get( name, null );
-        if ( value == null ) return defaultValue;
-        return Float.parseFloat( value );
-    }
-
-    /** Returns the attribute value with the specified name, or if no attribute is found, the text of a child with the name.
-		 * @throws GdxRuntimeException if no attribute or child was not found. */
-    public bool getBoolean( string name )
-    {
-        string value = get( name, null );
+        var value = Get( name, null );
 
         if ( value == null )
-            throw new GdxRuntimeException( "Element " + this.Name + " doesn't have attribute or child: " + name );
+        {
+            throw new RuntimeException( "Element " + this.Name + " doesn't have attribute or child: " + name );
+        }
 
-        return Boolean.parseBoolean( value );
+        return float.Parse( value );
     }
 
-    /** Returns the attribute value with the specified name, or if no attribute is found, the text of a child with the name.
-		 * @throws GdxRuntimeException if no attribute or child was not found. */
-    public bool getBoolean( string name, bool defaultValue )
+    /// <summary>
+    /// Returns the attribute value with the specified name, or if no
+    /// attribute is found, the text of a child with the name.
+    /// </summary>
+    /// <exception cref="RuntimeException">If attribute or child was not found.</exception>
+    public float GetFloat( string name, float defaultValue )
     {
-        string value = get( name, null );
-        if ( value == null ) return defaultValue;
-        return Boolean.parseBoolean( value );
-    }
-}
+        var value = Get( name, null );
 
+        if ( value == null )
+        {
+            return defaultValue;
+        }
+
+        return float.Parse( value );
+    }
+
+    /// <summary>
+    /// Returns the attribute value with the specified name, or if no
+    /// attribute is found, the text of a child with the name.
+    /// </summary>
+    /// <exception cref="RuntimeException">If attribute or child was not found.</exception>
+    public bool GetBoolean( string name )
+    {
+        var value = Get( name, null );
+
+        if ( value == null )
+        {
+            throw new RuntimeException( "Element " + this.Name + " doesn't have attribute or child: " + name );
+        }
+
+        return bool.Parse( value );
+    }
+
+    /// <summary>
+    /// Returns the attribute value with the specified name, or if no
+    /// attribute is found, the text of a child with the name.
+    /// </summary>
+    /// <exception cref="RuntimeException">If attribute or child was not found.</exception>
+    public bool GetBoolean( string name, bool defaultValue )
+    {
+        var value = Get( name, null );
+
+        if ( value == null )
+        {
+            return defaultValue;
+        }
+
+        return bool.Parse( value );
+    }
 }

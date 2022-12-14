@@ -20,6 +20,10 @@ namespace Lugh.Utils
         private float _loadFactor;
         private int   _threshold;
 
+        [NonSerialized] Entries entries1, entries2;
+        [NonSerialized] Values  values1,  values2;
+        [NonSerialized] Keys    keys1,    keys2;
+
         public ObjectMap( int initialCapacity = 51, float loadFactor = 0.8f )
         {
             if ( loadFactor <= 0f || loadFactor >= 1f )
@@ -41,7 +45,7 @@ namespace Lugh.Utils
 
         /// <summary>
         /// Returns an index >= 0 and <= mask for the specified item. The default
-        /// implementation uses Fibonacci hashing on the item's Object.hashCode():
+        /// implementation uses Fibonacci hashing on the item's object.hashCode():
         /// the hashcode is multiplied by a long constant (2 to the 64th, divided
         /// by the golden ratio) then the uppermos bits are shifted into the lowest
         /// positions to obtain an index in the desired range. Multiplication by a
@@ -248,17 +252,104 @@ namespace Lugh.Utils
             return Size == 0;
         }
 
-        public IEnumerator< string > Keys()
+        public Values< string > Values()
         {
-            // TODO:
+            if ( Collections.allocateIterators )
+            {
+                return new Values( this );
+            }
+
+            if ( values1 == null )
+            {
+                values1 = new Values( this );
+                values2 = new Values( this );
+            }
+
+            if ( !values1.valid )
+            {
+                values1.reset();
+                values1.valid = true;
+                values2.valid = false;
+
+                return values1;
+            }
+
+            values2.reset();
+            values2.valid = true;
+            values1.valid = false;
+
+            return values2;
+        }
+
+        public Keys< TK > Keys()
+        {
+            if ( Collections.allocateIterators )
+            {
+                return new Keys( this );
+            }
+
+            if ( keys1 == null )
+            {
+                keys1 = new Keys( this );
+                keys2 = new Keys( this );
+            }
+
+            if ( !keys1.valid )
+            {
+                keys1.reset();
+                keys1.valid = true;
+                keys2.valid = false;
+
+                return keys1;
+            }
+
+            keys2.reset();
+            keys2.valid = true;
+            keys1.valid = false;
+
+            return keys2;
+        }
+
+        public Entries< TK, TV > Entries()
+        {
+            if ( Collections.allocateIterators )
+            {
+                return new Entries( this );
+            }
+
+            if ( entries1 == null )
+            {
+                entries1 = new Entries( this );
+                entries2 = new Entries( this );
+            }
+
+            if ( !entries1.valid )
+            {
+                entries1.reset();
+                entries1.valid = true;
+                entries2.valid = false;
+
+                return entries1;
+            }
+
+            entries2.reset();
+            entries2.valid = true;
+            entries1.valid = false;
+
+            return entries2;
+        }
+
+        public IEnumerator< Entry< TK, TV > > GetEnumerator()
+        {
             yield break;
         }
 
-        public IEnumerator< object > Values()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            // TODO:
-            yield break;
+            return GetEnumerator();
         }
+
+        // ################################################
 
         public class Entry< TKey, TValue >
         {
@@ -271,14 +362,179 @@ namespace Lugh.Utils
             }
         }
 
-        public IEnumerator< Entry< TK, TV > > GetEnumerator()
+        // ################################################
+
+        private abstract class MapIterator< TK, TV, TI > : IEnumerable, IEnumerator< TI >
         {
-            yield break;
+            public bool HasNext { get; set; }
+
+            private ObjectMap< TK, TV > _map;
+
+            private int  _nextIndex;
+            private int  _currentIndex;
+            private bool _valid = true;
+
+            public MapIterator( ObjectMap< TK, TV > map )
+            {
+                this._map = map;
+                reset();
+            }
+
+            public void reset()
+            {
+                _currentIndex = -1;
+                _nextIndex    = -1;
+                FindNextIndex();
+            }
+
+            void FindNextIndex()
+            {
+                var keyTable = _map._keyTable;
+
+                for ( int n = keyTable.Length; ++_nextIndex < n; )
+                {
+                    if ( keyTable[ _nextIndex ] != null )
+                    {
+                        HasNext = true;
+                        return;
+                    }
+                }
+
+                HasNext = false;
+            }
+
+            public void Remove()
+            {
+                var i = _currentIndex;
+
+                if ( i < 0 )
+                {
+                    throw new MethodAccessException( "next must be called before remove." );
+                }
+
+                var mask = _map.Mask;
+                var next = i + 1 & mask;
+                TK  key;
+
+                while ( ( key = _map._keyTable[ next ] ) != null )
+                {
+                    var placement = _map.Place( key );
+
+                    if ( ( next - placement & mask ) > ( i - placement & mask ) )
+                    {
+                        _map._keyTable[ i ]   = key;
+                        _map._valueTable[ i ] = _map._valueTable[ next ];
+
+                        i = next;
+                    }
+
+                    next = next + 1 & mask;
+                }
+
+                _map._keyTable[ i ]   = default;
+                _map._valueTable[ i ] = default;
+                _map.Size--;
+
+                if ( i != _currentIndex )
+                {
+                    --_nextIndex;
+                }
+                
+                _currentIndex = -1;
+            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        // ################################################
+
+        public static class Values< TV > : MapIterator< object, TV, TV >
         {
-            return GetEnumerator();
+            public Values( ObjectMap<?, TV> map )
+            {
+                super( ( ObjectMap< object, TV > )map );
+            }
+
+            public boolean hasNext()
+            {
+                if ( !valid ) throw new GdxRuntimeException( "#iterator() cannot be used nested." );
+                return hasNext;
+            }
+
+            public @Null V next()
+            {
+                if ( !hasNext ) throw new NoSuchElementException();
+                if ( !valid ) throw new GdxRuntimeException( "#iterator() cannot be used nested." );
+                V value = map.valueTable[ nextIndex ];
+                currentIndex = nextIndex;
+                findNextIndex();
+                return value;
+            }
+
+            public Values< V > iterator()
+            {
+                return this;
+            }
+
+            /** Returns a new array containing the remaining values. */
+            public Array< V > toArray()
+            {
+                return toArray( new Array( true, map.size ) );
+            }
+
+            /** Adds the remaining values to the specified array. */
+            public Array< V > toArray( Array< V > array )
+            {
+                while ( hasNext )
+                    array.add( next() );
+
+                return array;
+            }
+        }
+
+        static public class Keys< K >
+
+        extends MapIterator< K, object, K > {
+
+        public Keys( ObjectMap< K,?> map )
+        {
+            super( ( ObjectMap< K, object > )map );
+        }
+
+        public boolean hasNext()
+        {
+            if ( !valid ) throw new GdxRuntimeException( "#iterator() cannot be used nested." );
+            return hasNext;
+        }
+
+        public K next()
+        {
+            if ( !hasNext ) throw new NoSuchElementException();
+            if ( !valid ) throw new GdxRuntimeException( "#iterator() cannot be used nested." );
+            K key = map.keyTable[ nextIndex ];
+            currentIndex = nextIndex;
+            findNextIndex();
+            return key;
+        }
+
+        public Keys< K > iterator()
+        {
+            return this;
+        }
+
+        /** Returns a new array containing the remaining keys. */
+        public Array< K > toArray()
+        {
+            return toArray( new Array< K >( true, map.size ) );
+        }
+
+        /** Adds the remaining keys to the array. */
+        public Array< K > toArray( Array< K > array )
+        {
+            while ( hasNext )
+                array.add( next() );
+
+            return array;
         }
     }
+}
+
 }

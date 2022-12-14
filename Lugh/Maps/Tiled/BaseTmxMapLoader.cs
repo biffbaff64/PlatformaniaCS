@@ -173,7 +173,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
         foreach ( Element element in tilesets )
         {
             LoadTileSet( element, tmxFile, imageResolver );
-            Root.RemoveChild( element );
+            Root.RemoveChild( ( int )element );
         }
 
         for ( int i = 0, j = Root.GetChildCount(); i < j; i++ )
@@ -228,16 +228,16 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
             MapGroupLayer groupLayer = new MapGroupLayer();
             loadBasicLayerInfo( groupLayer, element );
 
-            Element properties = element.getChildByName( "properties" );
+            Element properties = element.GetChildByName( "properties" );
 
             if ( properties != null )
             {
                 loadProperties( groupLayer.getProperties(), properties );
             }
 
-            for ( int i = 0, j = element.getChildCount(); i < j; i++ )
+            for ( int i = 0, j = element.GetChildCount(); i < j; i++ )
             {
-                Element child = element.getChild( i );
+                Element child = element.GetChild( i );
                 loadLayer( map, groupLayer.getLayers(), child, tmxFile, imageResolver );
             }
 
@@ -254,8 +254,8 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
     {
         if ( element.getName().equals( "layer" ) )
         {
-            int               width      = element.getIntAttribute( "width",  0 );
-            int               height     = element.getIntAttribute( "height", 0 );
+            int               width      = element.GetIntAttribute( "width",  0 );
+            int               height     = element.GetIntAttribute( "height", 0 );
             int               tileWidth  = map.getProperties().get( "tilewidth",  Integer.class);
             int               tileHeight = map.getProperties().get( "tileheight", Integer.class);
             TiledMapTileLayer layer      = new TiledMapTileLayer( width, height, tileWidth, tileHeight );
@@ -285,7 +285,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
                 }
             }
 
-            Element properties = element.getChildByName( "properties" );
+            Element properties = element.GetChildByName( "properties" );
 
             if ( properties != null )
             {
@@ -302,7 +302,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
         {
             MapLayer layer = new MapLayer();
             loadBasicLayerInfo( layer, element );
-            Element properties = element.getChildByName( "properties" );
+            Element properties = element.GetChildByName( "properties" );
 
             if ( properties != null )
             {
@@ -310,7 +310,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
             }
 
             for ( Element objectElement :
-            element.getChildrenByName( "object" )) {
+            element.GetChildrenByName( "object" )) {
                 loadObject( map, layer, objectElement );
             }
 
@@ -348,7 +348,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
 
             TextureRegion texture = null;
 
-            Element image = element.getChildByName( "image" );
+            Element image = element.GetChildByName( "image" );
 
             if ( image != null )
             {
@@ -362,7 +362,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
 
             loadBasicLayerInfo( layer, element );
 
-            Element properties = element.getChildByName( "properties" );
+            Element properties = element.GetChildByName( "properties" );
 
             if ( properties != null )
             {
@@ -377,9 +377,9 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
     {
         string name    = element.getAttribute( "name", null );
         float  opacity = Float.parseFloat( element.getAttribute( "opacity", "1.0" ) );
-        bool   visible = element.getIntAttribute( "visible", 1 ) == 1;
-        float  offsetX = element.getFloatAttribute( "offsetx", 0 );
-        float  offsetY = element.getFloatAttribute( "offsety", 0 );
+        bool   visible = element.GetIntAttribute( "visible", 1 ) == 1;
+        float  offsetX = element.GetFloatAttribute( "offsetx", 0 );
+        float  offsetY = element.GetFloatAttribute( "offsety", 0 );
 
         layer.setName( name );
         layer.setOpacity( opacity );
@@ -407,20 +407,20 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
             float scaleX = ConvertObjectToTileSpace ? 1.0f / MapTileWidth : 1.0f;
             float scaleY = ConvertObjectToTileSpace ? 1.0f / MapTileHeight : 1.0f;
 
-            float x = element.getFloatAttribute( "x", 0 ) * scaleX;
+            float x = element.GetFloatAttribute( "x", 0 ) * scaleX;
 
             float y = ( FlipY
-                ? ( heightInPixels - element.getFloatAttribute( "y", 0 ) )
-                : element.getFloatAttribute( "y", 0 ) ) * scaleY;
+                ? ( heightInPixels - element.GetFloatAttribute( "y", 0 ) )
+                : element.GetFloatAttribute( "y", 0 ) ) * scaleY;
 
-            float width  = element.getFloatAttribute( "width",  0 ) * scaleX;
-            float height = element.getFloatAttribute( "height", 0 ) * scaleY;
+            float width  = element.GetFloatAttribute( "width",  0 ) * scaleX;
+            float height = element.GetFloatAttribute( "height", 0 ) * scaleY;
 
-            if ( element.getChildCount() > 0 )
+            if ( element.GetChildCount() > 0 )
             {
                 Element child = null;
 
-                if ( ( child = element.getChildByName( "polygon" ) ) != null )
+                if ( ( child = element.GetChildByName( "polygon" ) ) != null )
                 {
                     string[] points   = child.getAttribute( "points" ).split( " " );
                     float[]  vertices = new float[ points.length * 2 ];
@@ -436,7 +436,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
                     polygon.setPosition( x, y );
                     object = new PolygonMapObject( polygon );
                 }
-                else if ( ( child = element.getChildByName( "polyline" ) ) != null )
+                else if ( ( child = element.GetChildByName( "polyline" ) ) != null )
                 {
                     string[] points   = child.getAttribute( "points" ).split( " " );
                     float[]  vertices = new float[ points.length * 2 ];
@@ -452,7 +452,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
                     polyline.setPosition( x, y );
                     object = new PolylineMapObject( polyline );
                 }
-                else if ( ( child = element.getChildByName( "ellipse" ) ) != null )
+                else if ( ( child = element.GetChildByName( "ellipse" ) ) != null )
                 {
                     object = new EllipseMapObject( x, FlipY ? y - height : y, width, height );
                 }
@@ -477,11 +477,11 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
                     tiledMapTileMapObject.getProperties().put( "gid", id );
                     tiledMapTileMapObject.setX( x );
                     tiledMapTileMapObject.setY( FlipY ? y : y - height );
-                    float objectWidth  = element.getFloatAttribute( "width",  textureRegion.getRegionWidth() );
-                    float objectHeight = element.getFloatAttribute( "height", textureRegion.getRegionHeight() );
+                    float objectWidth  = element.GetFloatAttribute( "width",  textureRegion.getRegionWidth() );
+                    float objectHeight = element.GetFloatAttribute( "height", textureRegion.getRegionHeight() );
                     tiledMapTileMapObject.setScaleX( scaleX * ( objectWidth / textureRegion.getRegionWidth() ) );
                     tiledMapTileMapObject.setScaleY( scaleY * ( objectHeight / textureRegion.getRegionHeight() ) );
-                    tiledMapTileMapObject.setRotation( element.getFloatAttribute( "rotation", 0 ) );
+                    tiledMapTileMapObject.setRotation( element.GetFloatAttribute( "rotation", 0 ) );
                     object = tiledMapTileMapObject;
                 }
                 else
@@ -505,7 +505,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
                 object.getProperties().put( "type", type );
             }
 
-            int id = element.getIntAttribute( "id", 0 );
+            int id = element.GetIntAttribute( "id", 0 );
 
             if ( id != 0 )
             {
@@ -522,8 +522,8 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
 
             object.getProperties().put( "width",  width );
             object.getProperties().put( "height", height );
-            object.setVisible( element.getIntAttribute( "visible", 1 ) == 1 );
-            Element properties = element.getChildByName( "properties" );
+            object.setVisible( element.GetIntAttribute( "visible", 1 ) == 1 );
+            Element properties = element.GetChildByName( "properties" );
 
             if ( properties != null )
             {
@@ -541,7 +541,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
         if ( element.getName().equals( "properties" ) )
         {
             for ( Element property :
-            element.getChildrenByName( "property" )) {
+            element.GetChildrenByName( "property" )) {
                 string name  = property.getAttribute( "name",  null );
                 string value = property.getAttribute( "value", null );
                 string type  = property.getAttribute( "type",  null );
@@ -628,7 +628,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
 
     static public int[] getTileIds( Element element, int width, int height )
     {
-        Element data     = element.getChildByName( "data" );
+        Element data     = element.GetChildByName( "data" );
         string  encoding = data.getAttribute( "encoding", null );
 
         if ( encoding == null )
@@ -641,7 +641,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
 
         if ( encoding.equals( "csv" ) )
         {
-            string[] array = data.getText().split( "," );
+            string[] array = data.GetText().split( "," );
 
             for ( int i = 0; i < array.length; i++ )
                 ids[ i ] = ( int )Long.parseLong( array[ i ].trim() );
@@ -656,7 +656,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
                     try
                     {
                         string compression = data.getAttribute( "compression", null );
-                        byte[] bytes       = Base64Coder.decode( data.getText() );
+                        byte[] bytes       = Base64Coder.decode( data.GetText() );
 
                         if ( compression == null )
                             is = new ByteArrayInputStream( bytes );
@@ -751,7 +751,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
     {
         if ( element.GetName().equals( "tileset" ) )
         {
-            int        firstgid    = element.getIntAttribute( "firstgid", 1 );
+            int        firstgid    = element.GetIntAttribute( "firstgid", 1 );
             string     imageSource = "";
             int        imageWidth  = 0;
             int        imageHeight = 0;
@@ -766,13 +766,13 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
                 try
                 {
                     element = Xml.parse( tsx );
-                    Element imageElement = element.getChildByName( "image" );
+                    Element imageElement = element.GetChildByName( "image" );
 
                     if ( imageElement != null )
                     {
                         imageSource = imageElement.getAttribute( "source" );
-                        imageWidth  = imageElement.getIntAttribute( "width",  0 );
-                        imageHeight = imageElement.getIntAttribute( "height", 0 );
+                        imageWidth  = imageElement.GetIntAttribute( "width",  0 );
+                        imageHeight = imageElement.GetIntAttribute( "height", 0 );
                         image       = GetRelativeFileHandle( tsx, imageSource );
                     }
                 }
@@ -788,8 +788,8 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
                 if ( imageElement != null )
                 {
                     imageSource = imageElement.getAttribute( "source" );
-                    imageWidth  = imageElement.getIntAttribute( "width",  0 );
-                    imageHeight = imageElement.getIntAttribute( "height", 0 );
+                    imageWidth  = imageElement.GetIntAttribute( "width",  0 );
+                    imageHeight = imageElement.GetIntAttribute( "height", 0 );
                     image       = GetRelativeFileHandle( tmxFile, imageSource );
                 }
             }
@@ -826,7 +826,7 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
             tileSetProperties.put( "firstgid", firstgid );
 
             // Tiles
-            Utils.Array< Element > tileElements = element.getChildrenByName( "tile" );
+            Utils.Array< Element > tileElements = element.GetChildrenByName( "tile" );
 
             addStaticTiles
                 (
@@ -902,12 +902,12 @@ public abstract class BaseTmxMapLoader< TP > : AsynchronousAssetLoader< TiledMap
 
     protected void addTileObjectGroup( TiledMapTile tile, Element tileElement )
     {
-        Element objectgroupElement = tileElement.getChildByName( "objectgroup" );
+        Element objectgroupElement = tileElement.GetChildByName( "objectgroup" );
 
         if ( objectgroupElement != null )
         {
             for ( Element objectElement :
-            objectgroupElement.getChildrenByName( "object" )) {
+            objectgroupElement.GetChildrenByName( "object" )) {
                 loadObject( Map, tile, objectElement );
             }
         }

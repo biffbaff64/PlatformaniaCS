@@ -205,14 +205,14 @@ public class AtlasTmxMapLoader : BaseTmxMapLoader< AtlasTmxMapLoader.AtlasTiledM
 
     protected FileHandle GetAtlasFileHandle( FileHandle tmxFile )
     {
-        Element properties = Root.getChildByName( "properties" );
+        Element properties = Root.GetChildByName( "properties" );
 
         String atlasFilePath = null;
 
         if ( properties != null )
         {
             for ( Element property :
-            properties.getChildrenByName( "property" )) {
+            properties.GetChildrenByName( "property" )) {
                 String name = property.getAttribute( "name" );
 
                 if ( name.startsWith( "atlas" ) )
