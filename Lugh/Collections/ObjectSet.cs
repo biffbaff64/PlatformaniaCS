@@ -2,7 +2,7 @@
 
 // ##################################################
 
-namespace Lugh.Utils
+namespace Lugh.Collections
 {
     public class ObjectSet< T >
     {

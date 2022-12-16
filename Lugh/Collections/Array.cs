@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 // ##################################################
 
-namespace Lugh.Utils
+namespace Lugh.Collections
 {
     /// <summary>
     /// A resizable, ordered or unordered array of objects.

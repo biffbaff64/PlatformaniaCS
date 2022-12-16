@@ -1,4 +1,4 @@
-﻿namespace Lugh.Utils
+﻿namespace Lugh.Collections
 {
     public class ArrayReflection
     {

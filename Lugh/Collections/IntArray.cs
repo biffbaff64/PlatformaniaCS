@@ -1,4 +1,4 @@
-﻿namespace Lugh.Utils
+﻿namespace Lugh.Collections
 {
     using System.Collections.Generic;
 
