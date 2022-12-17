@@ -2,16 +2,17 @@
 
 // ##################################################
 
-namespace Lugh.Logging;
-
-public class NoSuchElementException : Exception
+namespace Lugh.Logging
 {
-    public NoSuchElementException()
+    public class NoSuchElementException : Exception
     {
-    }
+        public NoSuchElementException()
+        {
+        }
     
-    public NoSuchElementException( string message ) : base( message )
-    {
+        public NoSuchElementException( string message ) : base( message )
+        {
+        }
     }
 }
 

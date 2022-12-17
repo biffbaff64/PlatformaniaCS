@@ -2,13 +2,12 @@
 
 // ##################################################
 
-namespace Lugh.Files.Xml
+namespace Lugh.Maps.Tiled
 {
-    public class XmlReader
+    public class TiledMapTileSets
     {
-        public Element Parse( FileHandle tmxFile )
+        public void AddTileSet( TiledMapTileSet tileSet )
         {
-            return null;
         }
     }
 }

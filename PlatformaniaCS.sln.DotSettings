@@ -135,9 +135,10 @@
 
 // ##################################################
 
-namespace $NAMESPACE$;
-
-public class $CLASS$ {$END$}
+namespace $NAMESPACE$
+{
+    public class $CLASS$ {$END$}
+}
 </s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Applicability/=File/@EntryIndexedValue">True</s:Boolean>

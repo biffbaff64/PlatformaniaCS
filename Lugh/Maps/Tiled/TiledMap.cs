@@ -2,13 +2,19 @@
 
 // ##################################################
 
-namespace Lugh.Maps.Tiled;
-
-public class TiledMap
+namespace Lugh.Maps.Tiled
 {
-    public MapProperties GetProperties()
+    public class TiledMap : Map
     {
-        return null;
+        public MapProperties GetProperties()
+        {
+            return null;
+        }
+
+        public TiledMapTileSets GetTileSets()
+        {
+            return null;
+        }
     }
 }
 

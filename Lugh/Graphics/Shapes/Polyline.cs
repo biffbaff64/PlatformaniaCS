@@ -2,16 +2,17 @@
 
 // ##################################################
 
-namespace Lugh.Graphics;
-
-public class Polyline
+namespace Lugh.Graphics
 {
-    public Polyline()
+    public class Polyline
     {
-    }
+        public Polyline()
+        {
+        }
     
-    public Polyline( float[] vertices )
-    {
+        public Polyline( float[] vertices )
+        {
+        }
     }
 }
 

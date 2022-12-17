@@ -19,6 +19,11 @@ namespace Lugh.Maths
             return tableSize;
         }
 
+        public static int UnsignedByteToInt( byte b )
+        {
+            return b & 0xFF;
+        }
+
         public static int GetCount( int currentTotal )
         {
             int count;

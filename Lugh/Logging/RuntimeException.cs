@@ -2,12 +2,13 @@
 
 // ##################################################
 
-namespace Lugh.Logging;
-
-public class RuntimeException : SystemException
+namespace Lugh.Logging
 {
-    public RuntimeException( string message ) : base( message )
+    public class RuntimeException : SystemException
     {
+        public RuntimeException( string message ) : base( message )
+        {
+        }
     }
 }
 

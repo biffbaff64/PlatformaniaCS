@@ -2,10 +2,11 @@
 
 // ##################################################
 
-namespace Lugh.Files;
-
-public class FileHandleResolver
+namespace Lugh.Files
 {
+    public class FileHandleResolver
+    {
     
+    }
 }
 

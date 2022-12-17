@@ -2,52 +2,53 @@
 
 // ##################################################
 
-namespace Lugh.Utils;
-
-public class Long
+namespace Lugh.Utils
 {
-    public static int NumberOfLeadingZeros( long i )
+    public class Long
     {
-        if ( i > 0 )
+        public static int NumberOfLeadingZeros( long i )
         {
-            var n = 1;
-            var x = ( int )( i >> 32 );
-
-            if ( x == 0 )
+            if ( i > 0 )
             {
-                n += 32;
-                x =  ( int )i;
-            }
+                var n = 1;
+                var x = ( int )( i >> 32 );
 
-            if ( x >> 16 == 0 )
-            {
-                n +=  16;
-                x <<= 16;
-            }
+                if ( x == 0 )
+                {
+                    n += 32;
+                    x =  ( int )i;
+                }
 
-            if ( x >> 24 == 0 )
-            {
-                n +=  8;
-                x <<= 8;
-            }
+                if ( x >> 16 == 0 )
+                {
+                    n +=  16;
+                    x <<= 16;
+                }
 
-            if ( x >> 28 == 0 )
-            {
-                n +=  4;
-                x <<= 4;
-            }
+                if ( x >> 24 == 0 )
+                {
+                    n +=  8;
+                    x <<= 8;
+                }
 
-            if ( x >> 30 == 0 )
-            {
-                n +=  2;
-                x <<= 2;
-            }
+                if ( x >> 28 == 0 )
+                {
+                    n +=  4;
+                    x <<= 4;
+                }
 
-            n -= x >> 31;
+                if ( x >> 30 == 0 )
+                {
+                    n +=  2;
+                    x <<= 2;
+                }
+
+                n -= x >> 31;
         
-            return n;
-        }
+                return n;
+            }
 
-        return 64;
+            return 64;
+        }
     }
 }

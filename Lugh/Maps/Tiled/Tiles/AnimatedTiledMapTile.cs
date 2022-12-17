@@ -2,66 +2,54 @@
 
 // ##################################################
 
-namespace Lugh.Maps.Tiled.Tiles;
+using Lugh.Collections;
 
-public class AnimatedTiledMapTile : ITiledMapTile
+namespace Lugh.Maps.Tiled.Tiles
 {
-    public AnimatedTiledMapTile( IntArray intervals, Array< StaticTiledMapTile > staticTiles )
+    public class AnimatedTiledMapTile : ITiledMapTile
     {
-    }
+        public int                      ID        { get; set; }
+        public ITiledMapTile.BlendModes BlendMode { get; set; } = ITiledMapTile.BlendModes.NONE;
 
-    public int GetId()
-    {
-        return 0;
-    }
+        public AnimatedTiledMapTile( IntArray intervals, List< StaticTiledMapTile > staticTiles )
+        {
+        }
 
-    public void SetId( int id )
-    {
-    }
+        public TextureRegion GetTextureRegion()
+        {
+            return null;
+        }
 
-    public ITiledMapTile.BlendMode GetBlendMode()
-    {
-        return ITiledMapTile.BlendMode.NONE;
-    }
+        public void SetTextureRegion( TextureRegion textureRegion )
+        {
+        }
 
-    public void SetBlendMode( ITiledMapTile.BlendMode blendMode )
-    {
-    }
+        public float GetOffsetX()
+        {
+            return 0;
+        }
 
-    public TextureRegion GetTextureRegion()
-    {
-        return null;
-    }
+        public void SetOffsetX( float offsetX )
+        {
+        }
 
-    public void SetTextureRegion( TextureRegion textureRegion )
-    {
-    }
+        public float GetOffsetY()
+        {
+            return 0;
+        }
 
-    public float GetOffsetX()
-    {
-        return 0;
-    }
+        public void SetOffsetY( float offsetY )
+        {
+        }
 
-    public void SetOffsetX( float offsetX )
-    {
-    }
+        public MapProperties GetProperties()
+        {
+            return null;
+        }
 
-    public float GetOffsetY()
-    {
-        return 0;
-    }
-
-    public void SetOffsetY( float offsetY )
-    {
-    }
-
-    public MapProperties GetProperties()
-    {
-        return null;
-    }
-
-    public MapObjects GetObjects()
-    {
-        return null;
+        public MapObjects GetObjects()
+        {
+            return null;
+        }
     }
 }

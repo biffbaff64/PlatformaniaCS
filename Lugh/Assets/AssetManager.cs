@@ -8,11 +8,11 @@ namespace Lugh.Assets
 {
     public class AssetManager
     {
-//    private ObjectMap< Type, ObjectMap< string, RefCountedContainer > > _assets;
-        private ObjectMap< string, Type >                           _assetTypes;
-        private ObjectMap< string, List< string > >                 _assetDependencies;
-        private ObjectSet< string >                                 _injected;
-        private ObjectMap< Type, ObjectMap< string, AssetLoader > > _loaders;
+//    private Dictionary< Type, Dictionary< string, RefCountedContainer > > _assets;
+        private Dictionary< string, Type >                            _assetTypes;
+        private Dictionary< string, List< string > >                  _assetDependencies;
+        private List< string >                                        _injected;
+        private Dictionary< Type, Dictionary< string, AssetLoader > > _loaders;
 
         private List< AssetDescriptor > _loadQueue;
 //    private AsyncExecutor            _executor;

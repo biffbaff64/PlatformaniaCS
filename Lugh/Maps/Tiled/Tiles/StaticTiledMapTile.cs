@@ -2,66 +2,52 @@
 
 // ##################################################
 
-namespace Lugh.Maps.Tiled.Tiles;
-
-public class StaticTiledMapTile : ITiledMapTile
+namespace Lugh.Maps.Tiled.Tiles
 {
-    public StaticTiledMapTile( TextureRegion textureRegion )
+    public class StaticTiledMapTile : ITiledMapTile
     {
-    }
+        public int                      ID        { get; set; }
+        public ITiledMapTile.BlendModes BlendMode { get; set; } = ITiledMapTile.BlendModes.NONE;
 
-    public int GetId()
-    {
-        return 0;
-    }
+        public StaticTiledMapTile( TextureRegion textureRegion )
+        {
+        }
 
-    public void SetId( int id )
-    {
-    }
+        public TextureRegion GetTextureRegion()
+        {
+            return null;
+        }
 
-    public ITiledMapTile.BlendMode GetBlendMode()
-    {
-        return ITiledMapTile.BlendMode.NONE;
-    }
+        public void SetTextureRegion( TextureRegion textureRegion )
+        {
+        }
 
-    public void SetBlendMode( ITiledMapTile.BlendMode blendMode )
-    {
-    }
+        public float GetOffsetX()
+        {
+            return 0;
+        }
 
-    public TextureRegion GetTextureRegion()
-    {
-        return null;
-    }
+        public void SetOffsetX( float offsetX )
+        {
+        }
 
-    public void SetTextureRegion( TextureRegion textureRegion )
-    {
-    }
+        public float GetOffsetY()
+        {
+            return 0;
+        }
 
-    public float GetOffsetX()
-    {
-        return 0;
-    }
+        public void SetOffsetY( float offsetY )
+        {
+        }
 
-    public void SetOffsetX( float offsetX )
-    {
-    }
+        public MapProperties GetProperties()
+        {
+            return null;
+        }
 
-    public float GetOffsetY()
-    {
-        return 0;
-    }
-
-    public void SetOffsetY( float offsetY )
-    {
-    }
-
-    public MapProperties GetProperties()
-    {
-        return null;
-    }
-
-    public MapObjects GetObjects()
-    {
-        return null;
+        public MapObjects GetObjects()
+        {
+            return null;
+        }
     }
 }

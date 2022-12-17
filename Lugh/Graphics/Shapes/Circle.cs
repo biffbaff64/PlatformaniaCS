@@ -2,16 +2,17 @@
 
 // ##################################################
 
-namespace Lugh.Graphics;
-
-public class Circle
+namespace Lugh.Graphics
 {
-    public Circle()
+    public class Circle
     {
-    }
+        public Circle()
+        {
+        }
 
-    public Circle( float x, float y, float radius )
-    {
+        public Circle( float x, float y, float radius )
+        {
+        }
     }
 }
 

@@ -2,16 +2,17 @@
 
 // ##################################################
 
-namespace Lugh.Graphics;
-
-public class Ellipse
+namespace Lugh.Graphics
 {
-    public Ellipse()
+    public class Ellipse
     {
-    }
+        public Ellipse()
+        {
+        }
 
-    public Ellipse( float f, float f1, float width, float height )
-    {
+        public Ellipse( float f, float f1, float width, float height )
+        {
+        }
     }
 }
 
