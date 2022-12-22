@@ -158,7 +158,7 @@ namespace $NAMESPACE$
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=HEADER1/Expression/@EntryValue"></s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=HEADER1/Order/@EntryValue">3</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE/Expression/@EntryValue">fileLibGDX.Net()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE/Order/@EntryValue">1</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE1/@KeyIndexDefined">True</s:Boolean>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9415FFBE5A73D847B3CCE4C141AC4DA6/Field/=NAMESPACE1/Order/@EntryValue">4</s:Int64>
